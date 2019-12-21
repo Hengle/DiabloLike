@@ -1,0 +1,36 @@
+/*
+0. If you import this package to an early version of Unity5 mechanim animator transitions will be messe up.
+To fix this close Unity and open it again.
+
+2.Demo and project setup:
+
+Before you can run the demo you'll need to setup Layers and Layers Collision Mastrix in the edit/project settings/physics.
+To help you with that I've included picture of how it supposed to look like:
+
+	2.a. Layers:
+	Setup layers in layers position starting from position 20 in the same order as on picture or listed below:
+	20 Player
+	21 Enemies
+	22 EnemiesMouseCollider
+	23 TargetingPlane
+	24 Obstacles
+	25 InteractiveObject
+	26 Bullets
+	27 TargetingPlaneToShoot
+	28 Ground
+	29 EnemyProjectiles
+	30 DoT
+
+	2.b.Layers Collision Mastrix:
+	please see .jpg attached in this package to find out how to setup layers matrix.
+
+	2.c. To use waypoint you also have to setup build settings.
+	     To do that go to File/Build settings and add scenes from the demo to the build.
+
+	2.d. In Unity5 you also have to setup tags: Please see attached picture.
+	     - all children of "DoorPositionToNavigate" should have door tag
+	     - MainCanvas should have MainCanvas tag
+	     - TargetingPlane and TargetingPlaneToShoot should have targetingPlane tag
+	     - Zombie and its child ColliderMouse should have enemy tag, same for ZombieBare
+	     - Ray prefab should have DoT tag.
+	     - It's easy to spot missing tag in a prefab: missing tag is called "Undefined"
