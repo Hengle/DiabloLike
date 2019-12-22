@@ -21,6 +21,10 @@ public enum skills { None, BaseAttack, Fireball, Ray, Medkit, Move };
 public enum damageType { Physical, Fire, Magic };
 public enum buttonCharacter { WeaponSelection, Keyboard_Mobile, MouseRight, MouseLeft};
 
+/// <summary>
+/// 和player相关的脚本，一部分在player预制上（可随player删除），一部分在SCRIPTS上（常驻）
+/// 这样设计是为了，便于控制和其他操作，就像保存。暂时没看出来
+/// </summary>
 public class aRPG_Master : MonoBehaviour {
     internal GameObject mc;
     internal GameObject s;
@@ -41,6 +45,7 @@ public class aRPG_Master : MonoBehaviour {
 
     internal GameObject waypointMenu;
 
+    //player核心脚本
     internal aRPG_Input psInput;
     internal aRPG_Health psHealth;
     internal aRPG_ItemPickup psItemPick;
@@ -62,6 +67,7 @@ public class aRPG_Master : MonoBehaviour {
     internal GameObject joystick;
     internal aRPG_Joystick gsJoystick;
 
+    //层的详细说明可以看 readme
     internal int layerPlayer = 1 << 20;
     internal int layerEnemies = 1 << 21;
     internal int layerEnemyMouseCollider = 1 << 22; // this layer is for enemies - more precisly it is for ColliderMouse child game object of the enemy prefab. By changing the size of the collider you can change mouse precision for targeting enemies
@@ -122,6 +128,7 @@ public class aRPG_Master : MonoBehaviour {
         pAnimator = player.GetComponent<Animator>();
         pNavAgent = player.GetComponent<UnityEngine.AI.NavMeshAgent>();
 
+        //用于射线时，选择性忽略的层
         maskMoveEnemiesDoors =  layerTargetingPlaneToMove | layerEnemyMouseCollider | layerInteractiveObject;
         maskMoveEnemies = layerTargetingPlaneToMove | layerEnemyMouseCollider;
         maskShootEnemies = layerTargetingPlaneToShoot | layerEnemyMouseCollider;
@@ -133,7 +140,9 @@ public class aRPG_Master : MonoBehaviour {
         if (joystick == null) { joystick = GameObject.Find("MainCanvas/MobileJoystick_@"); }
         if (gsJoystick == null && joystick != null) { gsJoystick = joystick.GetComponent<aRPG_Joystick>(); }
     }
-    
+    /// <summary>
+    /// 重新生成player
+    /// </summary>
     public void Respawn()
     {
         Destroy(player);

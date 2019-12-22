@@ -150,7 +150,7 @@ public class aRPG_PlayerMovement : MonoBehaviour
         return angle;
     }
     /// <summary>
-    /// 移动
+    /// 移动，给外部调用的移动接口
     /// </summary>
     /// <param name="destination"></param>
     public void SetDestinationCustom(Vector3 destination)
