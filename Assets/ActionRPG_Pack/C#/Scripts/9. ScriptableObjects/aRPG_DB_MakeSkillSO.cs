@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// DOT - Damage over time，在一段时间内不断对目标造成伤害。
+/// AOE - Area Effect Damage，区域作用魔法。指的是一个可以伤害一个区域中的一群怪物的魔法，例如法师的暴风雪和奥术爆炸。
+/// MeleeSweep 近战扫荡？
+/// </summary>
 public enum archetype { BuffDebuff, Projectile, Bullet, DoT, AoE, BasicAttack, Move, MeleeSweep}
 public enum sttChange { Strenght, Int, Health, Mana}
 

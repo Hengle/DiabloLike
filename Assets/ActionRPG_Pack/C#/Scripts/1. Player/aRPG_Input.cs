@@ -51,6 +51,9 @@ public class aRPG_Input : MonoBehaviour
     }
 
     // Skills input from keyboard(1,2,3, etc.)
+    /// <summary>
+    /// 技能按钮输入
+    /// </summary>
     public void InputActionButtons()
     {
         // UI Action Buttons
@@ -59,6 +62,7 @@ public class aRPG_Input : MonoBehaviour
             if (Input.GetKeyDown(ms.gsManagement.Buttons_InputKey[i]))
             {
                 // block input from more then one key, with exeption of consumables
+                //阻止来自多个密钥的输入，消耗品除外
                 if (inputLockedBy == ms.gsManagement.Buttons_InputKey[i] || inputLockedBy == "" || ms.gsManagement.Buttons_ActiveSkill[i].skillArchetype == archetype.BuffDebuff)
                 {
                     if (ms.gsManagement.Buttons_ActiveSkill[i].skillArchetype != archetype.BuffDebuff) { inputLockedBy = ms.gsManagement.Buttons_InputKey[i]; }
@@ -200,7 +204,7 @@ public class aRPG_Input : MonoBehaviour
         if (skill.skillArchetype == archetype.AoE && inputType == "up")
         { ms.psSkills.CastAoEUp(); }
 
-        // (Medkit)
+        // (Medkit)急救包
         if (skill.skillArchetype == archetype.BuffDebuff && inputType == "down")
         { ms.psSkills.Consumable_Down(skill); }
         
@@ -212,7 +216,8 @@ public class aRPG_Input : MonoBehaviour
         if (skill.skillArchetype == archetype.Move && inputType == "up")
         { ms.psSkills.MoveSkillUp(); }
 
-        if(skill.skillArchetype == archetype.MeleeSweep && inputType == "down")
+        //MeleeSweep
+        if (skill.skillArchetype == archetype.MeleeSweep && inputType == "down")
         { ms.psSkills.MeleeSweep_Down(skill);}
         if (skill.skillArchetype == archetype.MeleeSweep && inputType == "held")
         { ms.psSkills.MeleeSweep_Held(skill); }

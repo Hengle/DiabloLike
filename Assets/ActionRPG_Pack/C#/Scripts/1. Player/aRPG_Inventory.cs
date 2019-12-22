@@ -6,9 +6,18 @@ using System.Collections;
 
 // below enums are outside of class to easily access then in other scripts.
 // weapon category is usefull when you want to introduce additional weapons that look different and have different stats but behave same as present ones. For example a baseball bat, that behaves as a crowbar.
+/// <summary>
+/// 武器类型
+/// None, Melee1H, Gun1H, Shotgun, AssaultRifle
+/// 无，Melee1H，Gun1H，霰弹枪，突击步枪
+/// MeleeWeapons 近战武器
+/// </summary>
 public enum weaponCategories { None, Melee1H, Gun1H, Shotgun, AssaultRifle };
 public enum weaponItem { None, Crowbar_BY, Sword_Zombie, Gun_Basic, Shotgun_Basic, AssRif_M4 }
-
+/// <summary>
+/// inventory 清单，库存
+/// 这个脚本保存应该属于游戏目录的变量。它还具有执行所有必要步骤以更换武器的功能。
+/// </summary>
 public class aRPG_Inventory : MonoBehaviour {
     
     GameObject m;
