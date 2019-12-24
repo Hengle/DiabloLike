@@ -8,8 +8,8 @@ public class aRPG_Skills : MonoBehaviour {
     
     public GameObject gunShot; // for Bullet prefab
     public GameObject gunBulletPoint; // for BulletShootPoint child of player character - from this position a bullet will be shot
-    public GameObject spellCastPoint; // same for spells - differences are driven by animations, as you will change animations you propably will have to change or add new points to instantiate.
-    public GameObject impactEffect; // for BloodExp prefab
+    public GameObject spellCastPoint; // same for spells（咒语） - differences are driven by animations, as you will change animations you propably will have to change or add new points to instantiate.
+    public GameObject impactEffect; // for BloodExp prefab ，受击效果放置点
     
 
     // scripting operations variables
@@ -60,8 +60,10 @@ public class aRPG_Skills : MonoBehaviour {
     // ===== MOUSE AND KEYBOARD =====
 
     // Every skill has three functions - on button down, on button being held and on button up. In many cases, skill only need execution from one state, in such case leave other functions empty, but please create one to avoid bugs(later in development you will find such scripting practice usefull because it will be easier for you to make changes in skills you created.)
-    
+
     // # please note that DoT_Collider skill damage to the enemy is dealt in aRPG_EnemyDoT script attached to an enemy.
+    //请注意，对敌人的点阵对撞机技能伤害是用附在敌人身上的aRPG_enemy DoT脚本造成的。
+    //此脚本这里实现了技能释放（直接释放，动画驱动的等帧事件），扣篮操作，没有全部的处理伤害（有的有，有的没）
     public void CastDoT_ColliderDown(aRPG_DB_MakeSkillSO skill)
     {
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0) { return; }
@@ -71,27 +73,29 @@ public class aRPG_Skills : MonoBehaviour {
     }
     public void CastDoT_ColliderHeld(aRPG_DB_MakeSkillSO skill)
     {
+        //是否需要持续施法的
         if (skill.spawnAtCastPoint == false) { return; }
-
+        //弹药射击类的，需要子弹数量
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0)
         {
             CastDoT_ColliderUp(skill);
             rayContinousCastingManaBreak = true;
             return;
         }
-
+        //没蓝了，但是*0.04没看太懂？应该是不够这一帧的消耗了
         if (ms.psHealth.mana < skill.manaCostPerSecOrUse*0.04f)
         {
             CastDoT_ColliderUp(skill);
             rayContinousCastingManaBreak = true;
             return; 
         }
+        //rayContinousCastingManaBreak参数的实际用处，没理解
         if (ms.psHealth.mana > skill.manaCostPerSecOrUse && rayContinousCastingManaBreak)
         {
             CastDoT_ColliderDown(skill);
             rayContinousCastingManaBreak = false;
         }
-
+        //施法中可以转向
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitFire, 60.0f, ms.layerTargetingPlaneToShoot))
         {
             ms.player.transform.LookAt(new Vector3(hitFire.point.x, ms.player.transform.position.y, hitFire.point.z));
@@ -100,7 +104,7 @@ public class aRPG_Skills : MonoBehaviour {
     public void CastDoT_ColliderUp(aRPG_DB_MakeSkillSO skill)
     {
         ms.pAnimator.SetBool("rayBool", false);
-        if (skill.spawnAtCastPoint) { Destroy(DoTClone); }
+        if (skill.spawnAtCastPoint) { Destroy(DoTClone); }//持续施法结束，直接在这里删除。非持续的，由各自处理
         ManaDegen_Stop(skill);
     }
     
@@ -114,7 +118,7 @@ public class aRPG_Skills : MonoBehaviour {
         
         ms.psMovement.StopMoveNavAgent();
         rayFire = Camera.main.ScreenPointToRay(Input.mousePosition);
-
+        //转向鼠标方向，做动作，，动作帧驱动发射
         if (Physics.Raycast(rayFire, out hitFire, 60.0f, ms.layerTargetingPlaneToShoot))
         {
             gameObject.transform.LookAt(new Vector3(hitFire.point.x, gameObject.transform.position.y, hitFire.point.z));
@@ -162,13 +166,13 @@ public class aRPG_Skills : MonoBehaviour {
     public void CastAoEUp() { }
 
 
-    /*Mana Degen*/
+    /*Mana Degen*///持续减篮
     public void ManaDegen_Start(aRPG_DB_MakeSkillSO skill)
     {
         skill.manaDegenIsOn = true;
         StartCoroutine(ManaDegeneration_Coroutine(skill));
     }
-
+    //持续减篮停止
     public void ManaDegen_Stop(aRPG_DB_MakeSkillSO skill)
     {
         skill.manaDegenIsOn = false;
@@ -187,6 +191,7 @@ public class aRPG_Skills : MonoBehaviour {
     /*Mana Degen*/
 
     /* Projectile */
+    //投掷技能的帧事件触发
     public void EventProjectile()
     {
         if (projectileSkill.hasLimitedNoOfUses == true) { projectileSkill.ammo_amount -= 1; }
@@ -276,7 +281,14 @@ public class aRPG_Skills : MonoBehaviour {
             }
         }
     }
-    
+
+    /// <summary>
+    /// 投射物的移动两种方式Rigidbody和非刚体
+    /// 然后用协程做移动
+    /// </summary>
+    /// <param name="casterTag"></param>
+    /// <param name="skill"></param>
+    /// <param name="projectileGameObject"></param>
     public void ProjectileMovement(string casterTag, aRPG_DB_MakeSkillSO skill, GameObject projectileGameObject)
     {
         time = Time.time;
@@ -302,10 +314,17 @@ public class aRPG_Skills : MonoBehaviour {
             yield return null;
 
         }
+        //投射物的最后链接，是什么意思？  投射物飞到目标点，出效果，爆炸或者其他，不是最后的链接，是结束之后，接着是什么技能！！
         if (skill.linkOnEndOfLife == true && projectileGameObject != null && skill.linkedSkillProjectile1 != null) { ExecuteLink(casterTag, skill.linkedSkillProjectile1, projectileGameObject.transform.position); }
         Destroy(projectileGameObject);
     }
-    
+    /// <summary>
+    /// 执行接着的技能
+    /// 只能是AOE、DOT
+    /// </summary>
+    /// <param name="casterTag"></param>
+    /// <param name="linkedSkill"></param>
+    /// <param name="contactPosition"></param>
     void ExecuteLink(string casterTag, aRPG_DB_MakeSkillSO linkedSkill, Vector3 contactPosition)
     {
         if (linkedSkill.skillArchetype == archetype.AoE)
@@ -326,6 +345,7 @@ public class aRPG_Skills : MonoBehaviour {
 
     
     /* DoT Collider */
+    //DoT技能直接生成的，不是动画驱动的
     public void InstantiateDoT_Collider(aRPG_DB_MakeSkillSO skill)
     {
         if (ms.psHealth.mana < skill.manaCostPerSecOrUse) { return; }
@@ -347,11 +367,12 @@ public class aRPG_Skills : MonoBehaviour {
                 DoTClone.transform.LookAt(new Vector3(ms.player.transform.position.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z));
                 ms.psHealth.mana -= skill.manaCostPerSecOrUse;
             }
+            //dot技能脚本初始化
             DoTClone.GetComponent<aRPG_DoT>().SendObjects(ms, skill, ms.player.tag);
         }
         ms.pAnimator.SetBool("rayBool", true);
     }
-
+    //被链接的DoT生成
     public void InstantiateDoT_Collider_fromLink(string casterTag, aRPG_DB_MakeSkillSO skill, Vector3 contactPosition)
     {
         GameObject DoT_FromLink = Instantiate(skill.instantiatePrefab, contactPosition, Quaternion.identity) as GameObject;
@@ -362,6 +383,7 @@ public class aRPG_Skills : MonoBehaviour {
 
 
     /* Area Damage */
+    //处理AoE技能伤害， 但是没有处理技能消失
     public void AoE(string casterTag, aRPG_DB_MakeSkillSO skill, Vector3 center)
     {
         if (skill.AoEradius > 0f)

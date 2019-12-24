@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// DoT伤害的触发，技能到时间销毁
+/// </summary>
 public class aRPG_DoT : MonoBehaviour {
     
     aRPG_DB_MakeSkillSO skill;

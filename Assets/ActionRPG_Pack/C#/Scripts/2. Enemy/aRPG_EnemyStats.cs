@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public enum AiTypes { Melee, SpellCaster };
+/// <summary>
+/// //这个类管理属性，怪物的稀有，健康，死亡功能，伤害计算（但是没有伤害实现），名字，经验增益。
+/// </summary>
 public class aRPG_EnemyStats : MonoBehaviour {
     // this class manages stats, rarity of the monster, health, death functionality, damage calculation(no damage implementation however), name, experience gains.
     GameObject m;

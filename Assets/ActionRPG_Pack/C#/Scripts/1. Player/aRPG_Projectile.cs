@@ -31,6 +31,7 @@ public class aRPG_Projectile : MonoBehaviour {
     {
         if (projectileContact.tag != casterTag)
         {
+            //这里没看懂contactsArray 没用上
             if (skill.piercing >= Random.Range(0.01f, 100f))
             {
                 int contactID = projectileContact.gameObject.GetInstanceID();
