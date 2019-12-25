@@ -7,7 +7,7 @@ public class aRPG_CharacterStats : MonoBehaviour {
 
     [HideInInspector] public float exp = 0.0f;
     //below variables decide how much exp you'll need on higher levels.
-    public enum expMath{Flat, Additive, Multiplicative};
+    public enum expMath{Flat, Additive, Multiplicative};//平的、加法的、乘法的
     public expMath expToLevelUpProgression = expMath.Flat;
     [Range(1,3)] public float exp_ToLevelUp_Multiplier = 2.0f;
     [HideInInspector] public float prevExpToLevelUp = 0.0f;
@@ -40,12 +40,12 @@ public class aRPG_CharacterStats : MonoBehaviour {
     public float meleeArcSweep_arcWidth = 0.8f;
     public float meleeArcSweep_arcLength = 1.5f;
 
-    [HideInInspector] public float small_guns_skill_bonus;
+    [HideInInspector] public float small_guns_skill_bonus;//bonus加成
     [HideInInspector] public float large_guns_skill_bonus;
-    [HideInInspector] public float blunt_melee_skill_bonus;
-    [HideInInspector] public float bladed_melee_skill_bonus;
+    [HideInInspector] public float blunt_melee_skill_bonus;//blunt钝器
+    [HideInInspector] public float bladed_melee_skill_bonus;//bladed刀锋
     [HideInInspector] public float melee_strenght_bonus;
-    [HideInInspector] public float ranged_perception_bonus;
+    [HideInInspector] public float ranged_perception_bonus;//perception感知
 
     void Awake()
     {
@@ -128,11 +128,25 @@ public class aRPG_CharacterStats : MonoBehaviour {
         bladed++;
         small++;
         large++;
+        /*
+        强度++；
+        体质++；
+        感知++；
+        魅力++；
+        智能++；
+        运气++；
+
+        钝器++；
+        刀片式++；
+        小++；
+        大++；
+        */
 
         RecalculateDerviedStats();
     }
 
     // # Call this function whenever you an event can take place that will influence stats. For example when you put on an armour from backpack to ragdoll in inventory system that you created.
+    //重新计算统计数据
     public void RecalculateDerviedStats()
     {
         small_guns_skill_bonus = small / 20;
