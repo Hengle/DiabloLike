@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+/// <summary>
+/// 此脚本这里实现了技能释放（直接释放，动画驱动的等帧事件），扣蓝操作，没有全部的处理伤害（有的有，有的没）
+/// 技能的销毁，有的在这里做了，有的是在技能prefab上挂脚本实现的，比如aRPG_TimedDestroy
+/// </summary>
 public class aRPG_Skills : MonoBehaviour {
     
     public float meleeRange = 2.7f;
@@ -63,7 +66,7 @@ public class aRPG_Skills : MonoBehaviour {
 
     // # please note that DoT_Collider skill damage to the enemy is dealt in aRPG_EnemyDoT script attached to an enemy.
     //请注意，对敌人的点阵对撞机技能伤害是用附在敌人身上的aRPG_enemy DoT脚本造成的。
-    //此脚本这里实现了技能释放（直接释放，动画驱动的等帧事件），扣篮操作，没有全部的处理伤害（有的有，有的没）
+    
     public void CastDoT_ColliderDown(aRPG_DB_MakeSkillSO skill)
     {
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0) { return; }
