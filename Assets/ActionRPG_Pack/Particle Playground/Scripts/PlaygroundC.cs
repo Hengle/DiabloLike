@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using PlaygroundSplines;
 using System.Threading;
 
+/// <summary>
+/// 这两个脚本太复杂，暂时掌控不了，单脚本5000+的数量，还有大量的成员变量，暂时放弃
+/// 自己写特效管理也比这个来的快
+/// </summary>
 namespace ParticlePlayground {
 	/// <summary>
 	/// The PlaygroundC class is the Playground Manager which runs all Particle Playground systems and is containing all Global Manipulators. 

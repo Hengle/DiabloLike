@@ -21,7 +21,7 @@ public class aRPG_DB_MakeSkillSO : ScriptableObject
     public bool hasLimitedNoOfUses = false;
     public int ammo_amount;
 
-    [Header("Melee Sweep")]
+    [Header("Melee Sweep近战扫荡")]
     //=======Melee Sweep=======
     public float damageModifierPercent;
     public float arcWidth;
@@ -29,7 +29,7 @@ public class aRPG_DB_MakeSkillSO : ScriptableObject
     //=======Melee Sweep=======
 
     //=======Consumable=======
-    [Header("Consumable")]
+    [Header("Consumable消耗品，")]
     public sttChange sttChange;
     // if sttChangeDuration is 0 then change will be permanent.
     public float sttChangeDuration;
@@ -39,7 +39,7 @@ public class aRPG_DB_MakeSkillSO : ScriptableObject
     //=======Consumable=======
 
     //=======Projectile=======
-    [Header("Projectile")]
+    [Header("Projectile投掷物")]
     public GameObject prefabFireballVFX;
     [Range(0, 7)]
     public int addtionalProjectiles = 0;
