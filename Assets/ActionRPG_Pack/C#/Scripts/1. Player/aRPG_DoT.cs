@@ -22,7 +22,7 @@ public class aRPG_DoT : MonoBehaviour {
     {
         if (skill != null && skill.spawnAtCastPoint == false)
         {
-            Destroy(gameObject, skill.lifetime);
+            Destroy(gameObject, skill.lifetime);//回收
         }
     }
     

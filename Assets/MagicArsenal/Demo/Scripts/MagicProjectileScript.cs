@@ -3,12 +3,12 @@ using System.Collections;
  
 public class MagicProjectileScript : MonoBehaviour
 {
-    public GameObject impactParticle;
-    public GameObject projectileParticle;
-    public GameObject muzzleParticle;
+    public GameObject impactParticle;//撞击特效
+    public GameObject projectileParticle;//投掷物特效
+    public GameObject muzzleParticle;//枪口特效
     public GameObject[] trailParticles;
     [HideInInspector]
-    public Vector3 impactNormal; //Used to rotate impactparticle.
+    public Vector3 impactNormal; //Used to rotate impactparticle. 记录初始位置，最后算撞击特效的法线方向
  
     private bool hasCollided = false;
  
@@ -20,9 +20,19 @@ public class MagicProjectileScript : MonoBehaviour
         muzzleParticle = Instantiate(muzzleParticle, transform.position, transform.rotation) as GameObject;
         Destroy(muzzleParticle, 1.5f); // Lifetime of muzzle effect.
 		}
+        //碰撞统一用collider.isTrigger
+        Collider collider = gameObject.GetComponent<Collider>();
+        if(collider != null)
+        {
+            if (!collider.isTrigger)
+            {
+                Debug.LogError("Effect collider.isTrigger is false==" + transform.name);
+                collider.isTrigger = true;
+            }
+        }
     }
  
-    void OnCollisionEnter(Collision hit)
+    void OnTriggerEnter(Collision hit)
     {
         if (!hasCollided)
         {
@@ -46,7 +56,9 @@ public class MagicProjectileScript : MonoBehaviour
             }
             Destroy(projectileParticle, 3f);
             Destroy(impactParticle, 5f);
-            Destroy(gameObject);
+            //投射物删除======================4
+            if(gameObject.GetComponent<aRPG_Projectile>() == null)
+                Destroy(gameObject);
             //projectileParticle.Stop();
 			
 			ParticleSystem[] trails = GetComponentsInChildren<ParticleSystem>();

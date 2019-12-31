@@ -51,7 +51,7 @@ public class aRPG_DB_MakeSkillSO : ScriptableObject
     public float lifetimeProjectile;
     public bool rigidbodyMovement = true;
     [Range(0f, 100f)]
-    public float piercing = 0f;
+    public float piercing = 0f;//穿透
     // linked skill will be executed on contact with and enemy or at the end of life, not all skills can be linked, for now AoE and DoT archetypes work.
     public aRPG_DB_MakeSkillSO linkedSkillProjectile1;
     // below bool determines whether projectile will execute link when 

@@ -241,103 +241,22 @@ public class aRPG_Skills : MonoBehaviour {
     void InstantiateProjectile()
     {
         instantiatedProjectile = Instantiate(projectileSkill.prefabFireballVFX, castPoint.position, castPoint.rotation) as GameObject;
-        instantiatedProjectile.GetComponent<aRPG_Projectile>().GetObject(m, projectileSkill, ms.player.tag);
-    }
-    /// <summary>
-    /// 投掷物射中的情况
-    /// </summary>
-    /// <param name="projectileContact"></param>
-    /// <param name="skill"></param>
-    /// <param name="projectileGameObject"></param>
-    /// <param name="piercing"></param>
-    /// <param name="casterTag"></param>
-    public void ProjectileOnContact(Collider projectileContact, aRPG_DB_MakeSkillSO skill, GameObject projectileGameObject, bool piercing, string casterTag)
-    {
-        // On contact with enemy
-        if (projectileContact.tag == "enemy" && casterTag == "Player")
+        aRPG_Projectile projectile = instantiatedProjectile.GetComponent<aRPG_Projectile>();
+        if (projectile == null)
         {
-            if (skill.damageProjectile > 0f)
-            {
-                // Projectile Damage
-                projectileContact.GetComponent<aRPG_EnemyMovement>().DamageTaken();//怪物受击
-                enemyStatsScript = projectileContact.GetComponent<aRPG_EnemyStats>();
-                enemyStatsScript.currentHealth -= enemyStatsScript.ReceiveDamage(skill.damageTypeProjectile, skill.damageProjectile);//算伤害
-            }
-            if (skill.linkedSkillProjectile1 != null) { ExecuteLink(casterTag, skill.linkedSkillProjectile1, projectileGameObject.transform.position); }
-            //感觉这个ExecuteLink在这个函数中执行了两次，测测=================================================================================================================
+            projectile = instantiatedProjectile.AddComponent<aRPG_Projectile>();
         }
-        // On contact with player
-        if (projectileContact.tag == "Player" && casterTag == "enemy")
-        {
-            if (skill.damageProjectile > 0f)
-            {
-                // Projectile Damage
-                ms.psHealth.health -= skill.damageProjectile;
-            }
-            if (skill.linkedSkillProjectile1 != null){ExecuteLink(casterTag, skill.linkedSkillProjectile1, projectileGameObject.transform.position);}
-
-        }
-        // Destroy
-        if (projectileContact.tag != "enemy" && projectileContact.tag != "Player")
-        {
-            if(skill.linkOnEndOfLife == true && skill.linkedSkillProjectile1 != null) { ExecuteLink(casterTag, skill.linkedSkillProjectile1, projectileGameObject.transform.position); }
-            Destroy(projectileGameObject);
-        }
-        else
-        {
-            //不能穿透
-            if (piercing == false)
-            {
-                if(skill.linkOnEndOfLife == true && skill.linkedSkillProjectile1 != null) { ExecuteLink(casterTag, skill.linkedSkillProjectile1, projectileGameObject.transform.position); }
-                Destroy(projectileGameObject);
-            }
-        }
+        projectile.GetObject(m, projectileSkill, ms.player.tag);
     }
 
     /// <summary>
-    /// 投射物的移动两种方式Rigidbody和非刚体
-    /// 然后用协程做移动
-    /// </summary>
-    /// <param name="casterTag"></param>
-    /// <param name="skill"></param>
-    /// <param name="projectileGameObject"></param>
-    public void ProjectileMovement(string casterTag, aRPG_DB_MakeSkillSO skill, GameObject projectileGameObject)
-    {
-        time = Time.time;
-        if (projectileGameObject.GetComponent<Rigidbody>() != null && skill.rigidbodyMovement)
-        {
-            projectileGameObject.GetComponent<Rigidbody>().velocity = projectileGameObject.transform.forward * skill.speedProjectile;
-            StartCoroutine(ProjectileMovementCoroutine(casterTag, skill, projectileGameObject, true));
-        }
-        else
-        {
-            StartCoroutine(ProjectileMovementCoroutine(casterTag, skill, projectileGameObject, false));
-        }
-    }
-
-    IEnumerator ProjectileMovementCoroutine(string casterTag, aRPG_DB_MakeSkillSO skill, GameObject projectileGameObject, bool isRigidbody)
-    {
-        while (time + skill.lifetimeProjectile > Time.time && projectileGameObject != null)
-        {
-            if (isRigidbody == false)
-            {
-                projectileGameObject.transform.Translate(Vector3.forward * Time.deltaTime * skill.speedProjectile);
-            }
-            yield return null;
-
-        }
-        //投射物的最后链接，是什么意思？  投射物飞到目标点，出效果，爆炸或者其他，不是最后的链接，是结束之后，接着是什么技能！！没有射中目标的情况
-        if (skill.linkOnEndOfLife == true && projectileGameObject != null && skill.linkedSkillProjectile1 != null) { ExecuteLink(casterTag, skill.linkedSkillProjectile1, projectileGameObject.transform.position); }
-        Destroy(projectileGameObject);
-    }
-    /// <summary>
-    /// 执行接着的技能
+    /// 投射物结束后，执行接着的技能
     /// 只能是AOE、DOT
     /// </summary>
     /// <param name="casterTag"></param>
     /// <param name="linkedSkill"></param>
     /// <param name="contactPosition"></param>
-    void ExecuteLink(string casterTag, aRPG_DB_MakeSkillSO linkedSkill, Vector3 contactPosition)
+    public void ExecuteLink(string casterTag, aRPG_DB_MakeSkillSO linkedSkill, Vector3 contactPosition)
     {
         if (linkedSkill.skillArchetype == archetype.AoE)
         {
@@ -400,51 +319,66 @@ public class aRPG_Skills : MonoBehaviour {
     {
         if (skill.AoEradius > 0f)
         {
-            Instantiate(skill.AoEprefabVFX, center, Quaternion.identity);
-            if(casterTag == "Player") { ms.psHealth.mana -= skill.AoEmanaCost; }
-            StartCoroutine(AoE_Damage(casterTag, skill, center));
+            GameObject aoeGo = null;
+            //看特效有没有角度
+            if (skill.AoEprefabVFX.transform.rotation.eulerAngles.magnitude > 10)
+            {
+                aoeGo = Instantiate(skill.AoEprefabVFX, center, skill.AoEprefabVFX.transform.rotation);
+            }
+            else
+            {
+                aoeGo = Instantiate(skill.AoEprefabVFX, center, Quaternion.identity);
+            }
+            aRPG_AoE aoe = aoeGo.GetComponent<aRPG_AoE>();
+            if(aoe == null)
+            {
+                aoe = aoeGo.AddComponent<aRPG_AoE>();
+            }
+            aoe.SendObjects(ms, skill, casterTag);
+            //if (casterTag == "Player") { ms.psHealth.mana -= skill.AoEmanaCost; }
+            //StartCoroutine(AoE_Damage(casterTag, skill, center));
 
         }
     }
+    //把AoE逻辑转移到aRPG_AoE脚本中
+    //IEnumerator AoE_Damage(string casterTag, aRPG_DB_MakeSkillSO skill, Vector3 center)
+    //{
+    //    yield return new WaitForSeconds(skill.AoEdamageDelay);
 
-    IEnumerator AoE_Damage(string casterTag, aRPG_DB_MakeSkillSO skill, Vector3 center)
-    {
-        yield return new WaitForSeconds(skill.AoEdamageDelay);
+    //    if (casterTag == "Player")
+    //    {
+    //        Collider[] hitColliders = Physics.OverlapSphere(center, skill.AoEradius, ms.layerEnemies);
+    //        int i = 0;
+    //        while (i < hitColliders.Length)
+    //        {
+    //            if (hitColliders[i].tag == "enemy")
+    //            {
+    //                hitColliders[i].gameObject.GetComponent<aRPG_EnemyMovement>().DamageTaken();
+    //                enemyStatsScript = hitColliders[i].gameObject.GetComponent<aRPG_EnemyStats>();
+    //                enemyStatsScript.currentHealth -= enemyStatsScript.ReceiveDamage(skill.AoEdamageType, skill.AoEdamage);
+    //            }
+    //            i++;
+    //        }
+    //    }
 
-        if (casterTag == "Player")
-        {
-            Collider[] hitColliders = Physics.OverlapSphere(center, skill.AoEradius, ms.layerEnemies);
-            int i = 0;
-            while (i < hitColliders.Length)
-            {
-                if (hitColliders[i].tag == "enemy")
-                {
-                    hitColliders[i].gameObject.GetComponent<aRPG_EnemyMovement>().DamageTaken();
-                    enemyStatsScript = hitColliders[i].gameObject.GetComponent<aRPG_EnemyStats>();
-                    enemyStatsScript.currentHealth -= enemyStatsScript.ReceiveDamage(skill.AoEdamageType, skill.AoEdamage);
-                }
-                i++;
-            }
-        }
+    //    if(casterTag == "enemy")
+    //    {
+    //        Collider[] hitColliders = Physics.OverlapSphere(center, skill.AoEradius, ms.layerPlayer);
+    //        int i = 0;
+    //        while (i < hitColliders.Length)
+    //        {
+    //            if (hitColliders[i].tag == "Player")
+    //            {
+    //                ms.psHealth.health -= skill.AoEdamage;
+    //            }
+    //            i++;
+    //        }
+    //    }
 
-        if(casterTag == "enemy")
-        {
-            Collider[] hitColliders = Physics.OverlapSphere(center, skill.AoEradius, ms.layerPlayer);
-            int i = 0;
-            while (i < hitColliders.Length)
-            {
-                if (hitColliders[i].tag == "Player")
-                {
-                    ms.psHealth.health -= skill.AoEdamage;
-                }
-                i++;
-            }
-        }
-
-    }
+    //}
     /* Area Damage */
     //以上是技能，法师居多，后边是枪和近战的技能，当然都是可以混用的，看怎么设计，但是后边的好像没有在示例中用上。或者应该是换上武器以后才行
-    
+
     /*_________Guns & Bullets_______*/
 
 
