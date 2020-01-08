@@ -87,6 +87,8 @@ public class aRPG_Master : MonoBehaviour {
     void Awake()
     {
         OnAwake();
+
+        DataManager.Instance.Init();
     }
     
 
