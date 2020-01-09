@@ -157,18 +157,18 @@ namespace FairyGUI
 
 		public void CallInternal(EventContext context)
 		{
-            //FGUI修改 -默认点击时间，不能连续点击
-            if (strType == "onClick" && !canContinueHit)
-            {
-                if (UnityEngine.Time.realtimeSinceStartup - executTime < .5f)
-                {
-                    if (_callback0!=null)
-                       Debug.LogWarning(" Warning Target:"+_callback0.Target.ToString()+" Not Click Now! LastClick:"+ executTime);
-                    return;
-                }
-                executTime = UnityEngine.Time.realtimeSinceStartup;
-            }
-            //end
+            ////FGUI修改 -默认点击时间，不能连续点击
+            //if (strType == "onClick" && !canContinueHit)
+            //{
+            //    if (UnityEngine.Time.realtimeSinceStartup - executTime < .5f)
+            //    {
+            //        if (_callback0!=null)
+            //           Debug.LogWarning(" Warning Target:"+_callback0.Target.ToString()+" Not Click Now! LastClick:"+ executTime);
+            //        return;
+            //    }
+            //    executTime = UnityEngine.Time.realtimeSinceStartup;
+            //}
+            ////end
 
             _dispatching = true;
 			context.sender = owner;
@@ -190,18 +190,18 @@ namespace FairyGUI
 			if (_captureCallback == null)
 				return;
 
-            //FGUI修改 -默认点击时间，不能连续点击
-            if (strType == "onClick"&&!canContinueHit)
-            {
-                if (UnityEngine.Time.realtimeSinceStartup - executTime < .5f)
-                {
-                    if (_captureCallback != null)
-                        Debug.LogWarning(" Warning Target:" + _captureCallback.Target.ToString() + " Not Click Now! LastClick:" + executTime);
-                    return;
-                }
-                executTime = UnityEngine.Time.realtimeSinceStartup;
-            }
-            //end
+            ////FGUI修改 -默认点击时间，不能连续点击
+            //if (strType == "onClick"&&!canContinueHit)
+            //{
+            //    if (UnityEngine.Time.realtimeSinceStartup - executTime < .5f)
+            //    {
+            //        if (_captureCallback != null)
+            //            Debug.LogWarning(" Warning Target:" + _captureCallback.Target.ToString() + " Not Click Now! LastClick:" + executTime);
+            //        return;
+            //    }
+            //    executTime = UnityEngine.Time.realtimeSinceStartup;
+            //}
+            ////end
 
             _dispatching = true;
 			context.sender = owner;

@@ -119,7 +119,7 @@ namespace FairyGUI
 		{
 			if (!_created && Application.isPlaying)
             {
-                if (packageName == "Loading") Loading.LoadingBinder.BindAll();  //add by 董 绑定loading
+                //if (packageName == "Loading") Loading.LoadingBinder.BindAll();  //add by 董 绑定loading
 
                 CreateUI_PlayMode();
             }

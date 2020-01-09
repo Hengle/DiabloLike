@@ -44,8 +44,8 @@ namespace FairyGUI
 		bool _customInputButtonDown;
 		EventCallback1 _focusRemovedDelegate;
 		AudioSource _audio;
-        // Edit FGUI获取audio
-        public AudioSource Audio => _audio;
+        //// Edit FGUI获取audio
+        //public AudioSource Audio => _audio;
 
 		List<NTexture> _toCollectTextures = new List<NTexture>();
 		EventListener _onStageResized;
@@ -432,9 +432,10 @@ namespace FairyGUI
 
             if (clip == null)
             {
-                Slg.SoundManager.Instance.PlayClickSound();
+                //Slg.SoundManager.Instance.PlayClickSound();
             }
-            else if (clip.nativeClip != null)
+            else
+            if (clip.nativeClip != null)
                 _audio.PlayOneShot(clip.nativeClip, volumeScale * this.soundVolume);
         }
 

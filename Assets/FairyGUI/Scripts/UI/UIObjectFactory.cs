@@ -138,9 +138,9 @@ namespace FairyGUI
 				case ObjectType.InputText:
 					return new GTextInput();
 
-                // Edit 改用GGroupPlus
+                //// Edit 改用GGroupPlus
                 case ObjectType.Group:
-					return new GGroupPlus();
+					return new GGroup();
 
 				case ObjectType.List:
 					return new GList();
