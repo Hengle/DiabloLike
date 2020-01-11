@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiabloLike", "Assembly-CSharp-firstpass.csproj", "{D06A3816-FA22-D1E4-B8A5-C9235685B38D}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiabloLike", "Assembly-CSharp.csproj", "{CA468EDB-F600-E5D5-E62F-BC1A80020D24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiabloLike", "Assembly-CSharp-Editor.csproj", "{E2EDE475-7DC6-0FF2-59B1-97D1ADD36536}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +13,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D06A3816-FA22-D1E4-B8A5-C9235685B38D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D06A3816-FA22-D1E4-B8A5-C9235685B38D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D06A3816-FA22-D1E4-B8A5-C9235685B38D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D06A3816-FA22-D1E4-B8A5-C9235685B38D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CA468EDB-F600-E5D5-E62F-BC1A80020D24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CA468EDB-F600-E5D5-E62F-BC1A80020D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA468EDB-F600-E5D5-E62F-BC1A80020D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA468EDB-F600-E5D5-E62F-BC1A80020D24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2EDE475-7DC6-0FF2-59B1-97D1ADD36536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2EDE475-7DC6-0FF2-59B1-97D1ADD36536}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2EDE475-7DC6-0FF2-59B1-97D1ADD36536}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2EDE475-7DC6-0FF2-59B1-97D1ADD36536}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
