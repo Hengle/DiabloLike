@@ -107,7 +107,7 @@ namespace Xft
             TempCamera.backgroundColor = Color.black;
             TempCamera.clearFlags = CameraClearFlags.SolidColor;
             TempCamera.cullingMask = 1 << client.SecondCameraLayer;
-            TempCamera.hdr = false;
+            TempCamera.allowHDR = false;
             TempCamera.depthTextureMode = DepthTextureMode.None;
 
             //IMPORTANT, OR CHANGES TO SCENE WINDOW CAUSES EDITOR CRASH, WHY?
