@@ -1,5 +1,5 @@
 @SET EXCEL_FOLDER=.\excel
-@SET JSON_FOLDER=.\json
+@SET JSON_FOLDER=..\Assets\Resources\JsonConfig
 @SET EXE=.\excel2json.exe
 
 @ECHO Converting excel files in folder %EXCEL_FOLDER% ...

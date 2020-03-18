@@ -375,10 +375,8 @@
     <None Include="Assets\Xffect\Tutorial\Events\CameraShake\readme.txt" />
     <None Include="Assets\Xffect\EffectLibrary\readme.txt" />
     <None Include="Assets\Xffect\Tutorial\AdvanceShader\Flow\readme.txt" />
-    <None Include="Assets\Resources\JsonConfig\Equipment例子.txt" />
     <None Include="Assets\Xffect\Resources\Shaders\AdvanceShader\xft_displacement-dissolve_additive.shader" />
     <None Include="Assets\FairyGUI\Resources\Shaders\AddOn\FairyGUI-BlurFilter.shader" />
-    <None Include="Assets\Resources\JsonConfig\Equipment例子1.txt" />
     <None Include="Assets\ActionRPG_Pack\Shaders\Skybox-Procedural.shader" />
     <None Include="Assets\Xffect\Resources\Shaders\ImageEffect\xft_color_inverse.shader" />
     <None Include="Assets\Xffect\EnhancementTools\XWeaponTrail\readme_english.txt" />
