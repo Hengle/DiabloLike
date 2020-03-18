@@ -89,8 +89,10 @@ public class aRPG_Master : MonoBehaviour {
         OnAwake();
 
         DataManager.Instance.Init();
+
+        //UI初始化
         UIManager.Instance.Init();
-        UIManager.Instance.ShowWind("UIBag");
+        //UIManager.Instance.ShowWind("UIBag");
     }
     
 

@@ -45,7 +45,7 @@ public class aRPG_PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (ms.psInput.wasdMovement == true || ms.psInput.joystickMovement == true)
+        if (ms.psInput.wasdMovement == true || ms.psInput.joystickMovement == true || FairyGUI.Stage.isTouchOnUI)
         { return; }
 
         // here we make sure that navmeshAgent follows player
