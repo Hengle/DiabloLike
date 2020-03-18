@@ -77,7 +77,8 @@
     <Compile Include="Assets\ActionRPG_Pack\C#\Scripts\1. Player\aRPG_PlayerSpawn.cs" />
     <Compile Include="Assets\ActionRPG_Pack\C#\Scripts\1. Player\aRPG_Projectile.cs" />
     <Compile Include="Assets\ActionRPG_Pack\C#\Scripts\1. Player\aRPG_Skills.cs" />
-    <Compile Include="Assets\ActionRPG_Pack\C#\Scripts\1. Player\Equipment.cs" />
+    <Compile Include="Assets\ActionRPG_Pack\C#\Scripts\1. Player\PlayerEquipment.cs" />
+    <Compile Include="Assets\ActionRPG_Pack\C#\Scripts\10.GameData\EquipmentData.cs" />
     <Compile Include="Assets\ActionRPG_Pack\C#\Scripts\2. Enemy\aRPG_EnemyMouseOver.cs" />
     <Compile Include="Assets\ActionRPG_Pack\C#\Scripts\2. Enemy\aRPG_EnemyMovement.cs" />
     <Compile Include="Assets\ActionRPG_Pack\C#\Scripts\2. Enemy\aRPG_EnemySight.cs" />
