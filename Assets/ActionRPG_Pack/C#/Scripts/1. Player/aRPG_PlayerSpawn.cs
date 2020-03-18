@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+/// <summary>
+/// 角色出生点
+/// </summary>
 public class aRPG_PlayerSpawn : MonoBehaviour {
     aRPG_PlayerMovement playerMovement;
 
