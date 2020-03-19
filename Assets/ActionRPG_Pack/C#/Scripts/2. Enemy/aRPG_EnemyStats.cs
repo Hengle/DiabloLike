@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public enum AiTypes { Melee, SpellCaster };
+public enum AiTypes { Melee, SpellCaster };//近战，施法者
 /// <summary>
 /// //这个类管理属性，怪物的稀有，健康，死亡功能，伤害计算（但是没有伤害实现），名字，经验增益。
 /// </summary>
@@ -28,15 +28,18 @@ public class aRPG_EnemyStats : MonoBehaviour {
     internal float currentHealth;
     public float max_health = 100.0f;
     float bonusDamageFloat;
-    
+
     // if you want to create custom monster select Custom in monsterModsDefinition and mark below boolean variables.
     // Float variables below influence manually and randomly spawned monsters.
-    [Header("Enchantments")]
+    //如果要创建自定义怪物，请在monsterModsDefinition中选择Custom，并在布尔变量下面标记。
+    //以下浮动变量影响手动和随机繁殖的怪物。
+    [Header("Enchantments")]//中魔法，着魔
+    //这些参数是打算实现，特殊伤害的怪物，要把参数都配置上才行
     public bool fastAttribute = false;
     public float speed_bonus = 0.25f;
     public bool extra_dmgAttribute = false;
     public float extra_dmg_bonus = 0.33f;
-    public float stunChance_multiplier = 4f;
+    public float stunChance_multiplier = 4f;//打晕倍数
     public bool extra_HPAttribute = false;
     public float extra_HP_bonus = 0.6f;
     
@@ -49,22 +52,26 @@ public class aRPG_EnemyStats : MonoBehaviour {
     public bool magicEnchanted = false;
     public float magic_dmg_bonus;
     public float magic_res;
+    //end 特殊伤害
 
-    public bool stunsTarget = true;
-    public float stunChance = 0.05f;
+    public bool stunsTarget = true;//能打晕对象
+    public float stunChance = 0.05f;//打晕概率
     // if you put mobs on the scene manually, below you can choose what kind of monster it will be.
-    public enum modsDefinition { Rare, RareMinion, Champion, Normal, Custom };
+    //如果你把人群手动放在现场，下面你可以选择什么样的怪物。
+    public enum modsDefinition { Rare, RareMinion, Champion, Normal, Custom };//稀有，稀有下属，冠军，正常，自定义
     public modsDefinition monsterModsDefinition;
     // when you want to manually place rare minions on the scene, select RareMinions in monsterModsDefinition and put rare object in below variable, spawned minions will inherit its mods.
+    //当你想在场景中手动放置稀有的仆从时，在monsterModsDefinition中选择稀有对象并在下面变量中放置稀有对象，生成的仆从将继承其mods。
     public GameObject rareObjForMinions;
     // when placing champions manually on the scene leave this empty for the first champ, and for each next put the first champ in previousChamp var, this will make all the champion inherit mods from the first one and you will have a stack of same champions.
+    //当手动将冠军放在现场时，将此项留空给第一个冠军，并为每个下一个将第一个冠军放在上一个冠军var中，这将使所有冠军从第一个继承mods，您将拥有一堆相同的冠军。
     public GameObject previousChamp;
     [HideInInspector]
     public bool isRandomlySpawned = false;
-    public float rareHPmultiplier = 5.0f;
-    public float champHPmultiplier = 2.5f;
+    public float rareHPmultiplier = 5.0f;//稀有怪血量加成
+    public float champHPmultiplier = 2.5f;//冠军怪血量加成
 
-	void Start () {
+    void Start () {
         m = GameObject.Find("SCRIPTS");
         ms = m.GetComponent<aRPG_Master>();
 
@@ -285,6 +292,7 @@ public class aRPG_EnemyStats : MonoBehaviour {
     }
 
     // it implements mods to the enemy(simple check boolean in inspector is not enought, this function has to be ran).
+    //它实现了对敌人的mods（简单的check boolean in inspector是不够的，这个函数必须运行）。
     public void ImplementPresets()
     {
         if (fastAttribute == false){ speed_bonus = 0f;}
@@ -330,6 +338,12 @@ public class aRPG_EnemyStats : MonoBehaviour {
     }
 
     // calculates damage dealt to the player based on his resistances and enemy bonuses.
+    
+    /// <summary>
+    /// 根据玩家的抵抗力和敌人加成计算对其造成的伤害。
+    /// 类似加上自身的元素伤，减去目标的元素防御
+    /// </summary>
+    /// <returns></returns>
     public float DealDamage()
     {
         dmgToDeal = esMovement.ai.meleeAttackDamage + bonusDamageFloat;
@@ -352,6 +366,7 @@ public class aRPG_EnemyStats : MonoBehaviour {
         return dmgToDealFb;
     }
     // called by the skills on collision with enemies to calculate how much damage should be dealt, based on different player and enemy mods
+    //根据不同的玩家和敌方的mod，通过与敌方碰撞的技能来计算应该造成的伤害
     public float ReceiveDamage(damageType dmgType, float dmgAmount)
     {
         if (dmgType == damageType.Fire)
@@ -377,6 +392,7 @@ public class aRPG_EnemyStats : MonoBehaviour {
         Destroy(mouseCollider);
 
         GiveExp();
+        ItemDropsManager.Instance.DoItemDrops(transform.position, 0);
         esMouseOver.SetMaterialOutline(false);
 	    eAnimator.SetBool("DeadBool", true);
 	    eAnimator.SetFloat("Move", 0.0f);

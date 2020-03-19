@@ -145,6 +145,7 @@ public class aRPG_Input : MonoBehaviour
                 { ExecuteInput(ms.gsManagement.buttonMouseLeftActiveSkill, "down", true); }
                 if (pressedObject == "waypoint")
                 { ms.psSkills.WaypointClick(hitFire.transform.gameObject); }
+               
             }
         }
 
@@ -154,7 +155,10 @@ public class aRPG_Input : MonoBehaviour
             {
                 if (pressedObject == "targetingPlane")
                 { ms.psMovement.SetDestinationCustom(MoveDestination()); }
-
+                if (pressedObject == "itemDrops")
+                {
+                    ItemDropsManager.Instance.PickUpItem(ClickItem());
+                }
                 if (pressedObject == "door")
                 {
                     ms.psSkills.PlayerOpensDoor();
@@ -360,6 +364,10 @@ public class aRPG_Input : MonoBehaviour
             {
                 return "waypoint";
             }
+            if (hitFire.transform.name == "itemDrops")
+            {
+                return "itemDrops";
+            }
             return "";
         }
         else { return ""; }
@@ -374,7 +382,19 @@ public class aRPG_Input : MonoBehaviour
         }
         else { return ms.player.transform.position; }
     }
-
+    /// <summary>
+    /// 获取点击的物品
+    /// </summary>
+    /// <returns></returns>
+    Transform ClickItem()
+    {
+        rayFire = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(rayFire, out hitFire, 60.0f, ms.layerTargetingPlaneToMove))
+        {
+            return hitFire.transform;
+        }
+        return null;
+    }
     /*Mobile pointer*/
     public void PointerDown(GameObject pressedButtonToPass)
     {

@@ -28,7 +28,7 @@ public class aRPG_CharacterStats : MonoBehaviour {
 
     public float fire_res;
     public float magic_res;
-    public float physical_res;
+    public float physical_res;//物理防御，或者物理减免
 
     public float manaRegenBonus = 0.0f;
 

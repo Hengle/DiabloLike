@@ -370,6 +370,7 @@ public class aRPG_EnemyMovement : MonoBehaviour {
     }
 
     // here we actually deal damage to the player and stun.
+    //在这里我们实际上会对玩家造成伤害和眩晕。
     void DoDamage()
     {
         var targetScript = ms.player.GetComponent<aRPG_Health>();

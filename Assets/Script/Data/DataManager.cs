@@ -35,19 +35,19 @@ public class DataManager : Singleton<DataManager> {
     }
     void LoadZhiye()
     {
-        string filepath = Application.dataPath + "/Resources/JsonConfig/" + "职业1.json";
-        if (!File.Exists(filepath))
-        {
-            return;
-        }
-        StreamReader sr = new StreamReader(filepath, System.Text.Encoding.UTF8);
-        string strLine = sr.ReadToEnd();
-        zhiyeDataDic = JsonMapper.ToObject<Dictionary<string, zhiye>>(strLine);
-        sr.Dispose();
-        foreach (var item in zhiyeDataDic)
-        {
-            Debug.Log(item.Value.hp);
-        }
+        //string filepath = Application.dataPath + "/Resources/JsonConfig/" + "职业1.json";
+        //if (!File.Exists(filepath))
+        //{
+        //    return;
+        //}
+        //StreamReader sr = new StreamReader(filepath, System.Text.Encoding.UTF8);
+        //string strLine = sr.ReadToEnd();
+        //zhiyeDataDic = JsonMapper.ToObject<Dictionary<string, zhiye>>(strLine);
+        //sr.Dispose();
+        //foreach (var item in zhiyeDataDic)
+        //{
+        //    Debug.Log(item.Value.hp);
+        //}
     }
 }
 public class ItemData
