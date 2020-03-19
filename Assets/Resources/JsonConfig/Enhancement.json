@@ -3,140 +3,120 @@
     "Id": 1,
     "Probability": 100,
     "Enhancement": 15,
-    "TotalEnhancement": 15,
-    "1": "1"
+    "TotalEnhancement": 15
   },
   "2": {
     "Id": 2,
     "Probability": 90,
     "Enhancement": 15,
-    "TotalEnhancement": 30,
-    "2": "2"
+    "TotalEnhancement": 30
   },
   "3": {
     "Id": 3,
     "Probability": 80,
     "Enhancement": 15,
-    "TotalEnhancement": 45,
-    "3": "3"
+    "TotalEnhancement": 45
   },
   "4": {
     "Id": 4,
     "Probability": 70,
     "Enhancement": 15,
-    "TotalEnhancement": 60,
-    "4": "4"
+    "TotalEnhancement": 60
   },
   "5": {
     "Id": 5,
     "Probability": 60,
     "Enhancement": 15,
-    "TotalEnhancement": 75,
-    "5": "5"
+    "TotalEnhancement": 75
   },
   "6": {
     "Id": 6,
     "Probability": 40,
     "Enhancement": 20,
-    "TotalEnhancement": 95,
-    "6": "6"
+    "TotalEnhancement": 95
   },
   "7": {
     "Id": 7,
     "Probability": 38,
     "Enhancement": 20,
-    "TotalEnhancement": 115,
-    "7": "7"
+    "TotalEnhancement": 115
   },
   "8": {
     "Id": 8,
     "Probability": 36,
     "Enhancement": 20,
-    "TotalEnhancement": 135,
-    "8": "8"
+    "TotalEnhancement": 135
   },
   "9": {
     "Id": 9,
     "Probability": 34,
     "Enhancement": 20,
-    "TotalEnhancement": 155,
-    "9": "9"
+    "TotalEnhancement": 155
   },
   "10": {
     "Id": 10,
     "Probability": 32,
     "Enhancement": 20,
-    "TotalEnhancement": 175,
-    "10": "10"
+    "TotalEnhancement": 175
   },
   "11": {
     "Id": 11,
     "Probability": 25,
     "Enhancement": 25,
-    "TotalEnhancement": 200,
-    "11": "11"
+    "TotalEnhancement": 200
   },
   "12": {
     "Id": 12,
     "Probability": 24,
     "Enhancement": 25,
-    "TotalEnhancement": 225,
-    "12": "12"
+    "TotalEnhancement": 225
   },
   "13": {
     "Id": 13,
     "Probability": 23,
     "Enhancement": 25,
-    "TotalEnhancement": 250,
-    "13": "13"
+    "TotalEnhancement": 250
   },
   "14": {
     "Id": 14,
     "Probability": 22,
     "Enhancement": 25,
-    "TotalEnhancement": 275,
-    "14": "14"
+    "TotalEnhancement": 275
   },
   "15": {
     "Id": 15,
     "Probability": 21,
     "Enhancement": 25,
-    "TotalEnhancement": 300,
-    "15": "15"
+    "TotalEnhancement": 300
   },
   "16": {
     "Id": 16,
     "Probability": 16,
     "Enhancement": 40,
-    "TotalEnhancement": 340,
-    "16": "16"
+    "TotalEnhancement": 340
   },
   "17": {
     "Id": 17,
     "Probability": 14,
     "Enhancement": 40,
-    "TotalEnhancement": 380,
-    "17": "17"
+    "TotalEnhancement": 380
   },
   "18": {
     "Id": 18,
     "Probability": 12,
     "Enhancement": 40,
-    "TotalEnhancement": 420,
-    "18": "18"
+    "TotalEnhancement": 420
   },
   "19": {
     "Id": 19,
     "Probability": 10,
     "Enhancement": 40,
-    "TotalEnhancement": 460,
-    "19": "19"
+    "TotalEnhancement": 460
   },
   "20": {
     "Id": 20,
     "Probability": 8,
     "Enhancement": 40,
-    "TotalEnhancement": 500,
-    "20": "20"
+    "TotalEnhancement": 500
   }
 }
