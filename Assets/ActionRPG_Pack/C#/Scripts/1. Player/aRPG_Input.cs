@@ -155,10 +155,10 @@ public class aRPG_Input : MonoBehaviour
             {
                 if (pressedObject == "targetingPlane")
                 { ms.psMovement.SetDestinationCustom(MoveDestination()); }
-                if (pressedObject == "itemDrops")
-                {
-                    ItemDropsManager.Instance.PickUpItem(ClickItem());
-                }
+                //if (pressedObject == "itemDrops")
+                //{
+                //    ItemDropsManager.Instance.PickUpItem(ClickItem());
+                //}
                 if (pressedObject == "door")
                 {
                     ms.psSkills.PlayerOpensDoor();
@@ -364,10 +364,10 @@ public class aRPG_Input : MonoBehaviour
             {
                 return "waypoint";
             }
-            if (hitFire.transform.name == "itemDrops")
-            {
-                return "itemDrops";
-            }
+            //if (hitFire.transform.name == "itemDrops")
+            //{
+            //    return "itemDrops";
+            //}
             return "";
         }
         else { return ""; }

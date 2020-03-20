@@ -8,6 +8,7 @@ namespace ItemDrop
 	{
 		public static void BindAll()
 		{
+			UIObjectFactory.SetPackageItemExtension(UI_ItemDrop.URL, typeof(UI_ItemDrop));
 			UIObjectFactory.SetPackageItemExtension(UI_ItemName.URL, typeof(UI_ItemName));
 		}
 	}

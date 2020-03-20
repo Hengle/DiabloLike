@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using ItemDrop;
 
 public class ItemDropsManager : MonoSingleton<ItemDropsManager>
 {
@@ -16,6 +17,8 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
             return dropPrefab;
         }
     }
+    public List<DropItem> ItemList = new List<DropItem>();
+    UIItemDrop uiItemDrop = null;
 
     GameObject m;
     aRPG_Master ms;
@@ -30,6 +33,12 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
         {
             DoItemDrops(ms.player.transform.position, 0);
         }
+
+        //名字显示到屏幕
+        if(ItemList.Count > 0)
+        {
+            uiItemDrop.Update();
+        }
     }
     /// <summary>
     /// 传入掉落点，和掉落id
@@ -39,26 +48,50 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
     public void DoItemDrops(Vector3 pos, int dropId) {
         //检查是否掉落，掉落什么
         //掉落物品
+        int id = UnityEngine.Random.Range(1, 20);
         if(DropPrefab != null)
         {
+            DropItem drop = new DropItem();
+            drop.ItemId = id;
+
+
             GameObject obj = GameObject.Instantiate(DropPrefab);
             obj.transform.position = new Vector3(UnityEngine.Random.value + pos.x, pos.y, UnityEngine.Random.value + pos.z);
             Debug.Log("掉落道具");
+            drop.OutLookTrans = obj.transform;
+
+
+            if (uiItemDrop == null)
+            {
+                uiItemDrop = UIManager.Instance.CreateWindow("UIItemDrop") as UIItemDrop;
+                uiItemDrop.Show();  
+            }
+            drop.UIName = uiItemDrop.CreateItemName(drop);
+            ItemList.Add(drop);
         } 
     }
-    public void PickUpItem(Transform clickTrans)
+    public void PickUpItem(DropItem item)
     {
-        if(clickTrans != null)
+        if(item != null)
         {
-            ItemDrops drop = clickTrans.GetComponent<ItemDrops>();
-            if(drop != null)
-            {
-                //判断包有没有满
-                Debug.Log("拾取道具，加入背包");
-                drop.gameObject.SetActive(false);
-                GameObject.Destroy(drop.gameObject);
-            }
-        }
+            //判断包有没有满
+            Debug.Log("拾取道具，加入背包");
+
+            item.OutLookTrans.gameObject.SetActive(false);
+            GameObject.Destroy(item.OutLookTrans.gameObject);
+            item.UIName.Dispose();
+            ItemList.Remove(item);
+        }  
     }
+}
+/// <summary>
+/// 掉落物品
+/// </summary>
+public class DropItem
+{
+    public Transform OutLookTrans;
+    public int ItemId;
+
+    public UI_ItemName UIName;
 }
 

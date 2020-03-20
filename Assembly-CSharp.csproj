@@ -295,11 +295,14 @@
     <Compile Include="Assets\Script\FairyGUIScript\Bag\UI_Comp_ItemInfo.cs" />
     <Compile Include="Assets\Script\FairyGUIScript\Bag\UI_ItemUse.cs" />
     <Compile Include="Assets\Script\FairyGUIScript\ItemDrop\ItemDropBinder.cs" />
+    <Compile Include="Assets\Script\FairyGUIScript\ItemDrop\UI_ItemDrop.cs" />
+    <Compile Include="Assets\Script\FairyGUIScript\ItemDrop\UI_ItemName.cs" />
     <Compile Include="Assets\Script\FileManager\FileManager.cs" />
     <Compile Include="Assets\Script\GameLogic\ItemDrops.cs" />
     <Compile Include="Assets\Script\GlobalExpansion.cs" />
     <Compile Include="Assets\Script\ItemDropsManager.cs" />
-    <Compile Include="Assets\Script\UI\UIBag.cs" />
+    <Compile Include="Assets\Script\UI\UIBag\UIBag.cs" />
+    <Compile Include="Assets\Script\UI\UIItemDrop\UIItemDrop.cs" />
     <Compile Include="Assets\Script\UIManager\FGuiManager.cs" />
     <Compile Include="Assets\Script\UIManager\UiBase.cs" />
     <Compile Include="Assets\Script\UIManager\UiManager.cs" />

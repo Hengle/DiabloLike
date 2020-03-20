@@ -116,7 +116,8 @@ public class FGuiManager : MonoSingleton<FGuiManager>
     private void AddPackageFromLocal()
     {
 
-        FairyGUI.UIPackage.AddPackage("Assets/Resources/FairyGUI/Bag");                            //背包
+        FairyGUI.UIPackage.AddPackage("Assets/Resources/FairyGUI/Bag/Bag");                            //背包
+        FairyGUI.UIPackage.AddPackage("Assets/Resources/FairyGUI/ItemDrop/ItemDrop");                            //掉落
 
 
         AfterAddPackage();
@@ -127,7 +128,7 @@ public class FGuiManager : MonoSingleton<FGuiManager>
 
 
         Bag.BagBinder.BindAll();
-
+        ItemDrop.ItemDropBinder.BindAll();
         GRoot.inst.SetContentScaleFactor(1334, 750);
 
         //create camera

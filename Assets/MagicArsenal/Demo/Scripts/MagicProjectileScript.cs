@@ -32,7 +32,7 @@ public class MagicProjectileScript : MonoBehaviour
         }
     }
  
-    void OnTriggerEnter(Collision hit)
+    void OnTriggerEnter(Collider hit)
     {
         if (!hasCollided)
         {
