@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Bag;
+using FairyGUI;
 
 public class UIBag : UIBase {
     /// <summary>
@@ -14,6 +15,7 @@ public class UIBag : UIBase {
     public override string PanelName { get { return "Bag"; } }
 
     UI_Bag fgui;
+    private List<ItemVO> itemList = new List<ItemVO>();
 
     public override void Dispose()
     {
@@ -21,7 +23,7 @@ public class UIBag : UIBase {
         base.Dispose();
     }
 
-    protected virtual void OnDestroy()
+    protected override void OnDestroy()
     {
 
     }
@@ -40,10 +42,8 @@ public class UIBag : UIBase {
         base.OnShown();
         this.visible = true;
         Debug.Log("OnShown");
-        
+        ShowBagList();
     }
-    
-
     protected override void OnHide()
     {
         base.OnHide();
@@ -51,6 +51,29 @@ public class UIBag : UIBase {
     }
     protected override void OnBtnClose()
     {
-        OnHide();
+        Hide();
+    }
+
+    void ShowBagList()
+    {
+        itemList = ItemDataManager.Instance.GetAllBagItem();
+        fgui.m_list_item.SetVirtual();
+        fgui.m_list_item.itemRenderer = RenderListItem;
+        fgui.m_list_item.numItems = itemList.Count;
+        fgui.m_list_item.RefreshVirtualList();
+    }
+    void RenderListItem(int index, GObject obj)
+    {
+        UI_Comp_Item item = (UI_Comp_Item)obj;
+        ItemVO itemvo = itemList[index];
+
+
+        item.m_txt_name.text = itemvo.Name;
+
+
+        //item.onClick.Set(() => {
+        //    GameDataManager.Instance.UseItem(itemvo.Id, 1, true);
+        //});
+
     }
 }

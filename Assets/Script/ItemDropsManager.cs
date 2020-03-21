@@ -33,9 +33,20 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
         {
             DoItemDrops(ms.player.transform.position, 0);
         }
-
+        if (Input.GetKeyUp(KeyCode.B))
+        {
+            uiItemDrop.Hide();
+        }
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            UIManager.Instance.ShowWind("UIBag");
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            uiItemDrop.Show();
+        }
         //名字显示到屏幕
-        if(ItemList.Count > 0)
+        if (ItemList.Count > 0)
         {
             uiItemDrop.Update();
         }
@@ -48,7 +59,7 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
     public void DoItemDrops(Vector3 pos, int dropId) {
         //检查是否掉落，掉落什么
         //掉落物品
-        int id = UnityEngine.Random.Range(1, 20);
+        int id = UnityEngine.Random.Range(100001, 100015);
         if(DropPrefab != null)
         {
             DropItem drop = new DropItem();
@@ -64,7 +75,11 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
             if (uiItemDrop == null)
             {
                 uiItemDrop = UIManager.Instance.CreateWindow("UIItemDrop") as UIItemDrop;
-                uiItemDrop.Show();  
+                uiItemDrop.Show();
+            }
+            else
+            {
+                uiItemDrop.Show();
             }
             drop.UIName = uiItemDrop.CreateItemName(drop);
             ItemList.Add(drop);
@@ -76,6 +91,8 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
         {
             //判断包有没有满
             Debug.Log("拾取道具，加入背包");
+            ItemVO itemVO = new ItemVO(item.ItemId, 1);
+            ItemDataManager.Instance.AddItem(itemVO);
 
             item.OutLookTrans.gameObject.SetActive(false);
             GameObject.Destroy(item.OutLookTrans.gameObject);

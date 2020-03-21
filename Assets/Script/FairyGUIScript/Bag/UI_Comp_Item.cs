@@ -9,6 +9,7 @@ namespace Bag
 	{
 		public GLoader m_load_quality;
 		public GLoader m_load_item;
+		public GTextField m_txt_name;
 
 		public const string URL = "ui://5krhxnalsurui";
 
@@ -27,6 +28,7 @@ namespace Bag
 
 			m_load_quality = (GLoader)this.GetChildAt(0);
 			m_load_item = (GLoader)this.GetChildAt(1);
+			m_txt_name = (GTextField)this.GetChildAt(2);
 		}
 	}
 }

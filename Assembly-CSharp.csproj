@@ -281,6 +281,7 @@
     <Compile Include="Assets\Script\Common\UVAnimation.cs" />
     <Compile Include="Assets\Script\Common\XmlRead.cs" />
     <Compile Include="Assets\Script\Data\DataManager.cs" />
+    <Compile Include="Assets\Script\Data\ValueObject\ItemVO.cs" />
     <Compile Include="Assets\Script\EventCenter\Callback.cs" />
     <Compile Include="Assets\Script\EventCenter\Event.cs" />
     <Compile Include="Assets\Script\EventCenter\EventCenter.cs" />
@@ -300,12 +301,13 @@
     <Compile Include="Assets\Script\FileManager\FileManager.cs" />
     <Compile Include="Assets\Script\GameLogic\ItemDrops.cs" />
     <Compile Include="Assets\Script\GlobalExpansion.cs" />
+    <Compile Include="Assets\Script\ItemDataManager.cs" />
     <Compile Include="Assets\Script\ItemDropsManager.cs" />
     <Compile Include="Assets\Script\UI\UIBag\UIBag.cs" />
     <Compile Include="Assets\Script\UI\UIItemDrop\UIItemDrop.cs" />
     <Compile Include="Assets\Script\UIManager\FGuiManager.cs" />
-    <Compile Include="Assets\Script\UIManager\UiBase.cs" />
-    <Compile Include="Assets\Script\UIManager\UiManager.cs" />
+    <Compile Include="Assets\Script\UIManager\UIBase.cs" />
+    <Compile Include="Assets\Script\UIManager\UIManager.cs" />
     <Compile Include="Assets\Xffect\demo.cs" />
     <Compile Include="Assets\Xffect\EffectLibrary\X-Projectile\ElectricBall\XP_ElectricBall.cs" />
     <Compile Include="Assets\Xffect\EffectLibrary\X-Projectile\FireComet\XP_FireComet.cs" />

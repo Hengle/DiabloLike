@@ -1,7 +1,7 @@
 {
-  "1": {
-    "Id": 1,
-    "Name": "物品1",
+  "100001": {
+    "Id": 100001,
+    "Name": "物品100001",
     "Quality": 1,
     "NeedLevel": 1,
     "SuitType": 0,
@@ -39,9 +39,9 @@
     "MaxCritRate": 1,
     "MaxCritDam": 1
   },
-  "2": {
-    "Id": 2,
-    "Name": "物品2",
+  "100002": {
+    "Id": 100002,
+    "Name": "物品100002",
     "Quality": 2,
     "NeedLevel": 2,
     "SuitType": 0,
@@ -79,9 +79,9 @@
     "MaxCritRate": 1,
     "MaxCritDam": 1
   },
-  "3": {
-    "Id": 3,
-    "Name": "物品3",
+  "100003": {
+    "Id": 100003,
+    "Name": "物品100003",
     "Quality": 3,
     "NeedLevel": 3,
     "SuitType": 0,
@@ -119,9 +119,9 @@
     "MaxCritRate": 1,
     "MaxCritDam": 1
   },
-  "4": {
-    "Id": 4,
-    "Name": "物品4",
+  "100004": {
+    "Id": 100004,
+    "Name": "物品100004",
     "Quality": 4,
     "NeedLevel": 4,
     "SuitType": 0,
@@ -159,9 +159,9 @@
     "MaxCritRate": 1,
     "MaxCritDam": 1
   },
-  "5": {
-    "Id": 5,
-    "Name": "物品5",
+  "100005": {
+    "Id": 100005,
+    "Name": "物品100005",
     "Quality": 5,
     "NeedLevel": 5,
     "SuitType": 0,
@@ -199,9 +199,9 @@
     "MaxCritRate": 1,
     "MaxCritDam": 1
   },
-  "6": {
-    "Id": 6,
-    "Name": "物品6",
+  "100006": {
+    "Id": 100006,
+    "Name": "物品100006",
     "Quality": 1,
     "NeedLevel": 6,
     "SuitType": 0,
@@ -239,9 +239,9 @@
     "MaxCritRate": 1,
     "MaxCritDam": 1
   },
-  "7": {
-    "Id": 7,
-    "Name": "物品7",
+  "100007": {
+    "Id": 100007,
+    "Name": "物品100007",
     "Quality": 2,
     "NeedLevel": 7,
     "SuitType": 0,
@@ -279,9 +279,9 @@
     "MaxCritRate": 1,
     "MaxCritDam": 1
   },
-  "8": {
-    "Id": 8,
-    "Name": "物品8",
+  "100008": {
+    "Id": 100008,
+    "Name": "物品100008",
     "Quality": 3,
     "NeedLevel": 8,
     "SuitType": 0,
@@ -319,9 +319,9 @@
     "MaxCritRate": 1,
     "MaxCritDam": 1
   },
-  "9": {
-    "Id": 9,
-    "Name": "物品9",
+  "100009": {
+    "Id": 100009,
+    "Name": "物品100009",
     "Quality": 4,
     "NeedLevel": 9,
     "SuitType": 0,
@@ -359,9 +359,9 @@
     "MaxCritRate": 1,
     "MaxCritDam": 1
   },
-  "10": {
-    "Id": 10,
-    "Name": "物品10",
+  "100010": {
+    "Id": 100010,
+    "Name": "物品100010",
     "Quality": 5,
     "NeedLevel": 10,
     "SuitType": 0,
@@ -399,9 +399,9 @@
     "MaxCritRate": 1,
     "MaxCritDam": 1
   },
-  "11": {
-    "Id": 11,
-    "Name": "物品11",
+  "100011": {
+    "Id": 100011,
+    "Name": "物品100011",
     "Quality": 1,
     "NeedLevel": 11,
     "SuitType": 0,
@@ -439,9 +439,9 @@
     "MaxCritRate": 1,
     "MaxCritDam": 1
   },
-  "12": {
-    "Id": 12,
-    "Name": "物品12",
+  "100012": {
+    "Id": 100012,
+    "Name": "物品100012",
     "Quality": 2,
     "NeedLevel": 12,
     "SuitType": 0,
@@ -479,9 +479,9 @@
     "MaxCritRate": 1,
     "MaxCritDam": 1
   },
-  "13": {
-    "Id": 13,
-    "Name": "物品13",
+  "100013": {
+    "Id": 100013,
+    "Name": "物品100013",
     "Quality": 3,
     "NeedLevel": 13,
     "SuitType": 0,
@@ -519,9 +519,9 @@
     "MaxCritRate": 1,
     "MaxCritDam": 1
   },
-  "14": {
-    "Id": 14,
-    "Name": "物品14",
+  "100014": {
+    "Id": 100014,
+    "Name": "物品100014",
     "Quality": 4,
     "NeedLevel": 14,
     "SuitType": 0,
@@ -559,9 +559,9 @@
     "MaxCritRate": 1,
     "MaxCritDam": 1
   },
-  "15": {
-    "Id": 15,
-    "Name": "物品15",
+  "100015": {
+    "Id": 100015,
+    "Name": "物品100015",
     "Quality": 5,
     "NeedLevel": 15,
     "SuitType": 0,

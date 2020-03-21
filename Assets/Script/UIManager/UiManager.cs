@@ -111,7 +111,7 @@ public class UIManager:Singleton<UIManager>{
 		if (baseUi==null)
 		{
 			baseUi =CreateWindow(winName);
-			_uIArray.Add(baseUi.WinName,baseUi);
+			_uIArray.Add(winName, baseUi);
 		}
 		baseUi.Show();
 	}

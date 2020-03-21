@@ -59,7 +59,7 @@ public class UIItemDrop : UIBase {
     {
         foreach (var item in ItemDropsManager.Instance.ItemList)
         {
-            if(item.OutLookTrans != null)
+            if(item.OutLookTrans != null && item.UIName != null)
                 item.UIName.xy = GlobalExpansion.WorldPos2FguiPos(item.OutLookTrans.position);
         }
     }
@@ -73,7 +73,11 @@ public class UIItemDrop : UIBase {
         fgui.AddChild(name);
 
         name.xy = GlobalExpansion.WorldPos2FguiPos(item.OutLookTrans.position);
-        name.m_txt_name.text = item.ItemId.ToString();
+        ItemData itemData = DataManager.Instance.GetItem(item.ItemId);
+        if(itemData != null)
+            name.m_txt_name.text = itemData.Name.ToString();
+        else
+            name.m_txt_name.text = item.ItemId.ToString();
         name.onClick.Add(()=> {
             ItemDropsManager.Instance.PickUpItem(item);
         });

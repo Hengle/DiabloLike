@@ -8,10 +8,9 @@ public class DataManager : Singleton<DataManager> {
 
 
     public Dictionary<string, ItemData> itemDataDic = new Dictionary<string, ItemData>();
-    public Dictionary<string, zhiye> zhiyeDataDic = new Dictionary<string, zhiye>();
+    //public Dictionary<string, zhiye> zhiyeDataDic = new Dictionary<string, zhiye>();
     public DataManager(){
         Load();
-        LoadZhiye();
     }
     public void Init()
     {
@@ -33,21 +32,13 @@ public class DataManager : Singleton<DataManager> {
             Debug.Log(item.Value.Name);
         }
     }
-    void LoadZhiye()
+    public ItemData GetItem(int id)
     {
-        //string filepath = Application.dataPath + "/Resources/JsonConfig/" + "职业1.json";
-        //if (!File.Exists(filepath))
-        //{
-        //    return;
-        //}
-        //StreamReader sr = new StreamReader(filepath, System.Text.Encoding.UTF8);
-        //string strLine = sr.ReadToEnd();
-        //zhiyeDataDic = JsonMapper.ToObject<Dictionary<string, zhiye>>(strLine);
-        //sr.Dispose();
-        //foreach (var item in zhiyeDataDic)
-        //{
-        //    Debug.Log(item.Value.hp);
-        //}
+        if (itemDataDic.ContainsKey(id.ToString()))
+        {
+            return itemDataDic[id.ToString()];
+        }
+        return null;
     }
 }
 public class ItemData
@@ -55,14 +46,4 @@ public class ItemData
     public int Id;
     public string Name;
 }
-public class zhiye
-{
-    public int id;
-    public int lv;
-    public double hp;
-    //public List<string> atk;
-    public List<int> fa;
-    public bool jue;
-    public string pu;
-    public List<string> p2u;
-}
+
