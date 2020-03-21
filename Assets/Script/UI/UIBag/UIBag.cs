@@ -33,6 +33,8 @@ public class UIBag : UIBase {
         this.visible = true;
         fgui = contentPane as UI_Bag;
         fgui.m_btn_close.onClick.Add(OnBtnClose);
+
+        //fgui.m_head.onDrop.Add(OnDragDrop);//拖动没行通
     }
     /// <summary>
     /// 重写的显示界面
@@ -43,6 +45,7 @@ public class UIBag : UIBase {
         this.visible = true;
         Debug.Log("OnShown");
         ShowBagList();
+
     }
     protected override void OnHide()
     {
@@ -75,5 +78,25 @@ public class UIBag : UIBase {
         //    GameDataManager.Instance.UseItem(itemvo.Id, 1, true);
         //});
 
+        //GButton b = item.asButton;
+        //item.draggable = true;
+        //item.onDragStart.Add((EventContext context) =>
+        //{
+        //    //Cancel the original dragging, and start a new one with a agent.
+        //    context.PreventDefault();
+
+        //    DragDropManager.inst.StartDrag(item, item.m_txt_name.text, item.m_txt_name, (int)context.data);
+        //});
+
+        //GButton c = obj.GetChild("c").asButton;
+        //c.icon = null;
+        //c.onDrop.Add((EventContext context) =>
+        //{
+        //    c.icon = (string)context.data;
+        //});
     }
+    //void OnDragDrop(EventContext context)
+    //{
+    //    fgui.m_head.m_txt_name.text = (string)context.data;
+    //}
 }
