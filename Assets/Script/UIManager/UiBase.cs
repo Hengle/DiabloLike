@@ -14,10 +14,11 @@ using UnityEngine.Events;
 /// 入口就是ShowWind，也就是掉window.show();
 /// 关闭就是CloseWind,也就是window.hide();
 /// OnXXX函数，不需要手动调用，window内部会调用他们。
+/// OnInit只在初始化时调用一次，OnShown每次show都会调用。oninit后会更onshown
+/// Dispose在销毁时调用一次，OnHide每次hide都会调用。dispose前，先hide,onhide。形成 闭合，一次注册注销的函数可以在oninit和dispose这里出来，需要多次的可以在onshown onhide里处理
 /// </summary>
 public abstract class UIBase: Window
 {
-
 	/// <summary>
 	/// 当前窗口名字
 	/// </summary>
@@ -176,6 +177,7 @@ public abstract class UIBase: Window
     }
 	public override void Dispose()
 	{
+        Hide();
 		OnDestroy();
 		base.Dispose();
 	}
@@ -197,12 +199,23 @@ public abstract class UIBase: Window
 	protected override void OnHide()
 	{
 		base.OnHide();
-	}
+        this.visible = false;
+    }
 
 	protected virtual void OnBtnClose()
 	{
         Hide();
 	}
+    /// <summary>
+    /// 注意，这里入口仅限于UIManager.instance.showwind(),
+    /// 如果不是这个入口，在调用show之后手动调用
+    /// OnShown之后被调用，传递参数用
+    /// 派生类，只需要，重写oninit和此函数就行，不需要重写onshown了
+    /// </summary>
+    /// <param name="datas"></param>
+    public virtual void AfterOnShown(params object[] datas)
+    {
 
+    }
 }
 

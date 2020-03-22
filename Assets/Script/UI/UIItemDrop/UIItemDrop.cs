@@ -30,25 +30,22 @@ public class UIItemDrop : UIBase {
     protected override void OnInit()
     {
         base.OnInit();
-        this.visible = true;
+ 
         fgui = contentPane as UI_ItemDrop;
         //fgui.m_btn_close.onClick.Add(OnBtnClose);
     }
-    /// <summary>
-    /// 重写的显示界面
-    /// </summary>
-    protected override void OnShown()
+
+    public override void AfterOnShown(params object[] datas)
     {
-        base.OnShown();
-        this.visible = true;
+        base.AfterOnShown();
+
+        Debug.Log("AfterOnShown");
         fgui.m_itemName.visible = false;
-        Debug.Log("OnShown");
-        
+
     }
     protected override void OnHide()
     {
         base.OnHide();
-        this.visible = false;
     }
     protected override void OnBtnClose()
     {

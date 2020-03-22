@@ -39,7 +39,7 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
         }
         if (Input.GetKeyUp(KeyCode.C))
         {
-            UIManager.Instance.ShowWind("UIBag");
+            UIManager.Instance.ShowWind(EUIType.UIBag);
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
@@ -74,12 +74,14 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
 
             if (uiItemDrop == null)
             {
-                uiItemDrop = UIManager.Instance.CreateWindow("UIItemDrop") as UIItemDrop;
+                uiItemDrop = UIManager.Instance.CreateWindow( EUIType.UIItemDrop) as UIItemDrop;
                 uiItemDrop.Show();
+                uiItemDrop.AfterOnShown();
             }
             else
             {
                 uiItemDrop.Show();
+                uiItemDrop.AfterOnShown();
             }
             drop.UIName = uiItemDrop.CreateItemName(drop);
             ItemList.Add(drop);
