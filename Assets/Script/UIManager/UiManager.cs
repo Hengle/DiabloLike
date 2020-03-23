@@ -5,6 +5,15 @@ using System.Collections.Generic;
 using FairyGUI;
 using UnityEngine;
 
+/// <summary>
+/// 界面名字
+/// 与窗口类名相同
+/// </summary>
+public enum EUIType
+{
+    UIBag,
+    UIItemDrop,
+}
 
 /// <summary>
 /// time:2019/3/24
@@ -16,7 +25,7 @@ public class UIManager:Singleton<UIManager>{
 	/// <summary>
 	/// 所有Windows
 	/// </summary>
-	private Dictionary<string,UIBase> _uIArray = new Dictionary<string, UIBase>();
+	private Dictionary<EUIType, UIBase> _uIArray = new Dictionary<EUIType, UIBase>();
 		
 
 	public void Init()
@@ -29,10 +38,10 @@ public class UIManager:Singleton<UIManager>{
 	/// </summary>
 	/// <param name="uiName"></param>
 	/// <returns></returns>
-	public UIBase GetWindow(string uiName)
+	public UIBase GetWindow(EUIType uiName)
 	{
 		UIBase wind = null;
-		foreach (string name in _uIArray.Keys)
+		foreach (EUIType name in _uIArray.Keys)
 		{
 			if (name == uiName)
 			{
@@ -49,10 +58,10 @@ public class UIManager:Singleton<UIManager>{
 	/// <param name="uiName"></param>
 	/// <returns></returns>
 	/// <exception cref="Exception"></exception>
-	public UIBase CreateWindow(string uiName)
+	public UIBase CreateWindow(EUIType uiName)
 	{
 		UIBase wind = null;
-		wind = Activator.CreateInstance(Type.GetType(uiName,true)) as UIBase;
+		wind = Activator.CreateInstance(Type.GetType(uiName.ToString(),true)) as UIBase;
 		if (wind==null)
 		{
 			throw new Exception("不存在"+uiName+"页面");
@@ -64,10 +73,10 @@ public class UIManager:Singleton<UIManager>{
 	/// 得到所有处于打开状态的窗口页面
 	/// </summary>
 	/// <returns></returns>
-	public List<string> GetAllOpenWindows()
+	public List<EUIType> GetAllOpenWindows()
 	{
-		List<string> list = new List<string>();
-		foreach(string uiName in _uIArray.Keys)
+		List<EUIType> list = new List<EUIType>();
+		foreach(EUIType uiName in _uIArray.Keys)
 		{
 			if (IsOpenWindow(uiName))
 			{
@@ -91,7 +100,7 @@ public class UIManager:Singleton<UIManager>{
 	/// </summary>
 	/// <param name="uiName"></param>
 	/// <returns></returns>
-	public bool IsOpenWindow(string uiName)
+	public bool IsOpenWindow(EUIType uiName)
 	{
 		UIBase wind = GetWindow(uiName);
 		if (wind != null)
@@ -105,7 +114,7 @@ public class UIManager:Singleton<UIManager>{
 	/// 展示窗口
 	/// </summary>
 	/// <param name="baseUi"></param>
-	public void ShowWind(string winName)
+	public void ShowWind(EUIType winName, params object[] datas)
 	{
 		UIBase baseUi = GetWindow(winName);
 		if (baseUi==null)
@@ -114,13 +123,14 @@ public class UIManager:Singleton<UIManager>{
 			_uIArray.Add(winName, baseUi);
 		}
 		baseUi.Show();
+        baseUi.AfterOnShown(datas);
 	}
 		
 	/// <summary>
 	/// 隐藏窗口
 	/// </summary>
 	/// <param name="baseUi"></param>
-	public void CloseWind(string winName)
+	public void CloseWind(EUIType winName)
 	{
 		UIBase baseUi = GetWindow(winName);
 		if (baseUi==null)

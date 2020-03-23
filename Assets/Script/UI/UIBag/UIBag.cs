@@ -37,20 +37,20 @@ public class UIBag : UIBase {
         //fgui.m_head.onDrop.Add(OnDragDrop);//拖动没行通
     }
     /// <summary>
-    /// 重写的显示界面
+    /// 重写显示界面
     /// </summary>
-    protected override void OnShown()
+    public override void AfterOnShown(params object[] datas)
     {
-        base.OnShown();
-        this.visible = true;
-        Debug.Log("OnShown");
+        base.AfterOnShown();
+
+        Debug.Log("AfterOnShown");
         ShowBagList();
 
     }
     protected override void OnHide()
     {
         base.OnHide();
-        this.visible = false;
+        
     }
     protected override void OnBtnClose()
     {

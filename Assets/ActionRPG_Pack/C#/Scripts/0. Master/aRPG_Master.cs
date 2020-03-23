@@ -92,7 +92,7 @@ public class aRPG_Master : MonoBehaviour {
 
         //UI初始化
         UIManager.Instance.Init();
-        UIManager.Instance.ShowWind("UIBag");
+
     }
     
 
