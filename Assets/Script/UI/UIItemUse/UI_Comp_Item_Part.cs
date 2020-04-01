@@ -18,6 +18,10 @@ namespace Bag {
                     UIManager.Instance.ShowWind(EUIType.UIItemUse, item);
                 });
             }
+            else
+            {
+                m_txt_name.text = string.Empty;
+            }
         }
     }
 }

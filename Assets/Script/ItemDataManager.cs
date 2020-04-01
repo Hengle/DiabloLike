@@ -324,14 +324,21 @@ public partial class ItemDataManager : Singleton<ItemDataManager>
     /// </summary>
     /// <param name="equipment"></param>
     /// <param name="pos"></param>
-    public void ChangeEquipment(EquipmentVO equipment, int pos = 0)
+    public void ChangeEquipment(ItemVO equipItem, int pos = 0, bool isRemove = false)
     {
-        if (equipment == null)
-            return;
-        if (pos == 0)
-            pos = equipment.Position;
+        if (isRemove)
+        {
+            bagItemDict[(int)EBagType.Equiped].Remove(pos);
+            bagItemDict[(int)EBagType.CommonBag].Add(equipItem.UId, equipItem);
+        }
+        else
+        {
+            if (pos == 0)
+                pos = equipItem.Equipment.Position;
 
-        bagItemDict[(int)EBagType.Equiped][pos] = new ItemVO(equipment.UId, equipment.ConfigId, 1, equipment);
+            bagItemDict[(int)EBagType.Equiped][pos] = equipItem;
+            bagItemDict[(int)EBagType.CommonBag].Remove(equipItem.UId);
+        }
         EventCenter.Broadcast(EGameEvent.eEquipmentChange);
     }
     /// <summary>

@@ -35,7 +35,7 @@ public class UIBag : UIBase {
         fgui = contentPane as UI_Bag;
         fgui.m_btn_close.onClick.Add(OnBtnClose);
 
-        EventCenter.RemoveListener(EGameEvent.eEquipmentChange, ShowBagList);
+        EventCenter.AddListener(EGameEvent.eEquipmentChange, ShowBagList);
         //fgui.m_head.onDrop.Add(OnDragDrop);//拖动没行通
     }
     /// <summary>

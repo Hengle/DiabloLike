@@ -70,11 +70,11 @@ public class UIItemDrop : UIBase {
         fgui.AddChild(name);
 
         name.xy = GlobalExpansion.WorldPos2FguiPos(item.OutLookTrans.position);
-        ItemData itemData = DataManager.Instance.GetItem(item.ItemId);
-        if(itemData != null)
-            name.m_txt_name.text = itemData.Name.ToString();
+
+        if(item.itemvo.ItemData != null)
+            name.m_txt_name.text = item.itemvo.ItemData.Name.ToString();
         else
-            name.m_txt_name.text = item.ItemId.ToString();
+            name.m_txt_name.text = item.itemvo.Id.ToString();
         name.onClick.Add(()=> {
             ItemDropsManager.Instance.PickUpItem(item);
         });

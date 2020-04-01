@@ -61,12 +61,12 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
     public void DoItemDrops(Vector3 pos, int dropId) {
         //检查是否掉落，掉落什么
         //掉落物品
-        int id = UnityEngine.Random.Range(100001, 100015);
+        
         if(DropPrefab != null)
         {
             DropItem drop = new DropItem();
-            drop.UId = uidMaker++;
-            drop.ItemId = id;
+            drop.itemvo = CreateDropItem();
+   
 
 
             GameObject obj = GameObject.Instantiate(DropPrefab);
@@ -96,8 +96,8 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
         {
             //判断包有没有满
             Debug.Log("拾取道具，加入背包");
-            ItemVO itemVO = new ItemVO(item.UId, item.ItemId);
-            ItemDataManager.Instance.AddItem(itemVO);
+           
+            ItemDataManager.Instance.AddItem(item.itemvo);
 
             item.OutLookTrans.gameObject.SetActive(false);
             GameObject.Destroy(item.OutLookTrans.gameObject);
@@ -105,6 +105,18 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
             ItemList.Remove(item);
         }  
     }
+    public ItemVO CreateDropItem()
+    {
+        ++uidMaker;
+        int id = UnityEngine.Random.Range(100001, 100015);
+        //如果是装备
+        if (id > 100000)
+        {
+            return new ItemVO(uidMaker, id, 1, new EquipmentVO(uidMaker,id));
+        }
+        return new ItemVO(uidMaker, id);
+    }
+
 }
 /// <summary>
 /// 掉落物品
@@ -112,8 +124,7 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
 public class DropItem
 {
     public Transform OutLookTrans;
-    public long UId;
-    public int ItemId;
+    public ItemVO itemvo;
 
     public UI_ItemName UIName;
 }

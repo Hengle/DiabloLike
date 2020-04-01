@@ -60,18 +60,27 @@ public class UIItemUse : UIBase {
 
     void ShowDetail()
     {
-        fgui.m_comp_1.Init(useItem, true);
-
         ItemVO equipedItem = null;
         if (useItem.Equipment != null)
         {
             equipedItem = ItemDataManager.Instance.GetEquipedItemByPos(useItem.Equipment.Position);
         }
-        fgui.m_comp_2.visible = equipedItem != null;
-        if (equipedItem != null)
+        //点击的是以装备的item
+        if(equipedItem != null && useItem.UId == equipedItem.UId)
         {
-            fgui.m_comp_2.Init(equipedItem, false);
+            fgui.m_comp_1.Init(useItem, true, true);
+            fgui.m_comp_2.visible = false;
         }
+        else
+        {
+            fgui.m_comp_1.Init(useItem, true, false);
+            fgui.m_comp_2.visible = equipedItem != null;
+            if (equipedItem != null)
+            {
+                fgui.m_comp_2.Init(equipedItem, false, false);
+            }
+        }
+        
         
     }
     void RenderListItem(int index, GObject obj)
