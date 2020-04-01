@@ -8,6 +8,7 @@ namespace Bag
 	public partial class UI_ItemUse : GComponent
 	{
 		public UI_Comp_ItemInfo m_comp_1;
+		public UI_Comp_ItemInfo m_comp_2;
 
 		public const string URL = "ui://5krhxnalsuruj";
 
@@ -25,6 +26,7 @@ namespace Bag
 			base.ConstructFromXML(xml);
 
 			m_comp_1 = (UI_Comp_ItemInfo)this.GetChildAt(0);
+			m_comp_2 = (UI_Comp_ItemInfo)this.GetChildAt(1);
 		}
 	}
 }

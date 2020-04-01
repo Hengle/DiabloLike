@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -61,17 +60,17 @@ public partial class ItemDataManager : Singleton<ItemDataManager>
     //    Spoils              //5.战力品
     //}
     //背包类型
-    public enum BagType
+    public enum EBagType
     {
-        CommonBag = 0
-
+        CommonBag = 0,
+        Equiped = 1,
     }
 
     // Event
     public UnityAction callbackByItemChangeRefresh = null;
 
     //各个背包数据key为背包ID
-    private Dictionary<int, Dictionary<int, ItemVO>> bagItemDict = new Dictionary<int, Dictionary<int, ItemVO>>();
+    private Dictionary<int, Dictionary<long, ItemVO>> bagItemDict = new Dictionary<int, Dictionary<long, ItemVO>>();
     private Dictionary<int, ItemVO> tempItemDic;
     //private void InitItemList(List<Common.Item> itemList)
     //{
@@ -87,8 +86,12 @@ public partial class ItemDataManager : Singleton<ItemDataManager>
     //    }
     //    DoRefreshEvent();
     //}
-
-    public void AddItem(ItemVO item, BagType bagType = BagType.CommonBag)
+    public ItemDataManager()
+    {
+        bagItemDict.Add((int)EBagType.CommonBag, new Dictionary<long, ItemVO>());//以Uid做key
+        bagItemDict.Add((int)EBagType.Equiped, new Dictionary<long, ItemVO>());//以装备的position做key
+    }
+    public void AddItem(ItemVO item, EBagType bagType = EBagType.CommonBag)
     {
         if (item.Count <= 0)
         {
@@ -96,32 +99,32 @@ public partial class ItemDataManager : Singleton<ItemDataManager>
         }
         if (bagItemDict.ContainsKey((int)bagType))
         {
-            if (bagItemDict[(int)bagType].ContainsKey(item.Id))
+            if (bagItemDict[(int)bagType].ContainsKey(item.UId))
             {
-                bagItemDict[(int)bagType][item.Id] = item;
+                bagItemDict[(int)bagType][item.UId] = item;
             }
             else
             {
-                bagItemDict[(int)bagType].Add(item.Id, item);
+                bagItemDict[(int)bagType].Add(item.UId, item);
             }
         }
         else
         {
-            bagItemDict.Add((int)bagType, new Dictionary<int, ItemVO>());
-            bagItemDict[(int)bagType].Add(item.Id, item);
+            bagItemDict.Add((int)bagType, new Dictionary<long, ItemVO>());
+            bagItemDict[(int)bagType].Add(item.UId, item);
         }
         //Slg.RedPointManager.Instance.MarkConditionChange(Slg.RedPointCondition.BagItem);
 
         //DoRefreshEvent();
     }
     //移除
-    public void RemoveItem(ItemVO item, BagType bagType = BagType.CommonBag)
+    public void RemoveItem(ItemVO item, EBagType bagType = EBagType.CommonBag)
     {
         if (bagItemDict.ContainsKey((int)bagType))
         {
-            if (bagItemDict[(int)bagType].ContainsKey(item.Id))
+            if (bagItemDict[(int)bagType].ContainsKey(item.UId))
             {
-                bagItemDict[(int)bagType].Remove(item.Id);
+                bagItemDict[(int)bagType].Remove(item.UId);
                 //Slg.RedPointManager.Instance.MarkConditionChange(Slg.RedPointCondition.BagItem);
 
             }
@@ -138,20 +141,20 @@ public partial class ItemDataManager : Singleton<ItemDataManager>
         //DoRefreshEvent();
     }
     //更新道具信息
-    public void UpdateItem(ItemVO item, BagType bagType = BagType.CommonBag)
+    public void UpdateItem(ItemVO item, EBagType bagType = EBagType.CommonBag)
     {
         if (bagItemDict.ContainsKey((int)bagType))
         {
-            if (bagItemDict[(int)bagType].ContainsKey(item.Id))
+            if (bagItemDict[(int)bagType].ContainsKey(item.UId))
             {
                 if (item.Count > 0)
                 {
-                    bagItemDict[(int)bagType][item.Id] = item;
+                    bagItemDict[(int)bagType][item.UId] = item;
                 }
                 else
                 {
                     //数量为0的移除
-                    bagItemDict[(int)bagType].Remove(item.Id);
+                    bagItemDict[(int)bagType].Remove(item.UId);
                 }
                 //Slg.RedPointManager.Instance.MarkConditionChange(Slg.RedPointCondition.BagItem);
             }
@@ -159,7 +162,7 @@ public partial class ItemDataManager : Singleton<ItemDataManager>
 
 
     }
-    public void ClearBag(BagType bagType = BagType.CommonBag)
+    public void ClearBag(EBagType bagType = EBagType.CommonBag)
     {
         if (bagItemDict.ContainsKey((int)bagType))
         {
@@ -252,9 +255,9 @@ public partial class ItemDataManager : Singleton<ItemDataManager>
     public List<ItemVO> GetAllBagItem()
     {
         List<ItemVO> list = new List<ItemVO>();
-        if (bagItemDict.ContainsKey((int)BagType.CommonBag))
+        if (bagItemDict.ContainsKey((int)EBagType.CommonBag))
         {
-            var iter = bagItemDict[(int)BagType.CommonBag].GetEnumerator();
+            var iter = bagItemDict[(int)EBagType.CommonBag].GetEnumerator();
             while (iter.MoveNext())
             {
                 list.Add(iter.Current.Value);
@@ -269,7 +272,7 @@ public partial class ItemDataManager : Singleton<ItemDataManager>
     /// </summary>
     /// <param name="id">物品id</param>
     /// <returns></returns>
-    public ItemVO GetItemFormBag(int id, BagType bagType = BagType.CommonBag)
+    public ItemVO GetItemFormBag(int id, EBagType bagType = EBagType.CommonBag)
     {
         if (bagItemDict.ContainsKey((int)bagType))
         {
@@ -298,6 +301,60 @@ public partial class ItemDataManager : Singleton<ItemDataManager>
 
         return number;
     }
+
+    #region 装备
+    private Attribute allEquipmentsAttribute = new Attribute();
+    public Attribute AllEquipmentsAttribute
+    {
+        get
+        {
+            foreach (var item in bagItemDict[(int)EBagType.Equiped])
+            {
+                if (item.Value != null)
+                {
+                    allEquipmentsAttribute = GlobalExpansion.GetSumOfAttributes(allEquipmentsAttribute, item.Value.Equipment);
+                }
+            }
+            return allEquipmentsAttribute;
+        }
+    }
+
+    /// <summary>
+    /// 换或者穿
+    /// </summary>
+    /// <param name="equipment"></param>
+    /// <param name="pos"></param>
+    public void ChangeEquipment(EquipmentVO equipment, int pos = 0)
+    {
+        if (equipment == null)
+            return;
+        if (pos == 0)
+            pos = equipment.Position;
+
+        bagItemDict[(int)EBagType.Equiped][pos] = new ItemVO(equipment.UId, equipment.ConfigId, 1, equipment);
+        EventCenter.Broadcast(EGameEvent.eEquipmentChange);
+    }
+    /// <summary>
+    /// 卸下装备
+    /// </summary>
+    /// <param name="pos"></param>
+    public void PutOffEquipment(int pos)
+    {
+        if (bagItemDict[(int)EBagType.Equiped].ContainsKey(pos))
+        {
+            bagItemDict[(int)EBagType.Equiped].Remove(pos);
+        }
+        EventCenter.Broadcast(EGameEvent.eEquipmentChange);
+    }
+    public ItemVO GetEquipedItemByPos(int pos)
+    {
+        if (bagItemDict[(int)EBagType.Equiped].ContainsKey(pos))
+        {
+            return bagItemDict[(int)EBagType.Equiped][pos];
+        }
+        return null;
+    }
+    #endregion
     #region 道具和服务器交互
     /// <summary>
     /// 服务器返回
@@ -346,7 +403,7 @@ public partial class ItemDataManager : Singleton<ItemDataManager>
     //            }
     //            //检测奖励数据中是否有书签更新信息，如果有，更新个人书签最大容量
     //            for(var rewardIndex = 0; rewardIndex < reply.reward.Count; ++rewardIndex) {
-    //                if(reply.reward[rewardIndex].id == 1012) {
+    //                if(reply.reward[rewardIndex].UId == 1012) {
     //                    MapDataManager.Instance.SetMaxBookmarkCount_Normal((int)reply.reward[rewardIndex].amount);
     //                    break;
     //                }

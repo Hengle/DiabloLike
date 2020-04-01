@@ -19,6 +19,7 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
     }
     public List<DropItem> ItemList = new List<DropItem>();
     UIItemDrop uiItemDrop = null;
+    private int uidMaker = 0;
 
     GameObject m;
     aRPG_Master ms;
@@ -26,6 +27,7 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
     {
         m = GameObject.Find("SCRIPTS");
         ms = m.GetComponent<aRPG_Master>();
+        
     }
     private void Update()
     {
@@ -63,6 +65,7 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
         if(DropPrefab != null)
         {
             DropItem drop = new DropItem();
+            drop.UId = uidMaker++;
             drop.ItemId = id;
 
 
@@ -93,7 +96,7 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
         {
             //判断包有没有满
             Debug.Log("拾取道具，加入背包");
-            ItemVO itemVO = new ItemVO(item.ItemId, 1);
+            ItemVO itemVO = new ItemVO(item.UId, item.ItemId);
             ItemDataManager.Instance.AddItem(itemVO);
 
             item.OutLookTrans.gameObject.SetActive(false);
@@ -109,6 +112,7 @@ public class ItemDropsManager : MonoSingleton<ItemDropsManager>
 public class DropItem
 {
     public Transform OutLookTrans;
+    public long UId;
     public int ItemId;
 
     public UI_ItemName UIName;

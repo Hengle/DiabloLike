@@ -7,11 +7,13 @@ using UnityEngine;
 /// </summary>
 public class ItemVO
 {
+    private long uid = 0;
     private int id = 0;
     private int count = 0;
 
     private ItemData itemData;
     private Sprite itemIcon;
+    public EquipmentVO Equipment;
 
     public ItemData ItemData
     {
@@ -38,19 +40,27 @@ public class ItemVO
             return id;
         }
     }
+    public long UId
+    {
+        get
+        {
+            return uid;
+        }
+    }
 
-   
     /// <summary>
     /// Item构造基础信息
     /// </summary>
     /// <param name="id"></param>
     /// <param name="count"></param>
-    public ItemVO(int id, int count)
+    public ItemVO(long uid, int id, int count = 1, EquipmentVO equip = null)
     {
+        this.uid = uid;
         this.id = id;
         this.count = count;
         this.itemData = null;
         this.itemIcon = null;
+        Equipment = equip;
     }
     
     /// <summary>

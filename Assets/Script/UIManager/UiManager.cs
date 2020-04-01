@@ -12,7 +12,8 @@ using UnityEngine;
 public enum EUIType
 {
     UIBag,
-    UIItemDrop,
+    UIItemDrop,//物品掉落
+    UIItemUse,
 }
 
 /// <summary>

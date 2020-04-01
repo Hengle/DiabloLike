@@ -21,6 +21,7 @@ public class UIBag : UIBase {
     {
         OnDestroy();
         base.Dispose();
+        EventCenter.RemoveListener(EGameEvent.eEquipmentChange, ShowBagList);
     }
 
     protected override void OnDestroy()
@@ -34,6 +35,7 @@ public class UIBag : UIBase {
         fgui = contentPane as UI_Bag;
         fgui.m_btn_close.onClick.Add(OnBtnClose);
 
+        EventCenter.RemoveListener(EGameEvent.eEquipmentChange, ShowBagList);
         //fgui.m_head.onDrop.Add(OnDragDrop);//拖动没行通
     }
     /// <summary>
@@ -59,6 +61,7 @@ public class UIBag : UIBase {
 
     void ShowBagList()
     {
+        RefreshEquipedItem();
         itemList = ItemDataManager.Instance.GetAllBagItem();
         fgui.m_list_item.SetVirtual();
         fgui.m_list_item.itemRenderer = RenderListItem;
@@ -71,12 +74,10 @@ public class UIBag : UIBase {
         ItemVO itemvo = itemList[index];
 
 
-        item.m_txt_name.text = itemvo.Name;
+        item.Init(itemvo);
 
 
-        //item.onClick.Set(() => {
-        //    GameDataManager.Instance.UseItem(itemvo.Id, 1, true);
-        //});
+
 
         //GButton b = item.asButton;
         //item.draggable = true;
@@ -94,6 +95,19 @@ public class UIBag : UIBase {
         //{
         //    c.icon = (string)context.data;
         //});
+    }
+    private void RefreshEquipedItem()
+    {
+        fgui.m_head.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Head));
+        fgui.m_chest.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Chest));
+        fgui.m_yao.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Belt));
+        fgui.m_leg.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Leg));
+        fgui.m_shoe.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Foot));
+        fgui.m_neck.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Necklace));
+        fgui.m_ring_1.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Ring_1));
+        fgui.m_ring_2.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Ring_2));
+        fgui.m_weapon.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Weapon));
+
     }
     //void OnDragDrop(EventContext context)
     //{
