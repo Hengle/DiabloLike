@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public enum AiTypes { Melee, SpellCaster };//近战，施法者
 /// <summary>
-/// //这个类管理属性，怪物的稀有，健康，死亡功能，伤害计算（但是没有伤害实现），名字，经验增益。
+/// //这个类生成并管理属性，怪物的稀有，健康，死亡功能，伤害计算（但是没有伤害实现），名字，经验增益。
 /// </summary>
 public class aRPG_EnemyStats : MonoBehaviour {
     // this class manages stats, rarity of the monster, health, death functionality, damage calculation(no damage implementation however), name, experience gains.
@@ -44,8 +44,8 @@ public class aRPG_EnemyStats : MonoBehaviour {
     public float extra_HP_bonus = 0.6f;
     
     public bool fireEnchanted = false;
-    public float fire_dmg_bonus;
-    public float fire_res;
+    public float fire_dmg_bonus;//额外火伤率
+    public float fire_res;//火抗率
     public bool physicalEnchanted = false;
     public float physical_dmg_bonus;
     public float physical_res;
@@ -125,12 +125,15 @@ public class aRPG_EnemyStats : MonoBehaviour {
 	}
 
     // next four functions are more like a technical functions - called on specific time will make a enemy rare/champ/minion. 
+    //接下来的四种功能更像是一种技术功能——在特定的时间调用将使敌人变得稀有/冠军/仆从。
     public void MakeItRare()
     {
+        //生成随机的额外属性
         GenerateRandomAttributes(3);
+        //稀有怪血量加成
         max_health = max_health * rareHPmultiplier;
 
-
+        //鼠标选中不同的颜色
         mouseCollider = gameObject.transform.Find("ColliderMouse").gameObject;
         esMouseOver = mouseCollider.GetComponent<aRPG_EnemyMouseOver>();
         esMouseOver.SetMaterials();
@@ -183,6 +186,11 @@ public class aRPG_EnemyStats : MonoBehaviour {
     }
 
     // this function randomly generates mods for rare/champions. Here you can add you own mods following the pattern, no need to change any other function to add a new mod.
+    //此函数随机生成稀有/冠军的mods。在这里您可以按照模式添加自己的mod，不需要更改任何其他函数来添加新的mod。
+    /// <summary>
+    /// 生成随机的额外属性
+    /// </summary>
+    /// <param name="numberOfModsToGenerate">额外的属性数量</param>
     void GenerateRandomAttributes(int numberOfModsToGenerate)
     {
         int numberOfModsGenerated = 0;
@@ -332,6 +340,7 @@ public class aRPG_EnemyStats : MonoBehaviour {
     }
 
     // it is called by many function that generate mods, it then gives a monster a proper sub-name that is displayed below health bar.
+    //它被许多生成mods的函数调用，然后给怪物一个合适的子名称，显示在健康栏下面。“某某怪物名 火伤 额外伤害”
     void GenerateName(string addName)
     {
         thisName = thisName + addName + " ";
@@ -340,6 +349,7 @@ public class aRPG_EnemyStats : MonoBehaviour {
     // calculates damage dealt to the player based on his resistances and enemy bonuses.
     
     /// <summary>
+    /// 对玩家造成伤害计算
     /// 根据玩家的抵抗力和敌人加成计算对其造成的伤害。
     /// 类似加上自身的元素伤，减去目标的元素防御
     /// </summary>
@@ -367,6 +377,12 @@ public class aRPG_EnemyStats : MonoBehaviour {
     }
     // called by the skills on collision with enemies to calculate how much damage should be dealt, based on different player and enemy mods
     //根据不同的玩家和敌方的mod，通过与敌方碰撞的技能来计算应该造成的伤害
+    /// <summary>
+    /// 受到伤害计算
+    /// </summary>
+    /// <param name="dmgType"></param>
+    /// <param name="dmgAmount"></param>
+    /// <returns></returns>
     public float ReceiveDamage(damageType dmgType, float dmgAmount)
     {
         if (dmgType == damageType.Fire)
@@ -417,9 +433,9 @@ public class aRPG_EnemyStats : MonoBehaviour {
 	
     // is called by Dead function to give experience to the player for killing it.
     void GiveExp(){
-	if(rewardGiven == false){
-        ms.psStats.exp = ms.psStats.exp + expReward;
-		rewardGiven = true;
+	    if(rewardGiven == false){
+            ms.psStats.exp = ms.psStats.exp + expReward;
+		    rewardGiven = true;
 		}
 	
 	}

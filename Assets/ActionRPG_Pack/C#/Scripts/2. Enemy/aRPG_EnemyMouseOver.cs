@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 该函数处理鼠标在敌人上方移动的视觉表示-它确保显示正确的健康栏和着色器显示轮廓。
+/// 它还具有一个功能，可以根据怪物的稀有性更改着色器。
+/// 此处不管理鼠标输入。
+/// 效率不怎么样
+/// </summary>
 public class aRPG_EnemyMouseOver : MonoBehaviour {
     // That function takes care of visual presentation of mouse movement over enemies - it makes sure that proper health bar is displayed and shader displays an outline.
     // It also has a function that changes shader based on monster rarity.
