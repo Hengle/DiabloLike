@@ -28,7 +28,7 @@ public class aRPG_BulletBehaviore : MonoBehaviour {
         {
             EnemyStatsScript = bulletContact.GetComponent<aRPG_EnemyStats>();
 
-            EnemyStatsScript.currentHealth -= EnemyStatsScript.ReceiveDamage(dmg_type, psInventory.startingEquippedWeapon.damage);
+            EnemyStatsScript.ReceiveDamage(dmg_type, psInventory.startingEquippedWeapon.damage);
             
 		    // 	below script is looking for a empty game object named "shotEffectFront", then at it's position(and with it's rotation!) instantiates a particle effect that act as a blood effect from a gun shot.
 		    var impactEffectposition = bulletContact.transform.Find("shotEffectFront");

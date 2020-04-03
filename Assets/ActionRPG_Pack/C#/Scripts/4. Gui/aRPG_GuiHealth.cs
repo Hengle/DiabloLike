@@ -25,8 +25,8 @@ public class aRPG_GuiHealth : MonoBehaviour {
 	
 	void Update () 
     {
-        hbBar.fillAmount = ms.psHealth.health / ms.psStats.maxHealth;
-        manaBar.fillAmount = ms.psHealth.mana / ms.psStats.maxMana;
+        hbBar.fillAmount = ms.psStats.curAttr.Health / ms.psStats.baseAttr.Health;
+        manaBar.fillAmount = ms.psStats.curAttr.Mana / ms.psStats.baseAttr.Mana;
         slider.value = ms.psStats.expBar;
 	}
 }

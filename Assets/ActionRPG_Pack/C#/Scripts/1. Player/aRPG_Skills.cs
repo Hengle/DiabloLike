@@ -86,14 +86,14 @@ public class aRPG_Skills : MonoBehaviour {
             return;
         }
         //没蓝了，但是*0.04没看太懂？应该是不够这一帧的消耗了
-        if (ms.psHealth.mana < skill.manaCostPerSecOrUse*0.04f)
+        if (ms.psStats.curAttr.Mana < skill.manaCostPerSecOrUse*0.04f)
         {
             CastDoT_ColliderUp(skill);
             rayContinousCastingManaBreak = true;
             return; 
         }
         //rayContinousCastingManaBreak参数的实际用处，没理解
-        if (ms.psHealth.mana > skill.manaCostPerSecOrUse && rayContinousCastingManaBreak)
+        if (ms.psStats.curAttr.Mana > skill.manaCostPerSecOrUse && rayContinousCastingManaBreak)
         {
             CastDoT_ColliderDown(skill);
             rayContinousCastingManaBreak = false;
@@ -117,7 +117,7 @@ public class aRPG_Skills : MonoBehaviour {
 
         projectileSkill = skill;
 
-        if (ms.psHealth.mana < skill.manaCostProjectile) { return; }
+        if (ms.psStats.curAttr.Mana < skill.manaCostProjectile) { return; }
         
         ms.psMovement.StopMoveNavAgent();
         rayFire = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -136,7 +136,7 @@ public class aRPG_Skills : MonoBehaviour {
             return;
         }
 
-        if (ms.psHealth.mana < skill.manaCostProjectile)
+        if (ms.psStats.curAttr.Mana < skill.manaCostProjectile)
         {
             CastFireballUp();
             return;
@@ -158,7 +158,7 @@ public class aRPG_Skills : MonoBehaviour {
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0) { return; }
         if (skill.hasLimitedNoOfUses == true) { skill.ammo_amount -= 1; }
 
-        if (ms.psHealth.mana < skill.AoEmanaCost) { return; }
+        if (ms.psStats.curAttr.Mana < skill.AoEmanaCost) { return; }
 
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitFire, 60.0f, ms.layerTargetingPlaneToShoot))
         {
@@ -186,7 +186,7 @@ public class aRPG_Skills : MonoBehaviour {
         float time = Time.time;
         while (time + skill.manaDegenInterval > Time.time && skill.manaDegenIsOn)
         {
-            ms.psHealth.mana -= skill.manaCostPerSecOrUse * skill.manaDegenInterval;
+            ms.psStats.curAttr.Mana -= (long)(skill.manaCostPerSecOrUse * skill.manaDegenInterval);
             yield return new WaitForSeconds(skill.manaDegenInterval);
             time = Time.time + skill.manaDegenInterval;
         }
@@ -205,7 +205,7 @@ public class aRPG_Skills : MonoBehaviour {
 
         // First Projectile
         InstantiateProjectile();
-        ms.psHealth.mana -= projectileSkill.manaCostProjectile;
+        ms.psStats.curAttr.Mana -= (long)projectileSkill.manaCostProjectile;
 
         if (projectileSkill.addtionalProjectiles == 0) { return; }
         // Additional Projectiles
@@ -279,7 +279,7 @@ public class aRPG_Skills : MonoBehaviour {
     //DoT技能直接生成的，不是动画驱动的
     public void InstantiateDoT_Collider(aRPG_DB_MakeSkillSO skill)
     {
-        if (ms.psHealth.mana < skill.manaCostPerSecOrUse) { return; }
+        if (ms.psStats.curAttr.Mana < skill.manaCostPerSecOrUse) { return; }
         ms.psMovement.StopMoveNavAgent();
         
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitFire, 60.0f, ms.layerTargetingPlaneToShoot))
@@ -296,7 +296,7 @@ public class aRPG_Skills : MonoBehaviour {
             {
                 DoTClone = Instantiate(skill.instantiatePrefab, new Vector3(hitFire.point.x, ms.player.transform.position.y + 2f, hitFire.point.z), Quaternion.identity) as GameObject;
                 DoTClone.transform.LookAt(new Vector3(ms.player.transform.position.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z));
-                ms.psHealth.mana -= skill.manaCostPerSecOrUse;
+                ms.psStats.curAttr.Mana -= (long)skill.manaCostPerSecOrUse;
             }
             //dot技能脚本初始化
             DoTClone.GetComponent<aRPG_DoT>().SendObjects(ms, skill, ms.player.tag);
@@ -335,7 +335,7 @@ public class aRPG_Skills : MonoBehaviour {
                 aoe = aoeGo.AddComponent<aRPG_AoE>();
             }
             aoe.SendObjects(ms, skill, casterTag);
-            //if (casterTag == "Player") { ms.psHealth.mana -= skill.AoEmanaCost; }
+            //if (casterTag == "Player") { ms.psStats.curAttr.Mana -= skill.AoEmanaCost; }
             //StartCoroutine(AoE_Damage(casterTag, skill, center));
 
         }
@@ -795,7 +795,10 @@ public class aRPG_Skills : MonoBehaviour {
 
         Consumable_Variants(skill);
     }
-
+    /// <summary>
+    /// 消耗品变化，影响属性的药品。回血回蓝。加体力什么的，到时间又变回原属性
+    /// </summary>
+    /// <param name="skill"></param>
     void Consumable_Variants(aRPG_DB_MakeSkillSO skill)
     {
         if (skill.sttChange == sttChange.Health)
@@ -809,7 +812,7 @@ public class aRPG_Skills : MonoBehaviour {
         
         if (skill.sttChange == sttChange.Strenght)
         {
-            ms.psStats.strenght += skill.sttChangeAmount;
+            //ms.psStats.strenght += skill.sttChangeAmount;
             // run Cooldown if has Delay;
             if (skill.sttChangeDuration > 0)
             {
@@ -819,7 +822,7 @@ public class aRPG_Skills : MonoBehaviour {
 
         if (skill.sttChange == sttChange.Int)
         {
-            ms.psStats.intelligence += skill.sttChangeAmount;
+            //ms.psStats.intelligence += skill.sttChangeAmount;
             // run Cooldown if has Delay;
             if (skill.sttChangeDuration > 0)
             {
@@ -830,22 +833,22 @@ public class aRPG_Skills : MonoBehaviour {
 
     public void MedkitHeal(aRPG_DB_MakeSkillSO skill)
     {
-        ms.psHealth.health += skill.sttChangeAmount;
-        if (ms.psHealth.health > ms.psStats.maxHealth) { ms.psHealth.health = ms.psStats.maxHealth; }
+        ms.psStats.curAttr.Health += (long)skill.sttChangeAmount;
+        if (ms.psStats.curAttr.Health > ms.psStats.baseAttr.Health) { ms.psStats.curAttr.Health = ms.psStats.baseAttr.Health; }
     }
 
     public void ManaPotion(aRPG_DB_MakeSkillSO skill)
     {
-        ms.psHealth.mana += skill.sttChangeAmount;
-        if (ms.psHealth.mana > ms.psStats.maxMana) { ms.psHealth.mana = ms.psStats.maxMana; }
+        ms.psStats.curAttr.Mana += (long)skill.sttChangeAmount;
+        if (ms.psStats.curAttr.Mana > ms.psStats.baseAttr.Mana) { ms.psStats.curAttr.Mana = ms.psStats.baseAttr.Mana; }
     }
 
     IEnumerator RemoveConsumableBuff(aRPG_DB_MakeSkillSO skill)
     {
         yield return new WaitForSeconds(skill.sttChangeDuration);
         
-        if (skill.sttChange == sttChange.Strenght) { ms.psStats.strenght -= skill.sttChangeAmount; }
-        if (skill.sttChange == sttChange.Int) { ms.psStats.intelligence -= skill.sttChangeAmount; }
+        //if (skill.sttChange == sttChange.Strenght) { ms.psStats.strenght -= skill.sttChangeAmount; }
+        //if (skill.sttChange == sttChange.Int) { ms.psStats.intelligence -= skill.sttChangeAmount; }
 
         // recalculate derived stats
     }
@@ -931,13 +934,13 @@ public class aRPG_Skills : MonoBehaviour {
             return;
         }
 
-        if (ms.psHealth.mana < skill.manaCostPerSecOrUse * 0.04f)
+        if (ms.psStats.curAttr.Mana < skill.manaCostPerSecOrUse * 0.04f)
         {
             Mobile_DoT_Collider_Up(skill);
             rayContinousCastingManaBreak = true;
             return;
         }
-        if (ms.psHealth.mana > skill.manaCostPerSecOrUse && rayContinousCastingManaBreak)
+        if (ms.psStats.curAttr.Mana > skill.manaCostPerSecOrUse && rayContinousCastingManaBreak)
         {
             Mobile_DoT_Collider_Down(skill);
             rayContinousCastingManaBreak = false;
@@ -954,7 +957,7 @@ public class aRPG_Skills : MonoBehaviour {
     /* DoT Collider */
     public void Mobile_InstantiateDoT_Collider(aRPG_DB_MakeSkillSO skill)
     {
-        if (ms.psHealth.mana < skill.manaCostPerSecOrUse) { return; }
+        if (ms.psStats.curAttr.Mana < skill.manaCostPerSecOrUse) { return; }
 
         //block wasd input
 
@@ -981,7 +984,7 @@ public class aRPG_Skills : MonoBehaviour {
     {
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0) { return; }
 
-        if (ms.psHealth.mana < skill.manaCostProjectile) { return; }
+        if (ms.psStats.curAttr.Mana < skill.manaCostProjectile) { return; }
 
         projectileSkill = skill;
         ms.pAnimator.SetBool("FireballBool", true);
@@ -994,7 +997,7 @@ public class aRPG_Skills : MonoBehaviour {
             return;
         }
 
-        if (ms.psHealth.mana < skill.manaCostProjectile)
+        if (ms.psStats.curAttr.Mana < skill.manaCostProjectile)
         {
             Mobile_CastFireball_Up();
             return;

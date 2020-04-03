@@ -80,7 +80,7 @@ public class aRPG_Projectile : MonoBehaviour {
                 // Projectile Damage
                 projectileContact.GetComponent<aRPG_EnemyMovement>().DamageTaken();//怪物受击
                 enemyStatsScript = projectileContact.GetComponent<aRPG_EnemyStats>();
-                enemyStatsScript.currentHealth -= enemyStatsScript.ReceiveDamage(skill.damageTypeProjectile, skill.damageProjectile);//算伤害
+                enemyStatsScript.ReceiveDamage(skill.damageTypeProjectile, skill.damageProjectile);//算伤害
             }
             if (skill.linkedSkillProjectile1 != null) {
                 ms.psSkills.ExecuteLink(casterTag, skill.linkedSkillProjectile1, projectileGameObject.transform.position);
@@ -93,7 +93,7 @@ public class aRPG_Projectile : MonoBehaviour {
             if (skill.damageProjectile > 0f)
             {
                 // Projectile Damage
-                ms.psHealth.health -= skill.damageProjectile;
+                ms.psStats.curAttr.Health -= (long)skill.damageProjectile;
             }
             if (skill.linkedSkillProjectile1 != null) {
                 ms.psSkills.ExecuteLink(casterTag, skill.linkedSkillProjectile1, projectileGameObject.transform.position);

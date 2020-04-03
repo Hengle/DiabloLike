@@ -78,7 +78,7 @@ public class aRPG_DoT : MonoBehaviour {
     {
         while (doDamageToPlayer)
         {
-            ms.psHealth.health -= dmgPerTick;
+            ms.psStats.curAttr.Health -= (long)dmgPerTick;
             yield return new WaitForSeconds(dmgFrequency);
         }
     }
@@ -87,7 +87,7 @@ public class aRPG_DoT : MonoBehaviour {
     {
         while (dot_enemy_Dictionary[enemyID])
         {
-            enemyScript.currentHealth -= dmgPerTick;
+            enemyScript.curAttr.Health -= (long)dmgPerTick;
             yield return new WaitForSeconds(dmgFrequency);
         }
     }

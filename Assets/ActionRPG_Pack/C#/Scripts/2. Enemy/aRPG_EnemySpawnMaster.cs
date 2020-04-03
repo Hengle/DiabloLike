@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 暂时用这个产怪
+/// 一个稀有，带一群小怪，形成类似将军带兵的效果
+/// 单一群小怪，就是一群兵
+/// </summary>
 public class aRPG_EnemySpawnMaster : MonoBehaviour {
     // this script should be attached to the simple plane mesh created in unity(or just use prefab).
     // the way this spawner works is that every simple plane mesh created in unity has a lenght and wideness of 5 units, changing scale of the mesh will allow you to change spawn area. 

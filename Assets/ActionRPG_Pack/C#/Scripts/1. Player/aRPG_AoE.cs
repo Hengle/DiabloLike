@@ -33,7 +33,7 @@ public class aRPG_AoE : MonoBehaviour {
         casterTagThis = casterTag;
         ms = receivedScript;
 
-        if (casterTag == "Player") { ms.psHealth.mana -= skill.AoEmanaCost; }
+        if (casterTag == "Player") { ms.psStats.curAttr.Mana -= (long)skill.AoEmanaCost; }
         StartCoroutine(AoE_Damage(casterTag, skill, this.transform.position));
     }
 
@@ -51,7 +51,7 @@ public class aRPG_AoE : MonoBehaviour {
                 {
                     hitColliders[i].gameObject.GetComponent<aRPG_EnemyMovement>().DamageTaken();
                     enemyStatsScript = hitColliders[i].gameObject.GetComponent<aRPG_EnemyStats>();
-                    enemyStatsScript.currentHealth -= enemyStatsScript.ReceiveDamage(skill.AoEdamageType, skill.AoEdamage);
+                    enemyStatsScript.ReceiveDamage(skill.AoEdamageType, skill.AoEdamage);
                 }
                 i++;
             }
@@ -65,7 +65,7 @@ public class aRPG_AoE : MonoBehaviour {
             {
                 if (hitColliders[i].tag == "Player")
                 {
-                    ms.psHealth.health -= skill.AoEdamage;
+                    ms.psStats.curAttr.Health -= (long)skill.AoEdamage;
                 }
                 i++;
             }

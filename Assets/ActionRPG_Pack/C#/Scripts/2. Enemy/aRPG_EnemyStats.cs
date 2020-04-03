@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public enum AiTypes { Melee, SpellCaster };//近战，施法者
 /// <summary>
 /// //这个类生成并管理属性，怪物的稀有，健康，死亡功能，伤害计算（但是没有伤害实现），名字，经验增益。
+/// 额外的属性，只是生成了暂时没有用上，保留，添加Attribute替换属性；
 /// </summary>
 public class aRPG_EnemyStats : MonoBehaviour {
     // this class manages stats, rarity of the monster, health, death functionality, damage calculation(no damage implementation however), name, experience gains.
@@ -21,19 +22,25 @@ public class aRPG_EnemyStats : MonoBehaviour {
     bool rewardGiven = false;
     [HideInInspector] public string thisName;
 
+    [Header("新的属性")]
+    public int monsterId;//这个只套用属性，不设计模型
+    [SerializeField]
+    public Attribute baseAttr = new Attribute();//配置表属性
+
+    public Attribute curAttr = new Attribute();//现有属性
 
     // these are the base stats for every enemy you create, have fun with these and create new monsters.
-    float dmgToDeal;
+    //float dmgToDeal;
     public float expReward;
-    internal float currentHealth;
-    public float max_health = 100.0f;
+    //internal float currentHealth;
+    //public float max_health = 100.0f;
     float bonusDamageFloat;
 
     // if you want to create custom monster select Custom in monsterModsDefinition and mark below boolean variables.
     // Float variables below influence manually and randomly spawned monsters.
     //如果要创建自定义怪物，请在monsterModsDefinition中选择Custom，并在布尔变量下面标记。
     //以下浮动变量影响手动和随机繁殖的怪物。
-    [Header("Enchantments")]//中魔法，着魔
+    [Header("Enchantments，暂时未用到")]//中魔法，着魔
     //这些参数是打算实现，特殊伤害的怪物，要把参数都配置上才行
     public bool fastAttribute = false;
     public float speed_bonus = 0.25f;
@@ -110,17 +117,20 @@ public class aRPG_EnemyStats : MonoBehaviour {
 
         
             ImplementPresets();
-        
 
-        currentHealth = max_health;
-	}
+
+        //currentHealth = max_health;
+        GlobalExpansion.AttributeCopy(curAttr, baseAttr);
+
+    }
 
     // update is only used to check if monster should be alive.
 	void Update () {
-        if (currentHealth > max_health) { currentHealth = max_health; }
-	    if(currentHealth <= 0 && !isDead){
-
-		Dead();
+        if (curAttr.Health > baseAttr.Health) {
+            curAttr.Health = baseAttr.Health; 
+        }
+	    if(curAttr.Health <= 0 && !isDead){
+		    Dead();
 		}
 	}
 
@@ -131,7 +141,7 @@ public class aRPG_EnemyStats : MonoBehaviour {
         //生成随机的额外属性
         GenerateRandomAttributes(3);
         //稀有怪血量加成
-        max_health = max_health * rareHPmultiplier;
+        baseAttr.Health = (long)(baseAttr.Health * rareHPmultiplier);
 
         //鼠标选中不同的颜色
         mouseCollider = gameObject.transform.Find("ColliderMouse").gameObject;
@@ -143,7 +153,7 @@ public class aRPG_EnemyStats : MonoBehaviour {
     public void MakeItChamp()
     {
         GenerateRandomAttributes(1);
-        max_health = max_health * champHPmultiplier;
+        baseAttr.Health = (long)(baseAttr.Health * champHPmultiplier);
 
         mouseCollider = gameObject.transform.Find("ColliderMouse").gameObject;
         esMouseOver = mouseCollider.GetComponent<aRPG_EnemyMouseOver>();
@@ -162,7 +172,7 @@ public class aRPG_EnemyStats : MonoBehaviour {
         physicalEnchanted = prevChampScript.physicalEnchanted;
         magicEnchanted = prevChampScript.magicEnchanted;
 
-        max_health = max_health * champHPmultiplier;
+        baseAttr.Health = (long)(baseAttr.Health * champHPmultiplier);
 
         thisName = prevChampScript.thisName;
 
@@ -317,9 +327,11 @@ public class aRPG_EnemyStats : MonoBehaviour {
             stunChance = stunChance * stunChance_multiplier;
         }
 
-        if (extra_HPAttribute == false) { extra_HP_bonus = 0f;}
-        else { max_health = max_health + max_health * extra_HP_bonus;
-        
+        if (extra_HPAttribute == false) { 
+            extra_HP_bonus = 0f;
+        }
+        else {
+            baseAttr.Health = (long)(baseAttr.Health * (1 + extra_HP_bonus));
         }
 
         if (fireEnchanted == false)
@@ -354,24 +366,25 @@ public class aRPG_EnemyStats : MonoBehaviour {
     /// 类似加上自身的元素伤，减去目标的元素防御
     /// </summary>
     /// <returns></returns>
-    public float DealDamage()
-    {
-        dmgToDeal = esMovement.ai.meleeAttackDamage + bonusDamageFloat;
+    //public void DealDamage()
+    //{
+    //    //dmgToDeal = esMovement.ai.meleeAttackDamage + bonusDamageFloat;
 
-        dmgToDeal += ((esMovement.ai.meleeAttackDamage + bonusDamageFloat) * fire_dmg_bonus) - (((esMovement.ai.meleeAttackDamage + bonusDamageFloat) * fire_dmg_bonus) * ms.psStats.fire_res);
+    //    //dmgToDeal += ((esMovement.ai.meleeAttackDamage + bonusDamageFloat) * fire_dmg_bonus) - (((esMovement.ai.meleeAttackDamage + bonusDamageFloat) * fire_dmg_bonus) * ms.psStats.fire_res);
 
-        dmgToDeal += ((esMovement.ai.meleeAttackDamage + bonusDamageFloat) * physical_dmg_bonus) - (((esMovement.ai.meleeAttackDamage + bonusDamageFloat) * physical_dmg_bonus) * ms.psStats.physical_res);
+    //    //dmgToDeal += ((esMovement.ai.meleeAttackDamage + bonusDamageFloat) * physical_dmg_bonus) - (((esMovement.ai.meleeAttackDamage + bonusDamageFloat) * physical_dmg_bonus) * ms.psStats.physical_res);
 
-        dmgToDeal += ((esMovement.ai.meleeAttackDamage + bonusDamageFloat) * magic_dmg_bonus) - (((esMovement.ai.meleeAttackDamage + bonusDamageFloat) * magic_dmg_bonus) * ms.psStats.magic_res);
-        
-        return dmgToDeal;
-    }
+    //    //dmgToDeal += ((esMovement.ai.meleeAttackDamage + bonusDamageFloat) * magic_dmg_bonus) - (((esMovement.ai.meleeAttackDamage + bonusDamageFloat) * magic_dmg_bonus) * ms.psStats.magic_res);
+
+    //    //return dmgToDeal;
+    //    return curAttr.Attack;
+    //}
 
     public float FireballDealDamage(float fireballBaseDmg)
     {
         float dmgToDealFb = fireballBaseDmg + (fireballBaseDmg * fire_dmg_bonus);
 
-        dmgToDealFb = dmgToDealFb - (dmgToDealFb * ms.psStats.fire_res);
+        //dmgToDealFb = dmgToDealFb - (dmgToDealFb * ms.psStats.fire_res);
 
         return dmgToDealFb;
     }
@@ -383,22 +396,23 @@ public class aRPG_EnemyStats : MonoBehaviour {
     /// <param name="dmgType"></param>
     /// <param name="dmgAmount"></param>
     /// <returns></returns>
-    public float ReceiveDamage(damageType dmgType, float dmgAmount)
+    public void ReceiveDamage(damageType dmgType, float dmgAmount)
     {
+        float realDam = dmgAmount;
         if (dmgType == damageType.Fire)
         {
-            return dmgAmount - dmgAmount*fire_res ;
+            realDam = dmgAmount - dmgAmount * fire_res ;
         }
         if (dmgType == damageType.Magic)
         {
-            return dmgAmount - dmgAmount * magic_res;
+            realDam = dmgAmount - dmgAmount * magic_res;
         }
         if (dmgType == damageType.Physical)
         {
-            return dmgAmount - dmgAmount * physical_res;
+            realDam = dmgAmount - dmgAmount * physical_res;
         }
         Debug.Log("wrong damage type was passed to ReceiveDamage function");
-        return 0;
+        curAttr.Health -= (long)realDam;
     }
 
     // is called when enemy HP reaches 0. It turns off all important components.
@@ -434,7 +448,7 @@ public class aRPG_EnemyStats : MonoBehaviour {
     // is called by Dead function to give experience to the player for killing it.
     void GiveExp(){
 	    if(rewardGiven == false){
-            ms.psStats.exp = ms.psStats.exp + expReward;
+            ms.psStats.Exp = ms.psStats.Exp + expReward;
 		    rewardGiven = true;
 		}
 	

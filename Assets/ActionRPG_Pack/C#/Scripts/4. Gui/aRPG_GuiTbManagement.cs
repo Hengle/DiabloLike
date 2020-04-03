@@ -350,29 +350,29 @@ public class aRPG_GuiTbManagement : MonoBehaviour {
         for (i=0; i<Buttons_numberOf; i++)
         {
             // AoE
-            if(Buttons_ActiveSkill[i].skillArchetype == archetype.AoE && ms.psHealth.mana < Buttons_ActiveSkill[i].AoEmanaCost && Buttons_Image[i].sprite == Buttons_ActiveSkill[i].sprite)
+            if(Buttons_ActiveSkill[i].skillArchetype == archetype.AoE && ms.psStats.curAttr.Mana < Buttons_ActiveSkill[i].AoEmanaCost && Buttons_Image[i].sprite == Buttons_ActiveSkill[i].sprite)
             {
                 Buttons_Image[i].sprite = Buttons_ActiveSkill[i].spriteNoMana;
             }
-            if (Buttons_ActiveSkill[i].skillArchetype == archetype.AoE && ms.psHealth.mana > Buttons_ActiveSkill[i].AoEmanaCost && Buttons_Image[i].sprite == Buttons_ActiveSkill[i].spriteNoMana)
+            if (Buttons_ActiveSkill[i].skillArchetype == archetype.AoE && ms.psStats.curAttr.Mana > Buttons_ActiveSkill[i].AoEmanaCost && Buttons_Image[i].sprite == Buttons_ActiveSkill[i].spriteNoMana)
             {
                 Buttons_Image[i].sprite = Buttons_ActiveSkill[i].sprite;
             }
             // Projectile
-            if (Buttons_ActiveSkill[i].skillArchetype == archetype.Projectile && ms.psHealth.mana < Buttons_ActiveSkill[i].manaCostProjectile && Buttons_Image[i].sprite == Buttons_ActiveSkill[i].sprite)
+            if (Buttons_ActiveSkill[i].skillArchetype == archetype.Projectile && ms.psStats.curAttr.Mana < Buttons_ActiveSkill[i].manaCostProjectile && Buttons_Image[i].sprite == Buttons_ActiveSkill[i].sprite)
             {
                 Buttons_Image[i].sprite = Buttons_ActiveSkill[i].spriteNoMana;
             }
-            if (Buttons_ActiveSkill[i].skillArchetype == archetype.Projectile && ms.psHealth.mana > Buttons_ActiveSkill[i].manaCostProjectile && Buttons_Image[i].sprite == Buttons_ActiveSkill[i].spriteNoMana)
+            if (Buttons_ActiveSkill[i].skillArchetype == archetype.Projectile && ms.psStats.curAttr.Mana > Buttons_ActiveSkill[i].manaCostProjectile && Buttons_Image[i].sprite == Buttons_ActiveSkill[i].spriteNoMana)
             {
                 Buttons_Image[i].sprite = Buttons_ActiveSkill[i].sprite;
             }
             // Ray
-            if (Buttons_ActiveSkill[i].skillArchetype == archetype.DoT && ms.psHealth.mana < Buttons_ActiveSkill[i].manaCostPerSecOrUse && Buttons_Image[i].sprite == Buttons_ActiveSkill[i].sprite)
+            if (Buttons_ActiveSkill[i].skillArchetype == archetype.DoT && ms.psStats.curAttr.Mana < Buttons_ActiveSkill[i].manaCostPerSecOrUse && Buttons_Image[i].sprite == Buttons_ActiveSkill[i].sprite)
             {
                 Buttons_Image[i].sprite = Buttons_ActiveSkill[i].spriteNoMana;
             }
-            if (Buttons_ActiveSkill[i].skillArchetype == archetype.DoT && ms.psHealth.mana > Buttons_ActiveSkill[i].manaCostPerSecOrUse && Buttons_Image[i].sprite == Buttons_ActiveSkill[i].spriteNoMana)
+            if (Buttons_ActiveSkill[i].skillArchetype == archetype.DoT && ms.psStats.curAttr.Mana > Buttons_ActiveSkill[i].manaCostPerSecOrUse && Buttons_Image[i].sprite == Buttons_ActiveSkill[i].spriteNoMana)
             {
                 Buttons_Image[i].sprite = Buttons_ActiveSkill[i].sprite;
             }
@@ -380,57 +380,57 @@ public class aRPG_GuiTbManagement : MonoBehaviour {
         }
 
         // Mouse Left
-        if (buttonMouseLeftActiveSkill.skillArchetype == archetype.AoE && ms.psHealth.mana < buttonMouseLeftActiveSkill.AoEmanaCost && buttonMouseLeftImage.sprite == buttonMouseLeftActiveSkill.sprite)
+        if (buttonMouseLeftActiveSkill.skillArchetype == archetype.AoE && ms.psStats.curAttr.Mana < buttonMouseLeftActiveSkill.AoEmanaCost && buttonMouseLeftImage.sprite == buttonMouseLeftActiveSkill.sprite)
         {
             buttonMouseLeftImage.sprite = buttonMouseLeftActiveSkill.spriteNoMana;
         }
-        if (buttonMouseLeftActiveSkill.skillArchetype == archetype.AoE && ms.psHealth.mana > buttonMouseLeftActiveSkill.AoEmanaCost && buttonMouseLeftImage.sprite == buttonMouseLeftActiveSkill.spriteNoMana)
+        if (buttonMouseLeftActiveSkill.skillArchetype == archetype.AoE && ms.psStats.curAttr.Mana > buttonMouseLeftActiveSkill.AoEmanaCost && buttonMouseLeftImage.sprite == buttonMouseLeftActiveSkill.spriteNoMana)
         {
             buttonMouseLeftImage.sprite = buttonMouseLeftActiveSkill.sprite;
         }
 
-        if (buttonMouseLeftActiveSkill.skillArchetype == archetype.Projectile && ms.psHealth.mana < buttonMouseLeftActiveSkill.manaCostProjectile && buttonMouseLeftImage.sprite == buttonMouseLeftActiveSkill.sprite)
+        if (buttonMouseLeftActiveSkill.skillArchetype == archetype.Projectile && ms.psStats.curAttr.Mana < buttonMouseLeftActiveSkill.manaCostProjectile && buttonMouseLeftImage.sprite == buttonMouseLeftActiveSkill.sprite)
         {
             buttonMouseLeftImage.sprite = buttonMouseLeftActiveSkill.spriteNoMana;
         }
-        if (buttonMouseLeftActiveSkill.skillArchetype == archetype.Projectile && ms.psHealth.mana > buttonMouseLeftActiveSkill.manaCostProjectile && buttonMouseLeftImage.sprite == buttonMouseLeftActiveSkill.spriteNoMana)
+        if (buttonMouseLeftActiveSkill.skillArchetype == archetype.Projectile && ms.psStats.curAttr.Mana > buttonMouseLeftActiveSkill.manaCostProjectile && buttonMouseLeftImage.sprite == buttonMouseLeftActiveSkill.spriteNoMana)
         {
             buttonMouseLeftImage.sprite = buttonMouseLeftActiveSkill.sprite;
         }
 
-        if (buttonMouseLeftActiveSkill.skillArchetype == archetype.DoT && ms.psHealth.mana < buttonMouseLeftActiveSkill.manaCostPerSecOrUse && buttonMouseLeftImage.sprite == buttonMouseLeftActiveSkill.sprite)
+        if (buttonMouseLeftActiveSkill.skillArchetype == archetype.DoT && ms.psStats.curAttr.Mana < buttonMouseLeftActiveSkill.manaCostPerSecOrUse && buttonMouseLeftImage.sprite == buttonMouseLeftActiveSkill.sprite)
         {
             buttonMouseLeftImage.sprite = buttonMouseLeftActiveSkill.spriteNoMana;
         }
-        if (buttonMouseLeftActiveSkill.skillArchetype == archetype.DoT && ms.psHealth.mana > buttonMouseLeftActiveSkill.manaCostPerSecOrUse && buttonMouseLeftImage.sprite == buttonMouseLeftActiveSkill.spriteNoMana)
+        if (buttonMouseLeftActiveSkill.skillArchetype == archetype.DoT && ms.psStats.curAttr.Mana > buttonMouseLeftActiveSkill.manaCostPerSecOrUse && buttonMouseLeftImage.sprite == buttonMouseLeftActiveSkill.spriteNoMana)
         {
             buttonMouseLeftImage.sprite = buttonMouseLeftActiveSkill.sprite;
         }
 
         // Mouse right
-        if (buttonMouseRightActiveSkill.skillArchetype == archetype.AoE && ms.psHealth.mana < buttonMouseRightActiveSkill.AoEmanaCost && buttonMouseRightImage.sprite == buttonMouseRightActiveSkill.sprite)
+        if (buttonMouseRightActiveSkill.skillArchetype == archetype.AoE && ms.psStats.curAttr.Mana < buttonMouseRightActiveSkill.AoEmanaCost && buttonMouseRightImage.sprite == buttonMouseRightActiveSkill.sprite)
         {
             buttonMouseRightImage.sprite = buttonMouseRightActiveSkill.spriteNoMana;
         }
-        if (buttonMouseRightActiveSkill.skillArchetype == archetype.AoE && ms.psHealth.mana > buttonMouseRightActiveSkill.AoEmanaCost && buttonMouseRightImage.sprite == buttonMouseRightActiveSkill.spriteNoMana)
+        if (buttonMouseRightActiveSkill.skillArchetype == archetype.AoE && ms.psStats.curAttr.Mana > buttonMouseRightActiveSkill.AoEmanaCost && buttonMouseRightImage.sprite == buttonMouseRightActiveSkill.spriteNoMana)
         {
             buttonMouseRightImage.sprite = buttonMouseRightActiveSkill.sprite;
         }
 
-        if (buttonMouseRightActiveSkill.skillArchetype == archetype.Projectile && ms.psHealth.mana < buttonMouseRightActiveSkill.manaCostProjectile && buttonMouseRightImage.sprite == buttonMouseRightActiveSkill.sprite)
+        if (buttonMouseRightActiveSkill.skillArchetype == archetype.Projectile && ms.psStats.curAttr.Mana < buttonMouseRightActiveSkill.manaCostProjectile && buttonMouseRightImage.sprite == buttonMouseRightActiveSkill.sprite)
         {
             buttonMouseRightImage.sprite = buttonMouseRightActiveSkill.spriteNoMana;
         }
-        if (buttonMouseRightActiveSkill.skillArchetype == archetype.Projectile && ms.psHealth.mana > buttonMouseRightActiveSkill.manaCostProjectile && buttonMouseRightImage.sprite == buttonMouseRightActiveSkill.spriteNoMana)
+        if (buttonMouseRightActiveSkill.skillArchetype == archetype.Projectile && ms.psStats.curAttr.Mana > buttonMouseRightActiveSkill.manaCostProjectile && buttonMouseRightImage.sprite == buttonMouseRightActiveSkill.spriteNoMana)
         {
             buttonMouseRightImage.sprite = buttonMouseRightActiveSkill.sprite;
         }
 
-        if (buttonMouseRightActiveSkill.skillArchetype == archetype.DoT && ms.psHealth.mana < buttonMouseRightActiveSkill.manaCostPerSecOrUse && buttonMouseRightImage.sprite == buttonMouseRightActiveSkill.sprite)
+        if (buttonMouseRightActiveSkill.skillArchetype == archetype.DoT && ms.psStats.curAttr.Mana < buttonMouseRightActiveSkill.manaCostPerSecOrUse && buttonMouseRightImage.sprite == buttonMouseRightActiveSkill.sprite)
         {
             buttonMouseRightImage.sprite = buttonMouseRightActiveSkill.spriteNoMana;
         }
-        if (buttonMouseRightActiveSkill.skillArchetype == archetype.DoT && ms.psHealth.mana > buttonMouseRightActiveSkill.manaCostPerSecOrUse && buttonMouseRightImage.sprite == buttonMouseRightActiveSkill.spriteNoMana)
+        if (buttonMouseRightActiveSkill.skillArchetype == archetype.DoT && ms.psStats.curAttr.Mana > buttonMouseRightActiveSkill.manaCostPerSecOrUse && buttonMouseRightImage.sprite == buttonMouseRightActiveSkill.spriteNoMana)
         {
             buttonMouseRightImage.sprite = buttonMouseRightActiveSkill.sprite;
         }

@@ -73,4 +73,25 @@ public class GlobalExpansion
         screenPos.y = Screen.height - screenPos.y;
         return GRoot.inst.GlobalToLocal(screenPos);
     }
+    public static void AttributeCopy(Attribute to, Attribute from)
+    {
+        to.Strenght = from.Strenght;
+        to.Intelligence = from.Intelligence;
+        to.Constitution = from.Constitution;
+        to.Agility = from.Agility;
+        to.Lucky = from.Lucky;
+
+        to.Health = from.Health;
+        to.Mana = from.Mana;
+        to.Attack = from.Attack;
+        to.Defense = from.Defense;
+        to.HealthRegen = from.HealthRegen;
+        to.ManaRegen = from.ManaRegen;
+
+        to.AtkSpeed = from.AtkSpeed;
+        to.MoveSpeed = from.MoveSpeed;
+
+        to.CriticalRate = from.CriticalRate;
+        to.CriticalDamageRate = from.CriticalDamageRate;
+    }
 }

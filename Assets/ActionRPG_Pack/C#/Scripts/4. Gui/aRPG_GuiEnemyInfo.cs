@@ -42,7 +42,7 @@ public class aRPG_GuiEnemyInfo : MonoBehaviour {
 	void Update () {
         if (enemyHealthScript != null)
         {
-            hpBar_slider.fillAmount = enemyHealthScript.currentHealth / enemyHealthScript.max_health;
+            hpBar_slider.fillAmount = enemyHealthScript.curAttr.Health / enemyHealthScript.baseAttr.Health;
             if (enemyHealthScript.isDead)
             {
                 enemyHPpanel.SetActive(false);

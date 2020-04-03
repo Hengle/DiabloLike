@@ -62,6 +62,7 @@ public class EquipmentVO
         CriticalDamageRate = Random.Range(equipmentData.MinCritDam, equipmentData.MaxCritDam);//暴伤率
     }
 }
+[System.Serializable]
 public class Attribute
 {
     public int Strenght;//力量

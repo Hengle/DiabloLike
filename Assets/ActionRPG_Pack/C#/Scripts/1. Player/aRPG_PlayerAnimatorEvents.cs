@@ -29,7 +29,7 @@ public class aRPG_PlayerAnimatorEvents : MonoBehaviour {
         // mouse melee
         if (meleeAttackTypeCode == 0)
         {
-            ms.psSkills.meleeTargetScript.currentHealth -= ms.psSkills.meleeTargetScript.ReceiveDamage(ms.psInventory.startingEquippedWeapon.damageType, ms.psInventory.startingEquippedWeapon.damage);
+            ms.psSkills.meleeTargetScript.ReceiveDamage(ms.psInventory.startingEquippedWeapon.damageType, ms.psInventory.startingEquippedWeapon.damage);
             ms.psSkills.meleeTargetNavScript.DamageTaken();
 
             var impactEffectposition = ms.psSkills.meleeTarget.transform.Find("shotEffectFront");
@@ -49,7 +49,7 @@ public class aRPG_PlayerAnimatorEvents : MonoBehaviour {
                 ms.psSkills.meleeTargetNavScript = enemy.collider.gameObject.GetComponent<aRPG_EnemyMovement>();
                 if (ms.psSkills.meleeTargetScript.isDead == false)
                 {
-                    ms.psSkills.meleeTargetScript.currentHealth -= ms.psSkills.meleeTargetScript.ReceiveDamage(ms.psInventory.startingEquippedWeapon.damageType, ms.psInventory.startingEquippedWeapon.damage);
+                    ms.psSkills.meleeTargetScript.ReceiveDamage(ms.psInventory.startingEquippedWeapon.damageType, ms.psInventory.startingEquippedWeapon.damage);
                     ms.psSkills.meleeTargetNavScript.DamageTaken();
 
                     var impactEffectposition = ms.psSkills.meleeTarget.transform.Find("shotEffectFront");
@@ -57,7 +57,7 @@ public class aRPG_PlayerAnimatorEvents : MonoBehaviour {
                 }
             }
         }
-        // melee sweep skill
+        // melee sweep skill//近战扫荡技能
         if (meleeAttackTypeCode == 2)
         {
             Vector3 p1 = new Vector3(ms.player.transform.position.x + ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.x + 0.05f * ms.player.transform.forward.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z + 0.05f * ms.player.transform.forward.z + ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.z);
@@ -71,7 +71,7 @@ public class aRPG_PlayerAnimatorEvents : MonoBehaviour {
                 ms.psSkills.meleeTargetNavScript = enemy.collider.gameObject.GetComponent<aRPG_EnemyMovement>();
                 if (ms.psSkills.meleeTargetScript.isDead == false)
                 {
-                    ms.psSkills.meleeTargetScript.currentHealth -= ms.psSkills.meleeTargetScript.ReceiveDamage(ms.psInventory.startingEquippedWeapon.damageType, ms.psInventory.startingEquippedWeapon.damage*ms.psSkills.lastMeleeSkillUsed.damageModifierPercent);
+                    ms.psSkills.meleeTargetScript.ReceiveDamage(ms.psInventory.startingEquippedWeapon.damageType, ms.psInventory.startingEquippedWeapon.damage*ms.psSkills.lastMeleeSkillUsed.damageModifierPercent);
                     ms.psSkills.meleeTargetNavScript.DamageTaken();
 
                     var impactEffectposition = ms.psSkills.meleeTarget.transform.Find("shotEffectFront");

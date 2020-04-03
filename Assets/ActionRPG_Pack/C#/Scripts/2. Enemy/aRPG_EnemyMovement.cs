@@ -375,15 +375,16 @@ public class aRPG_EnemyMovement : MonoBehaviour {
     {
         var targetScript = ms.player.GetComponent<aRPG_Health>();
         var targetScript2 = ms.player.GetComponent<aRPG_PlayerMovement>();
+        var targetScript3 = m.GetComponent<aRPG_CharacterStats>();
         if (CanAttackTarget())
         {
-            targetScript.health -= esStats.DealDamage();
+            targetScript.ReceiveDamage( damageType.Physical, esStats.curAttr.Attack);
             if (esStats.stunsTarget && Random.value < esStats.stunChance)
             {
                 targetScript2.Stunned();
             }
         }
-        if (targetScript.health <= 0)
+        if (targetScript3.curAttr.Health <= 0)
         {
             playerDead = true;
         }
