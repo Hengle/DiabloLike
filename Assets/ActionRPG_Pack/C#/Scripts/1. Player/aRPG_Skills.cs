@@ -63,10 +63,10 @@ public class aRPG_Skills : MonoBehaviour {
     // ===== MOUSE AND KEYBOARD =====
 
     // Every skill has three functions - on button down, on button being held and on button up. In many cases, skill only need execution from one state, in such case leave other functions empty, but please create one to avoid bugs(later in development you will find such scripting practice usefull because it will be easier for you to make changes in skills you created.)
-
+    //每一项技能都有三个功能：按下按钮、按住按钮和向上按钮。在许多情况下，技能只需要从一个状态执行，在这种情况下，将其他函数留空，但请创建一个以避免出现错误（在开发后期，您会发现这样的脚本编写实践非常有用，因为您可以更容易地更改创建的技能）
     // # please note that DoT_Collider skill damage to the enemy is dealt in aRPG_EnemyDoT script attached to an enemy.
     //请注意，对敌人的点阵对撞机技能伤害是用附在敌人身上的aRPG_enemy DoT脚本造成的。
-    
+
     public void CastDoT_ColliderDown(aRPG_DB_MakeSkillSO skill)
     {
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0) { return; }
@@ -92,7 +92,7 @@ public class aRPG_Skills : MonoBehaviour {
             rayContinousCastingManaBreak = true;
             return; 
         }
-        //rayContinousCastingManaBreak参数的实际用处，没理解
+        //rayContinousCastingManaBreak参数的实际用处，没理解。应该是没蓝或者没子弹原因打断了，按键没松开，然后蓝又够了。
         if (ms.psStats.curAttr.Mana > skill.manaCostPerSecOrUse && rayContinousCastingManaBreak)
         {
             CastDoT_ColliderDown(skill);

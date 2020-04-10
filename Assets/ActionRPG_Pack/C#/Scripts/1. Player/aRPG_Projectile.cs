@@ -39,7 +39,7 @@ public class aRPG_Projectile : MonoBehaviour {
     {
         if (projectileContact.tag != casterTag)
         {
-            //这里没看懂contactsArray 没用上
+            //穿透概率，不能穿透，投掷物就销毁了，否则会继续飞行，contactsArray保证同一个投掷物，只能对同一个对象造成一次伤害
             if (skill.piercing >= Random.Range(0.01f, 100f))
             {
                 int contactID = projectileContact.gameObject.GetInstanceID();
@@ -112,7 +112,7 @@ public class aRPG_Projectile : MonoBehaviour {
         }
         else
         {
-            //不能穿透
+            //不能穿透，直接删除
             if (piercing == false)
             {
                 if (skill.linkOnEndOfLife == true && skill.linkedSkillProjectile1 != null)
