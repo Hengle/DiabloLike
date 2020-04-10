@@ -38,9 +38,10 @@ public class aRPG_PlayerAnimatorEvents : MonoBehaviour {
         // mobile melee
         if (meleeAttackTypeCode == 1)
         {
+            //这两个点是，技能范围的左右两点，
             Vector3 p1 = new Vector3(ms.player.transform.position.x + ms.psStats.meleeArcSweep_arcWidth * ms.player.transform.right.x + 0.05f * ms.player.transform.forward.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z + 0.05f * ms.player.transform.forward.z + ms.psStats.meleeArcSweep_arcWidth * ms.player.transform.right.z);
             Vector3 p2 = new Vector3(ms.player.transform.position.x - ms.psStats.meleeArcSweep_arcWidth * ms.player.transform.right.x + 0.05f * ms.player.transform.forward.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z + 0.05f * ms.player.transform.forward.z - ms.psStats.meleeArcSweep_arcWidth * ms.player.transform.right.z);
-            RaycastHit[] enemies = Physics.CapsuleCastAll(p1, p2, 0.6f, ms.player.transform.forward, ms.psStats.meleeArcSweep_arcLength, ms.layerEnemies);
+            RaycastHit[] enemies = Physics.CapsuleCastAll(p1, p2, 0.6f, ms.player.transform.forward, ms.psStats.meleeArcSweep_arcLength, ms.layerEnemies);//s属性的范围
 
             foreach (RaycastHit enemy in enemies)
             {
@@ -62,7 +63,7 @@ public class aRPG_PlayerAnimatorEvents : MonoBehaviour {
         {
             Vector3 p1 = new Vector3(ms.player.transform.position.x + ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.x + 0.05f * ms.player.transform.forward.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z + 0.05f * ms.player.transform.forward.z + ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.z);
             Vector3 p2 = new Vector3(ms.player.transform.position.x - ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.x + 0.05f * ms.player.transform.forward.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z + 0.05f * ms.player.transform.forward.z - ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.z);
-            RaycastHit[] enemies = Physics.CapsuleCastAll(p1, p2, 0.6f, ms.player.transform.forward, ms.psSkills.lastMeleeSkillUsed.arcLength, ms.layerEnemies);
+            RaycastHit[] enemies = Physics.CapsuleCastAll(p1, p2, 0.6f, ms.player.transform.forward, ms.psSkills.lastMeleeSkillUsed.arcLength, ms.layerEnemies);//技能的范围
 
             foreach (RaycastHit enemy in enemies)
             {
