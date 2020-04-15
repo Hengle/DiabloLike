@@ -2,6 +2,7 @@
 using System.Collections;
 
 // # this script needs to be attached to player because player animations use events from this script.
+//#此脚本需要附加到player，因为player动画使用此脚本中的事件。
 
 public class aRPG_PlayerAnimatorEvents : MonoBehaviour {
 
@@ -26,16 +27,16 @@ public class aRPG_PlayerAnimatorEvents : MonoBehaviour {
     
     void EventPlayerHandWeapon()
     {
-        // mouse melee
+        // mouse melee，武器伤害，单体伤害
         if (meleeAttackTypeCode == 0)
         {
             ms.psSkills.meleeTargetScript.ReceiveDamage(ms.psInventory.startingEquippedWeapon.damageType, ms.psInventory.startingEquippedWeapon.damage);
-            ms.psSkills.meleeTargetNavScript.DamageTaken();
+            ms.psSkills.meleeTargetNavScript.DamageTaken();//受击动画
 
-            var impactEffectposition = ms.psSkills.meleeTarget.transform.Find("shotEffectFront");
+            var impactEffectposition = ms.psSkills.meleeTarget.transform.Find("shotEffectFront");//受击特效
             Instantiate(ms.psSkills.impactEffect, impactEffectposition.transform.position, impactEffectposition.transform.rotation);
         }
-        // mobile melee
+        // mobile melee，武器的伤害与范围计算
         if (meleeAttackTypeCode == 1)
         {
             //这两个点是，技能范围的左右两点，
@@ -58,7 +59,7 @@ public class aRPG_PlayerAnimatorEvents : MonoBehaviour {
                 }
             }
         }
-        // melee sweep skill//近战扫荡技能
+        // melee sweep skill//近战扫荡技能，技能的伤害和范围计算
         if (meleeAttackTypeCode == 2)
         {
             Vector3 p1 = new Vector3(ms.player.transform.position.x + ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.x + 0.05f * ms.player.transform.forward.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z + 0.05f * ms.player.transform.forward.z + ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.z);

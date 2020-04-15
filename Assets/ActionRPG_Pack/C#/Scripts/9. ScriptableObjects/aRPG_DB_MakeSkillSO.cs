@@ -2,10 +2,10 @@
 using System.Collections;
 
 /// <summary>
-/// Projectile，投射物
-/// DOT - Damage over time，在一段时间内不断对目标造成伤害。持续伤害。非动画驱动
-/// AOE - Area Effect Damage，区域作用魔法。指的是一个可以伤害一个区域中的一群怪物的魔法。一次性伤害。非动画驱动
-/// MeleeSweep 近战扫荡？
+/// Projectile，投射物，有碰撞
+/// DOT - Damage over time，在一段时间内不断对目标造成伤害。持续伤害。非动画驱动，有碰撞
+/// AOE - Area Effect Damage，区域作用魔法。指的是一个可以伤害一个区域中的一群怪物的魔法。一次性伤害。非动画驱动。无碰撞直接算范围的
+/// MeleeSweep 近战扫荡？无碰撞直接算范围的
 /// </summary>
 public enum archetype { BuffDebuff, Projectile, Bullet, DoT, AoE, BasicAttack, Move, MeleeSweep}
 public enum sttChange { Strenght, Int, Health, Mana}

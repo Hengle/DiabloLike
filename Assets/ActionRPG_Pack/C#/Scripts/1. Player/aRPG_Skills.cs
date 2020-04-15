@@ -528,7 +528,19 @@ public class aRPG_Skills : MonoBehaviour {
     // # in FreeTargetMelee player character will act like in PreciseMelee but if an enemy is in range player character will auto-attack it.
 
     // which type of skill to use is a game design decision - I prefer having PreciseWithLockOn under leftMouseButton and FreeTargetMelee under any other button.
+    //#下面有3种近战方法：
 
+
+
+    //#在PreciseMelee中，玩家角色只对光标下的内容做出反应。
+
+    //在PreciseWithLockOn中，玩家角色只会对按下按钮时光标下的内容做出反应-按住按钮时移动鼠标不会改变反应。
+
+    //#在FreeTargetMelee中，玩家角色的行为类似于在PreciseMelee中，但如果敌人在射程内，玩家角色将自动攻击它。
+
+
+
+    //使用哪种技能是一个游戏设计决定-我更喜欢在左鼠标按钮下使用PreciseWithLockOn，在任何其他按钮下使用FreeTargetMelee。
 
     // (PreciseMelee)
     public void PreciseMeleeDown() {ms.psEvents.meleeAttackTypeCode = 0;}
@@ -569,6 +581,9 @@ public class aRPG_Skills : MonoBehaviour {
 
 
     // (PreciseWithLockOn)
+    /// <summary>
+    /// 精确锁定近战，单目标攻击meleeAttackTypeCode = 0;
+    /// </summary>
     public void PreciseWithLockOnMeleeDown() 
     {
         ms.psEvents.meleeAttackTypeCode = 0;
@@ -708,7 +723,10 @@ public class aRPG_Skills : MonoBehaviour {
         target_PreciseMelee = null;
         ms.pAnimator.ResetTrigger("WeaponTr");
     }
-
+    /// <summary>
+    /// 近战技能释放接口，meleeAttackTypeCode = 2;使用技能计算范围和伤害
+    /// </summary>
+    /// <param name="skill"></param>
     public void MeleeSweep_Down(aRPG_DB_MakeSkillSO skill)
     {
         lastMeleeSkillUsed = skill;

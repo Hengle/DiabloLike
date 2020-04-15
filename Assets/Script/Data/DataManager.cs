@@ -9,9 +9,11 @@ public class DataManager : Singleton<DataManager> {
 
     public Dictionary<string, ItemData> itemDataDic = new Dictionary<string, ItemData>();
     public Dictionary<string, EquipmentData> equipmentDataDic = new Dictionary<string, EquipmentData>();
+    public Dictionary<string, SkillData> skillDataDic = new Dictionary<string, SkillData>();
     public DataManager(){
         Load();
         LoadEquipment();
+        LoadSkill();
     }
     public void Init()
     {
@@ -45,6 +47,22 @@ public class DataManager : Singleton<DataManager> {
         equipmentDataDic = JsonMapper.ToObject<Dictionary<string, EquipmentData>>(strLine);
         sr.Dispose();
         foreach (var item in equipmentDataDic)
+        {
+            Debug.Log(item.Value.Id);
+        }
+    }
+    void LoadSkill()
+    {
+        string filepath = Application.dataPath + "/Resources/JsonConfig/" + "Skill.json";
+        if (!File.Exists(filepath))
+        {
+            return;
+        }
+        StreamReader sr = new StreamReader(filepath, System.Text.Encoding.UTF8);
+        string strLine = sr.ReadToEnd();
+        skillDataDic = JsonMapper.ToObject<Dictionary<string, SkillData>>(strLine);
+        sr.Dispose();
+        foreach (var item in skillDataDic)
         {
             Debug.Log(item.Value.Id);
         }
