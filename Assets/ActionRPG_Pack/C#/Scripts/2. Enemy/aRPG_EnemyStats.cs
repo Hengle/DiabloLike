@@ -121,7 +121,7 @@ public class aRPG_EnemyStats : MonoBehaviour {
 
         //currentHealth = max_health;
         GlobalExpansion.AttributeCopy(curAttr, baseAttr);
-
+        BloodBarManager.Instance.ShowBloodBar(this);
     }
 
     // update is only used to check if monster should be alive.
@@ -413,6 +413,7 @@ public class aRPG_EnemyStats : MonoBehaviour {
         }
         Debug.Log("wrong damage type was passed to ReceiveDamage function");
         curAttr.Health -= (long)realDam;
+        BloodBarManager.Instance.ShowDamageNum(this.transform, (long)realDam);
     }
 
     // is called when enemy HP reaches 0. It turns off all important components.

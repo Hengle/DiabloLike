@@ -87,7 +87,7 @@ public class aRPG_DoT : MonoBehaviour {
     {
         while (dot_enemy_Dictionary[enemyID])
         {
-            enemyScript.curAttr.Health -= (long)dmgPerTick;
+            enemyScript.ReceiveDamage( damageType.Physical, dmgPerTick);//.curAttr.Health -= (long);
             yield return new WaitForSeconds(dmgFrequency);
         }
     }

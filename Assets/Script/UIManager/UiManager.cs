@@ -11,9 +11,12 @@ using UnityEngine;
 /// </summary>
 public enum EUIType
 {
+    UIMain,
     UIBag,
     UIItemDrop,//物品掉落
     UIItemUse,
+    UIBloodBar,
+    UIDamageNum,
 }
 
 /// <summary>

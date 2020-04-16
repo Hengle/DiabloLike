@@ -73,6 +73,10 @@ public class GlobalExpansion
         screenPos.y = Screen.height - screenPos.y;
         return GRoot.inst.GlobalToLocal(screenPos);
     }
+    public static bool IsInFguiScreen(Vector2 pos)
+    {
+        return (pos.x > 0 && pos.x < Stage.inst.stageWidth) && (pos.y > 0 && pos.y < Stage.inst.stageHeight);
+    }
     public static void AttributeCopy(Attribute to, Attribute from)
     {
         to.Strenght = from.Strenght;
