@@ -7,7 +7,7 @@ namespace ItemDrop
 {
 	public partial class UI_DamageNum : GComponent
 	{
-		public GTextField m_txt_num;
+		public GTextField m_txt_null;
 
 		public const string URL = "ui://yum1lb3nhsc63j";
 
@@ -24,7 +24,7 @@ namespace ItemDrop
 		{
 			base.ConstructFromXML(xml);
 
-			m_txt_num = (GTextField)this.GetChildAt(0);
+			m_txt_null = (GTextField)this.GetChildAt(0);
 		}
 	}
 }

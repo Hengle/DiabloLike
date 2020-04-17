@@ -14,6 +14,8 @@ namespace Main
 			UIObjectFactory.SetPackageItemExtension(UI_Bar_Blue.URL, typeof(UI_Bar_Blue));
 			UIObjectFactory.SetPackageItemExtension(UI_Btn_Main.URL, typeof(UI_Btn_Main));
 			UIObjectFactory.SetPackageItemExtension(UI_Btn_List.URL, typeof(UI_Btn_List));
+			UIObjectFactory.SetPackageItemExtension(UI_Bar_Blood_V.URL, typeof(UI_Bar_Blood_V));
+			UIObjectFactory.SetPackageItemExtension(UI_Bar_Blue_V.URL, typeof(UI_Bar_Blue_V));
 		}
 	}
 }

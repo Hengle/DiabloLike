@@ -129,7 +129,7 @@ public class FGuiManager : MonoSingleton<FGuiManager>
 
         Bag.BagBinder.BindAll();
         ItemDrop.ItemDropBinder.BindAll();
-        GRoot.inst.SetContentScaleFactor(1334, 750);
+        GRoot.inst.SetContentScaleFactor(GlobalExpansion.designScreenWidth, GlobalExpansion.designScreenHeight);//设置屏幕缩放比
 
         //create camera
         StageCamera.CheckMainCamera();

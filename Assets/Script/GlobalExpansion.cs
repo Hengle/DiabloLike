@@ -5,6 +5,8 @@ using FairyGUI;
 
 public class GlobalExpansion
 {
+    public static int designScreenWidth = 1334;//设计分辨率
+    public static int designScreenHeight = 750;
     /// <summary>
     /// 属性对象加属性对象
     /// </summary>
@@ -62,7 +64,7 @@ public class GlobalExpansion
         return a;
     }
     /// <summary>
-    /// 时间坐标转到FGUI
+    /// 世界坐标转到FGUI
     /// </summary>
     /// <param name="pos"></param>
     /// <returns></returns>
@@ -75,7 +77,7 @@ public class GlobalExpansion
     }
     public static bool IsInFguiScreen(Vector2 pos)
     {
-        return (pos.x > 0 && pos.x < Stage.inst.stageWidth) && (pos.y > 0 && pos.y < Stage.inst.stageHeight);
+        return (pos.x > 0 && pos.x < designScreenWidth) && (pos.y > 0 && pos.y < designScreenHeight);//设计分辨率
     }
     public static void AttributeCopy(Attribute to, Attribute from)
     {

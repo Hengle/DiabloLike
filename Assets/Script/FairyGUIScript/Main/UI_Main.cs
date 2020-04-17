@@ -8,9 +8,9 @@ namespace Main
 	public partial class UI_Main : GComponent
 	{
 		public UI_Bar_Exp m_bar_exp;
-		public UI_Bar_Blood m_bar_blood;
-		public UI_Bar_Blue m_bar_blue;
-		public GComponent m_btn1;
+		public UI_Bar_Blood_V m_bar_blood;
+		public UI_Bar_Blue_V m_bar_blue;
+		public UI_Btn_Main m_btn1;
 		public UI_Btn_Main m_btn2;
 		public UI_Btn_Main m_btn3;
 		public UI_Btn_Main m_btn4;
@@ -48,9 +48,9 @@ namespace Main
 			base.ConstructFromXML(xml);
 
 			m_bar_exp = (UI_Bar_Exp)this.GetChildAt(0);
-			m_bar_blood = (UI_Bar_Blood)this.GetChildAt(1);
-			m_bar_blue = (UI_Bar_Blue)this.GetChildAt(2);
-			m_btn1 = (GComponent)this.GetChildAt(3);
+			m_bar_blood = (UI_Bar_Blood_V)this.GetChildAt(1);
+			m_bar_blue = (UI_Bar_Blue_V)this.GetChildAt(2);
+			m_btn1 = (UI_Btn_Main)this.GetChildAt(3);
 			m_btn2 = (UI_Btn_Main)this.GetChildAt(4);
 			m_btn3 = (UI_Btn_Main)this.GetChildAt(5);
 			m_btn4 = (UI_Btn_Main)this.GetChildAt(6);

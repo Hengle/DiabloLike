@@ -39,7 +39,7 @@ public class UIBloodBar : UIBase {
         base.AfterOnShown();
 
         Debug.Log("AfterOnShown");
-        fgui.m_n0.visible = false;
+        fgui.m_txt_null.visible = false;
 
     }
     protected override void OnHide()

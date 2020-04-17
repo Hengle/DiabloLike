@@ -23,34 +23,31 @@ public class BloodBarManager : MonoSingleton<BloodBarManager>
     }
     private void Update()
     {
-        
-
-        //名字显示到屏幕
-        //if (ItemList.Count > 0)
-        //{
-        //    uiItemDrop.Update();
-        //}
+        if(bloodBar != null)
+        {
+            bloodBar.Update();
+        }
     }
 
     public void ShowDamageNum(Transform enemyTrans, long num)
     {
-        //if (damageNum == null)
-        //{
-        //    damageNum = UIManager.Instance.CreateWindow(EUIType.UIDamageNum) as UIDamageNum;
-        //    damageNum.Show();
-        //    damageNum.AfterOnShown();
-        //}
-        //damageNum.ShowDamageNum(enemyTrans, num);
+        if (damageNum == null)
+        {
+            damageNum = UIManager.Instance.CreateWindow(EUIType.UIDamageNum) as UIDamageNum;
+            damageNum.Show();
+            damageNum.AfterOnShown();
+        }
+        damageNum.ShowDamageNum(enemyTrans, num);
     }
     public void ShowBloodBar(aRPG_EnemyStats enemyStats)
     {
-        //if (bloodBar == null)
-        //{
-        //    bloodBar = UIManager.Instance.CreateWindow(EUIType.UIBloodBar) as UIBloodBar;
-        //    bloodBar.Show();
-        //    bloodBar.AfterOnShown();
-        //}
-        //bloodBar.ShowBloodBar(enemyStats);
+        if (bloodBar == null)
+        {
+            bloodBar = UIManager.Instance.CreateWindow(EUIType.UIBloodBar) as UIBloodBar;
+            bloodBar.Show();
+            bloodBar.AfterOnShown();
+        }
+        bloodBar.ShowBloodBar(enemyStats);
     }
 }
 

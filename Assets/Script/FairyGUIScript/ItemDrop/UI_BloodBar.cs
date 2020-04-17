@@ -7,7 +7,7 @@ namespace ItemDrop
 {
 	public partial class UI_BloodBar : GComponent
 	{
-		public UI_Bar_Blood m_n0;
+		public GTextField m_txt_null;
 
 		public const string URL = "ui://yum1lb3nhsc63k";
 
@@ -24,7 +24,7 @@ namespace ItemDrop
 		{
 			base.ConstructFromXML(xml);
 
-			m_n0 = (UI_Bar_Blood)this.GetChildAt(0);
+			m_txt_null = (GTextField)this.GetChildAt(0);
 		}
 	}
 }

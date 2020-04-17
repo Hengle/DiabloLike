@@ -39,7 +39,7 @@ public class UIDamageNum : UIBase {
         base.AfterOnShown();
 
         Debug.Log("AfterOnShown");
-        fgui.m_txt_num.visible = false;
+        fgui.m_txt_null.visible = false;
 
     }
     protected override void OnHide()
@@ -84,13 +84,15 @@ public class UIDamageNum : UIBase {
         Vector2 xy = GlobalExpansion.WorldPos2FguiPos(enemyTrans.position);
         if( GlobalExpansion.IsInFguiScreen(xy) )
         {
-            UI_ItemName name = UIPackage.CreateObject("ItemDrop", "ItemName") as UI_ItemName;
-            fgui.AddChild(name);
-            name.m_txt_name.text = num.ToString();
-
-            Timers.inst.Add(1, 1, (obj)=>{
-                name.Dispose();
+            UI_Comp_txt txt = UIPackage.CreateObject("ItemDrop", "Comp_txt") as UI_Comp_txt;
+            fgui.AddChild(txt);
+            txt.xy = xy;
+            txt.m_txt_num.text = num.ToString();
+            Transition trans = txt.GetTransition("txtTransition");
+            trans.Play(()=> { 
+                txt.Dispose();
             });
+            
         }
     }
 }
