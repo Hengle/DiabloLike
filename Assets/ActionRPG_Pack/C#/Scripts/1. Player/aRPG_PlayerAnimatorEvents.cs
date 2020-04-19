@@ -62,9 +62,9 @@ public class aRPG_PlayerAnimatorEvents : MonoBehaviour {
         // melee sweep skill//近战扫荡技能，技能的伤害和范围计算
         if (meleeAttackTypeCode == 2)
         {
-            Vector3 p1 = new Vector3(ms.player.transform.position.x + ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.x + 0.05f * ms.player.transform.forward.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z + 0.05f * ms.player.transform.forward.z + ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.z);
-            Vector3 p2 = new Vector3(ms.player.transform.position.x - ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.x + 0.05f * ms.player.transform.forward.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z + 0.05f * ms.player.transform.forward.z - ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.z);
-            RaycastHit[] enemies = Physics.CapsuleCastAll(p1, p2, 0.6f, ms.player.transform.forward, ms.psSkills.lastMeleeSkillUsed.arcLength, ms.layerEnemies);//技能的范围
+            Vector3 p1 = new Vector3(ms.player.transform.position.x + (float)ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.x + 0.05f * ms.player.transform.forward.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z + 0.05f * ms.player.transform.forward.z + (float)ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.z);
+            Vector3 p2 = new Vector3(ms.player.transform.position.x - (float)ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.x + 0.05f * ms.player.transform.forward.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z + 0.05f * ms.player.transform.forward.z - (float)ms.psSkills.lastMeleeSkillUsed.arcWidth * ms.player.transform.right.z);
+            RaycastHit[] enemies = Physics.CapsuleCastAll(p1, p2, 0.6f, ms.player.transform.forward, (float)ms.psSkills.lastMeleeSkillUsed.arcLength, ms.layerEnemies);//技能的范围
 
             foreach (RaycastHit enemy in enemies)
             {
@@ -73,7 +73,7 @@ public class aRPG_PlayerAnimatorEvents : MonoBehaviour {
                 ms.psSkills.meleeTargetNavScript = enemy.collider.gameObject.GetComponent<aRPG_EnemyMovement>();
                 if (ms.psSkills.meleeTargetScript.isDead == false)
                 {
-                    ms.psSkills.meleeTargetScript.ReceiveDamage(ms.psInventory.startingEquippedWeapon.damageType, ms.psInventory.startingEquippedWeapon.damage*ms.psSkills.lastMeleeSkillUsed.damageModifierPercent);
+                    ms.psSkills.meleeTargetScript.ReceiveDamage(ms.psInventory.startingEquippedWeapon.damageType, ms.psInventory.startingEquippedWeapon.damage * (float)ms.psSkills.lastMeleeSkillUsed.damageModifierPercent);
                     ms.psSkills.meleeTargetNavScript.DamageTaken();
 
                     var impactEffectposition = ms.psSkills.meleeTarget.transform.Find("shotEffectFront");

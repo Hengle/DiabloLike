@@ -18,14 +18,19 @@ using System.Collections.Generic;
 // # below enum is outside of class so other scripts could easly access it.
 
 public enum skills { None, BaseAttack, Fireball, Ray, Medkit, Move };
-public enum damageType { Physical, Fire, Magic };
+public static class damageType
+{
+    public static int Physical = 1;
+    public static int Fire = 2;
+    public static int Magic = 3;
+}
 public enum buttonCharacter { WeaponSelection, Keyboard_Mobile, MouseRight, MouseLeft};
 
 /// <summary>
 /// 和player相关的脚本，一部分在player预制上（可随player删除），一部分在SCRIPTS上（常驻）
 /// 这样设计是为了，便于控制和其他操作，就像保存。暂时没看出来
 /// </summary>
-public class aRPG_Master : MonoBehaviour {
+public class aRPG_Master : MonoSingleton<aRPG_Master> {
     internal GameObject mc;
     internal GameObject s;
 
@@ -60,7 +65,7 @@ public class aRPG_Master : MonoBehaviour {
     internal CharacterController pCharacterController;
     internal UnityEngine.AI.NavMeshAgent pNavAgent;
 
-    internal aRPG_GuiTbManagement gsManagement;
+    //internal aRPG_GuiTbManagement gsManagement;
     internal aRPG_GuiHealth gsHealth;
     internal aRPG_GuiEnemyInfo gsEnemyInfo;
 
@@ -92,7 +97,7 @@ public class aRPG_Master : MonoBehaviour {
 
         //UI初始化
         UIManager.Instance.Init();
-
+        SpecialUIManager.Instance.ShowMainUI();
     }
     
 
@@ -129,6 +134,7 @@ public class aRPG_Master : MonoBehaviour {
         psSpawn = player.GetComponent<aRPG_PlayerSpawn>();
         psSkills = player.GetComponent<aRPG_Skills>();
         psStats = s.GetComponent<aRPG_CharacterStats>();
+        psStats.Reborn();
         psInventory = s.GetComponent<aRPG_Inventory>();
 
         pAnimator = player.GetComponent<Animator>();
@@ -139,7 +145,7 @@ public class aRPG_Master : MonoBehaviour {
         maskMoveEnemies = layerTargetingPlaneToMove | layerEnemyMouseCollider;
         maskShootEnemies = layerTargetingPlaneToShoot | layerEnemyMouseCollider;
 
-        gsManagement = mc.GetComponent<aRPG_GuiTbManagement>();
+        //gsManagement = mc.GetComponent<aRPG_GuiTbManagement>();
         gsHealth = mc.GetComponent<aRPG_GuiHealth>();
         gsEnemyInfo = mc.GetComponent<aRPG_GuiEnemyInfo>();
 

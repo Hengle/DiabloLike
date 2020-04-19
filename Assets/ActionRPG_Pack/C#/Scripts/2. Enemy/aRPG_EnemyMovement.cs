@@ -151,7 +151,7 @@ public class aRPG_EnemyMovement : MonoBehaviour {
             if (ai.spellToCast.skillArchetype == archetype.Projectile)
             {
                 // First Projectile
-                GameObject instantiatedProjectile = Instantiate(ai.spellToCast.prefabFireballVFX, new Vector3(spellCastPoint.transform.position.x, spellCastPoint.transform.position.y, spellCastPoint.transform.position.z), spellCastPoint.transform.rotation) as GameObject;
+                GameObject instantiatedProjectile = Instantiate(ai.spellToCast.GetPrefab(), new Vector3(spellCastPoint.transform.position.x, spellCastPoint.transform.position.y, spellCastPoint.transform.position.z), spellCastPoint.transform.rotation) as GameObject;
                 instantiatedProjectile.GetComponent<aRPG_Projectile>().GetObject(m, ai.spellToCast, gameObject.tag);
 
                 // Additional Projectiles
@@ -160,7 +160,7 @@ public class aRPG_EnemyMovement : MonoBehaviour {
                 {
                     if (i % 2 == 0)
                     {
-                        instantiatedProjectile = Instantiate(ai.spellToCast.prefabFireballVFX, new Vector3(spellCastPoint.transform.position.x, spellCastPoint.transform.position.y, spellCastPoint.transform.position.z), spellCastPoint.transform.rotation) as GameObject;
+                        instantiatedProjectile = Instantiate(ai.spellToCast.GetPrefab(), new Vector3(spellCastPoint.transform.position.x, spellCastPoint.transform.position.y, spellCastPoint.transform.position.z), spellCastPoint.transform.rotation) as GameObject;
                         instantiatedProjectile.GetComponent<aRPG_Projectile>().GetObject(m, ai.spellToCast, gameObject.tag);
 
                         // Projectile rotation
@@ -169,7 +169,7 @@ public class aRPG_EnemyMovement : MonoBehaviour {
                     }
                     else
                     {
-                        instantiatedProjectile = Instantiate(ai.spellToCast.prefabFireballVFX, new Vector3(spellCastPoint.transform.position.x, spellCastPoint.transform.position.y, spellCastPoint.transform.position.z), spellCastPoint.transform.rotation) as GameObject;
+                        instantiatedProjectile = Instantiate(ai.spellToCast.GetPrefab(), new Vector3(spellCastPoint.transform.position.x, spellCastPoint.transform.position.y, spellCastPoint.transform.position.z), spellCastPoint.transform.rotation) as GameObject;
                         instantiatedProjectile.GetComponent<aRPG_Projectile>().GetObject(m, ai.spellToCast, gameObject.tag);
 
                         instantiatedProjectile.transform.Rotate(Vector3.up, projRotation * -1);
@@ -179,7 +179,7 @@ public class aRPG_EnemyMovement : MonoBehaviour {
 
             if (ai.spellToCast.skillArchetype == archetype.DoT)
             {
-                dotColliderClone = Instantiate(ai.spellToCast.instantiatePrefab, new Vector3(ms.player.transform.position.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z), Quaternion.identity) as GameObject;
+                dotColliderClone = Instantiate(ai.spellToCast.GetPrefab(), new Vector3(ms.player.transform.position.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z), Quaternion.identity) as GameObject;
                 dotColliderClone.transform.LookAt(new Vector3(ms.player.transform.position.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z));
                 
                 dotColliderClone.GetComponent<aRPG_DoT>().SendObjects(ms, ai.spellToCast, gameObject.tag);
@@ -198,7 +198,7 @@ public class aRPG_EnemyMovement : MonoBehaviour {
         {
             if (dotColliderClone != null) { Destroy(dotColliderClone); }
             
-            dotColliderClone = Instantiate(ai.spellToCast.instantiatePrefab, spellCastPoint.transform.position, spellCastPoint.transform.rotation) as GameObject;
+            dotColliderClone = Instantiate(ai.spellToCast.GetPrefab(), spellCastPoint.transform.position, spellCastPoint.transform.rotation) as GameObject;
             dotColliderClone.transform.parent = gameObject.transform;
             
             dotColliderClone.GetComponent<aRPG_DoT>().SendObjects(ms, ai.spellToCast, gameObject.tag);

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class aRPG_Projectile : MonoBehaviour {
     
-    aRPG_DB_MakeSkillSO skill;
+    SkillData skill;
     GameObject m;
     aRPG_Master ms;
     string casterTag;
@@ -16,7 +16,7 @@ public class aRPG_Projectile : MonoBehaviour {
     //声音在有这个脚本的特效上==================================
     MagicProjectileScript MagicP;
 
-    public void GetObject(GameObject receivedObject, aRPG_DB_MakeSkillSO passedSkill, string passedCasterTag)
+    public void GetObject(GameObject receivedObject, SkillData passedSkill, string passedCasterTag)
     {
         m = receivedObject;
         ms = m.GetComponent<aRPG_Master>();
@@ -70,7 +70,7 @@ public class aRPG_Projectile : MonoBehaviour {
     /// <param name="projectileGameObject"></param>
     /// <param name="piercing"></param>
     /// <param name="casterTag"></param>
-    public void ProjectileOnContact(Collider projectileContact, aRPG_DB_MakeSkillSO skill, GameObject projectileGameObject, bool piercing, string casterTag)
+    public void ProjectileOnContact(Collider projectileContact, SkillData skill, GameObject projectileGameObject, bool piercing, string casterTag)
     {
         // On contact with enemy
         if (projectileContact.tag == "enemy" && casterTag == "Player")
@@ -132,12 +132,12 @@ public class aRPG_Projectile : MonoBehaviour {
     /// <param name="casterTag"></param>
     /// <param name="skill"></param>
     /// <param name="projectileGameObject"></param>
-    public void ProjectileMovement(string casterTag, aRPG_DB_MakeSkillSO skill, GameObject projectileGameObject)
+    public void ProjectileMovement(string casterTag, SkillData skill, GameObject projectileGameObject)
     {
         time = Time.time;
         if (projectileGameObject.GetComponent<Rigidbody>() != null && skill.rigidbodyMovement)
         {
-            projectileGameObject.GetComponent<Rigidbody>().velocity = projectileGameObject.transform.forward * skill.speedProjectile;
+            projectileGameObject.GetComponent<Rigidbody>().velocity = projectileGameObject.transform.forward * (float)skill.speedProjectile;
             StartCoroutine(ProjectileMovementCoroutine(casterTag, skill, projectileGameObject, true));
         }
         else
@@ -146,13 +146,13 @@ public class aRPG_Projectile : MonoBehaviour {
         }
     }
 
-    IEnumerator ProjectileMovementCoroutine(string casterTag, aRPG_DB_MakeSkillSO skill, GameObject projectileGameObject, bool isRigidbody)
+    IEnumerator ProjectileMovementCoroutine(string casterTag, SkillData skill, GameObject projectileGameObject, bool isRigidbody)
     {
         while (time + skill.lifetimeProjectile > Time.time && projectileGameObject != null)
         {
             if (isRigidbody == false)
             {
-                projectileGameObject.transform.Translate(Vector3.forward * Time.deltaTime * skill.speedProjectile);
+                projectileGameObject.transform.Translate(Vector3.forward * Time.deltaTime * (float)skill.speedProjectile);
             }
             yield return null;
 

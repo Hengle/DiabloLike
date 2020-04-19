@@ -86,6 +86,11 @@ public class aRPG_CharacterStats : MonoBehaviour {
         // # expBar is used by GuiHealth script that updates level up progression bar.
 
 	}
+    public void Reborn()
+    {
+        GlobalExpansion.AttributeCopy(curAttr, baseAttr);
+        RecalculateDerviedStats();
+    }
     //
     void DealExp()
     {

@@ -83,6 +83,14 @@ public class DataManager : Singleton<DataManager> {
         }
         return null;
     }
+    public SkillData GetSkill(int id)
+    {
+        if (skillDataDic.ContainsKey(id.ToString()))
+        {
+            return skillDataDic[id.ToString()];
+        }
+        return null;
+    }
 }
 public class ItemData
 {

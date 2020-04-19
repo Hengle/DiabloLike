@@ -55,7 +55,7 @@ public class aRPG_Health : MonoBehaviour {
         ms.psStats.curAttr.Health += (long)healAmount;
         if (ms.psStats.curAttr.Health > ms.psStats.baseAttr.Health) { ms.psStats.curAttr.Health = ms.psStats.baseAttr.Health; }
 	}
-    public void ReceiveDamage(damageType dmgType, float dmgAmount)
+    public void ReceiveDamage(int dmgType, float dmgAmount)
     {
         //float realDam = dmgAmount;
         //if (dmgType == damageType.Fire)

@@ -7,7 +7,7 @@ public class aRPG_BulletBehaviore : MonoBehaviour {
     aRPG_Inventory psInventory;
     GameObject m;
     public GameObject impactEffect;
-    public damageType dmg_type = damageType.Physical;
+    public int dmg_type = damageType.Physical;
 
 
     public void GetObject(GameObject receivedObject)

@@ -25,12 +25,14 @@ namespace Main
 		public GButton m_btnLv2;
 		public GButton m_btnLv3;
 		public GTextField m_txtLv;
+		public GGroup m_group_lv;
 		public UI_Bar_Blood m_barEnemy;
 		public GTextField m_txtEnemyName;
 		public GGroup m_group_top;
 		public GGraph m_graph_bgDied;
 		public GButton m_btnRespawn;
 		public GTextField m_txtDied;
+		public GGroup m_group_die;
 
 		public const string URL = "ui://3lyppwh6hsc60";
 
@@ -65,12 +67,14 @@ namespace Main
 			m_btnLv2 = (GButton)this.GetChildAt(15);
 			m_btnLv3 = (GButton)this.GetChildAt(16);
 			m_txtLv = (GTextField)this.GetChildAt(17);
-			m_barEnemy = (UI_Bar_Blood)this.GetChildAt(18);
-			m_txtEnemyName = (GTextField)this.GetChildAt(19);
-			m_group_top = (GGroup)this.GetChildAt(20);
-			m_graph_bgDied = (GGraph)this.GetChildAt(21);
-			m_btnRespawn = (GButton)this.GetChildAt(22);
-			m_txtDied = (GTextField)this.GetChildAt(23);
+			m_group_lv = (GGroup)this.GetChildAt(18);
+			m_barEnemy = (UI_Bar_Blood)this.GetChildAt(19);
+			m_txtEnemyName = (GTextField)this.GetChildAt(20);
+			m_group_top = (GGroup)this.GetChildAt(21);
+			m_graph_bgDied = (GGraph)this.GetChildAt(22);
+			m_btnRespawn = (GButton)this.GetChildAt(23);
+			m_txtDied = (GTextField)this.GetChildAt(24);
+			m_group_die = (GGroup)this.GetChildAt(25);
 		}
 	}
 }

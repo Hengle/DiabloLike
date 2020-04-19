@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// </summary>
 public class aRPG_AoE : MonoBehaviour {
 
-    aRPG_DB_MakeSkillSO skill;
+    SkillData skill;
     string casterTagThis;
     aRPG_Master ms;
 
@@ -23,11 +23,11 @@ public class aRPG_AoE : MonoBehaviour {
     {
         if (skill != null)
         {
-            Destroy(gameObject, skill.lifetime);//回收
+            Destroy(gameObject, (float)skill.lifetime);//回收
         }
     }
     
-    public void SendObjects(aRPG_Master receivedScript , aRPG_DB_MakeSkillSO passedSkill, string casterTag)
+    public void SendObjects(aRPG_Master receivedScript , SkillData passedSkill, string casterTag)
     {
         skill = passedSkill;
         casterTagThis = casterTag;
@@ -37,13 +37,13 @@ public class aRPG_AoE : MonoBehaviour {
         StartCoroutine(AoE_Damage(casterTag, skill, this.transform.position));
     }
 
-    IEnumerator AoE_Damage(string casterTag, aRPG_DB_MakeSkillSO skill, Vector3 center)
+    IEnumerator AoE_Damage(string casterTag, SkillData skill, Vector3 center)
     {
-        yield return new WaitForSeconds(skill.AoEdamageDelay);
+        yield return new WaitForSeconds((float)skill.AoEdamageDelay);
 
         if (casterTag == "Player")
         {
-            Collider[] hitColliders = Physics.OverlapSphere(center, skill.AoEradius, ms.layerEnemies);
+            Collider[] hitColliders = Physics.OverlapSphere(center, (float)skill.AoEradius, ms.layerEnemies);
             int i = 0;
             while (i < hitColliders.Length)
             {
@@ -59,7 +59,7 @@ public class aRPG_AoE : MonoBehaviour {
 
         if (casterTag == "enemy")
         {
-            Collider[] hitColliders = Physics.OverlapSphere(center, skill.AoEradius, ms.layerPlayer);
+            Collider[] hitColliders = Physics.OverlapSphere(center, (float)skill.AoEradius, ms.layerPlayer);
             int i = 0;
             while (i < hitColliders.Length)
             {

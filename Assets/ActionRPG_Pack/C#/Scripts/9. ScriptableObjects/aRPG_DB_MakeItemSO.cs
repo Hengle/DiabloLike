@@ -8,7 +8,7 @@ public class aRPG_DB_MakeItemSO : ScriptableObject {
     public string weaponModelName;
     public weaponCategories weaponCategory;
     public float damage = 2;
-    public damageType damageType;
+    public int damageType;
     public bool hasLimitedNoOfUses = false;
     public int ammo;
 

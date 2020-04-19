@@ -62,4 +62,55 @@ public class SkillData
     public bool spawnAtCastPoint = true;//是否产生在发射点，如果是，就是射线哪样的特效持续的。不然就是直接出现在鼠标位置。移动端不支持出现在鼠标位置
     //=======Collider-DoT=======
 
+     //=======Other=======
+    /*variables for scripting operations*/
+    /*脚本操作的变量*/
+    internal bool delayIsOn = false;//技能已经开始了只是在延迟状态
+    internal float currentSpriteFill;//转CD用的比例
+    internal bool manaDegenIsOn = false;//持续消耗蓝
+                                        /*variables for scripting operations*/
+
+    /*Don't change these values unless you really need to*/
+    // below define speed of visual updates of things like cooldown sprite fill or mana drain.
+    /*不要改变这些值，除非你真的需要*/
+    //下面定义了像冷却精灵填充或法力消耗之类的东西的视觉更新速度。
+    internal float spriteFillSpeed = 0.03f;
+    internal float manaDegenInterval = 0.03f;
+    /*Don't change these values unless you really need to*/
+
+    private Object prefab;
+    /// <summary>
+    /// 获取prefab
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public Object GetPrefab()
+    {
+        string name = prefabFireballVFX;
+        if (skillArchetype == (int)archetype.AoE)
+        {
+            name = AoEprefabVFX;
+        }else if (skillArchetype == (int)archetype.DoT)
+        {
+            name = instantiatePrefab;
+        }
+        if (prefab == null)
+        {
+            prefab = Resources.Load("C# Prefabs/InstantiatedByScript/" + name);
+        }
+        return prefab;
+    }
+    Vector3 castPointLocalPos = Vector3.up;
+    public Vector3 CastPointLocalPos
+    {
+        get
+        {
+            if(castPointLocalPos == Vector3.positiveInfinity)
+            {
+                string[] arr = castPointLocalPosProjectile.Split(',');
+                castPointLocalPos = new Vector3(float.Parse(arr[0]), float.Parse(arr[1]), float.Parse(arr[2]));
+            }
+            return castPointLocalPos;
+        }
+    }
 }

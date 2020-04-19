@@ -7,6 +7,11 @@ using UnityEngine.UI;
 // all childs of MainCanvas that name ends with "#" have an GUI event in it.
 
 // this script manages toolbar button behaviore and weapon/skill switching.
+//图形用户界面工具栏上的一些常规信息：
+//以“@”结尾的主画布的所有子级都有一个敏感的名称，这意味着此脚本使用其名称来查找它。更改此对象的名称将导致错误。
+//名字以“#”结尾的主画布的所有子级都有一个GUI事件。
+
+//此脚本管理工具栏按钮行为和武器/技能切换。
 
 public class aRPG_GuiTbManagement : MonoBehaviour {
     

@@ -7,8 +7,24 @@ using System.Collections;
 /// AOE - Area Effect Damage，区域作用魔法。指的是一个可以伤害一个区域中的一群怪物的魔法。一次性伤害。非动画驱动。无碰撞直接算范围的
 /// MeleeSweep 近战扫荡？无碰撞直接算范围的
 /// </summary>
-public enum archetype { BuffDebuff, Projectile, Bullet, DoT, AoE, BasicAttack, Move, MeleeSweep}
-public enum sttChange { Strenght, Int, Health, Mana}
+public static class archetype {
+    public static int BuffDebuff = 1;
+    public static int Projectile = 2;
+    public static int Bullet = 3;
+    public static int DoT = 4;
+    public static int AoE = 5;
+    public static int BasicAttack = 6;
+    public static int Move = 7;
+    public static int MeleeSweep = 8;
+}
+public static class sttChange
+{
+    public static int Strenght = 1;
+    public static int Int = 2;
+    public static int Health = 3;
+    public static int Mana = 4;
+}
+
 
 public class aRPG_DB_MakeSkillSO : ScriptableObject
 {
@@ -16,7 +32,7 @@ public class aRPG_DB_MakeSkillSO : ScriptableObject
     [Header("General")]
     // skill archetype defines the skill. If you choose a Melee Sweep only variables from under Melee Sweep header will affect skill.
     //技能原型定义了技能。如果你选择一个近战扫荡只有变量从下面的近战扫荡头将影响技能。
-    public archetype skillArchetype;
+    public int skillArchetype;
     public string UNIQUE_skillName;
     public Sprite sprite;//技能图标
     public Sprite spriteNoMana;//没蓝时的技能图标
@@ -32,7 +48,7 @@ public class aRPG_DB_MakeSkillSO : ScriptableObject
 
     //=======Consumable=======
     [Header("Consumable消耗品，")]
-    public sttChange sttChange;//要改变的属性
+    public int sttChange;//要改变的属性
     // if sttChangeDuration is 0 then change will be permanent.
     //如果sttChangeDuration为0，则更改将是永久的。
     public float sttChangeDuration;//改变的时间
@@ -47,7 +63,7 @@ public class aRPG_DB_MakeSkillSO : ScriptableObject
     [Range(0, 7)]
     public int addtionalProjectiles = 0;//附加的投射物
     public float damageProjectile;//投射物的伤害
-    public damageType damageTypeProjectile;//伤害类型
+    public int damageTypeProjectile;//伤害类型
     public float manaCostProjectile;//蓝量消耗
     public Vector3 castPointLocalPosProjectile;//相对于投掷点的位置
     public float speedProjectile;//投掷物速度
@@ -67,7 +83,7 @@ public class aRPG_DB_MakeSkillSO : ScriptableObject
     [Header("AoE")]
     public float AoEdamageDelay;//延迟后算伤害
     public float AoEdamage;//伤害
-    public damageType AoEdamageType;//伤害类型
+    public int AoEdamageType;//伤害类型
     public float AoEradius;//伤害范围
     public GameObject AoEprefabVFX;//特效
     public float AoEmanaCost;//蓝量消耗

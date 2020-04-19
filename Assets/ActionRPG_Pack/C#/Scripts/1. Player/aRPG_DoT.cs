@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// </summary>
 public class aRPG_DoT : MonoBehaviour {
     
-    aRPG_DB_MakeSkillSO skill;
+    SkillData skill;
     string casterTagThis;
     aRPG_Master ms;
 
@@ -22,11 +22,11 @@ public class aRPG_DoT : MonoBehaviour {
     {
         if (skill != null && skill.spawnAtCastPoint == false)
         {
-            Destroy(gameObject, skill.lifetime);//回收
+            Destroy(gameObject, (float)skill.lifetime);//回收
         }
     }
     
-    public void SendObjects(aRPG_Master receivedScript , aRPG_DB_MakeSkillSO passedSkill, string casterTag)
+    public void SendObjects(aRPG_Master receivedScript , SkillData passedSkill, string casterTag)
     {
         skill = passedSkill;
         casterTagThis = casterTag;
@@ -47,13 +47,13 @@ public class aRPG_DoT : MonoBehaviour {
             {
                 dot_enemy_Dictionary[enemyID] = true;
                 enemyStats = enemy.GetComponent<aRPG_EnemyStats>();
-                StartCoroutine(DotDmg(enemyID, enemyStats, CalculateDmg(), skill.damageFrequency));
+                StartCoroutine(DotDmg(enemyID, enemyStats, CalculateDmg(), (float)skill.damageFrequency));
             }
         }
         if (enemy.tag == "Player" && casterTagThis == "enemy")
         {
             doDamageToPlayer = true;
-            StartCoroutine(DotDmg(CalculateDmg(), skill.damageFrequency));
+            StartCoroutine(DotDmg(CalculateDmg(), (float)skill.damageFrequency));
         }
    }
 
@@ -71,7 +71,7 @@ public class aRPG_DoT : MonoBehaviour {
 
     float CalculateDmg()
     {
-        return skill.dps * skill.damageFrequency;
+        return (float)(skill.dps * skill.damageFrequency);
     }
 
     IEnumerator DotDmg(float dmgPerTick, float dmgFrequency)

@@ -57,37 +57,37 @@ public class aRPG_Input : MonoBehaviour
     public void InputActionButtons()
     {
         // UI Action Buttons
-        for (i = 0; i < ms.gsManagement.Buttons_InputKey.Length; i++)
+        for (i = 0; i < SpecialUIManager.Instance.main.InputKeys.Length ; i++)
         {
-            if (Input.GetKeyDown(ms.gsManagement.Buttons_InputKey[i]))
+            if (Input.GetKeyDown(SpecialUIManager.Instance.main.InputKeys[i]))
             {
                 // block input from more then one key, with exeption of consumables
                 //阻止来自多个密钥的输入，消耗品除外
-                if (inputLockedBy == ms.gsManagement.Buttons_InputKey[i] || inputLockedBy == "" || ms.gsManagement.Buttons_ActiveSkill[i].skillArchetype == archetype.BuffDebuff)
+                if (inputLockedBy == SpecialUIManager.Instance.main.InputKeys[i] || inputLockedBy == "" || SpecialUIManager.Instance.main.InputSkills[i].skillArchetype == archetype.BuffDebuff)
                 {
-                    if (ms.gsManagement.Buttons_ActiveSkill[i].skillArchetype != archetype.BuffDebuff) { inputLockedBy = ms.gsManagement.Buttons_InputKey[i]; }
+                    if (SpecialUIManager.Instance.main.InputSkills[i].skillArchetype != archetype.BuffDebuff) { inputLockedBy = SpecialUIManager.Instance.main.InputKeys[i]; }
                     ms.psMovement.trackingEnemy = false;
                     ms.psMovement.pendingEnemyMeleeAtack = false;
 
-                    ExecuteInput(ms.gsManagement.Buttons_ActiveSkill[i], "down", false);
+                    ExecuteInput(SpecialUIManager.Instance.main.InputSkills[i], "down", false);
                 }
             }
 
-            if (Input.GetKey(ms.gsManagement.Buttons_InputKey[i]))
+            if (Input.GetKey(SpecialUIManager.Instance.main.InputKeys[i]))
             {
-                if (inputLockedBy == ms.gsManagement.Buttons_InputKey[i] || inputLockedBy == "" || ms.gsManagement.Buttons_ActiveSkill[i].skillArchetype == archetype.BuffDebuff)
+                if (inputLockedBy == SpecialUIManager.Instance.main.InputKeys[i] || inputLockedBy == "" || SpecialUIManager.Instance.main.InputSkills[i].skillArchetype == archetype.BuffDebuff)
                 {
-                    ExecuteInput(ms.gsManagement.Buttons_ActiveSkill[i], "held", false);
+                    ExecuteInput(SpecialUIManager.Instance.main.InputSkills[i], "held", false);
                 }
             }
 
-            if (Input.GetKeyUp(ms.gsManagement.Buttons_InputKey[i]))
+            if (Input.GetKeyUp(SpecialUIManager.Instance.main.InputKeys[i]))
             {
-                if (inputLockedBy == ms.gsManagement.Buttons_InputKey[i] || inputLockedBy == "" || ms.gsManagement.Buttons_ActiveSkill[i].skillArchetype == archetype.BuffDebuff)
+                if (inputLockedBy == SpecialUIManager.Instance.main.InputKeys[i] || inputLockedBy == "" || SpecialUIManager.Instance.main.InputSkills[i].skillArchetype == archetype.BuffDebuff)
                 {
-                    ExecuteInput(ms.gsManagement.Buttons_ActiveSkill[i], "up", false);
+                    ExecuteInput(SpecialUIManager.Instance.main.InputSkills[i], "up", false);
 
-                    if (ms.gsManagement.Buttons_ActiveSkill[i].skillArchetype != archetype.BuffDebuff) { inputLockedBy = ""; }
+                    if (SpecialUIManager.Instance.main.InputSkills[i].skillArchetype != archetype.BuffDebuff) { inputLockedBy = ""; }
                 }
             }
         }
@@ -102,29 +102,29 @@ public class aRPG_Input : MonoBehaviour
         // # the third condition is an exception from the rule based on the current skill of the button that you pressed as a second one. Thats usefull because you want to be able to use medkit while you are running away for example.
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            if (inputLockedBy == "mouse1" || inputLockedBy == "" || ms.gsManagement.buttonMouseRightActiveSkill.skillArchetype == archetype.BuffDebuff)
+            if (inputLockedBy == "mouse1" || inputLockedBy == "" || SpecialUIManager.Instance.main.rightMouseSkill.skillArchetype == archetype.BuffDebuff)
             {
-                if (ms.gsManagement.buttonMouseRightActiveSkill.skillArchetype != archetype.BuffDebuff) { inputLockedBy = "mouse1"; }
+                if (SpecialUIManager.Instance.main.rightMouseSkill.skillArchetype != archetype.BuffDebuff) { inputLockedBy = "mouse1"; }
                 ms.psMovement.trackingEnemy = false;
                 ms.psMovement.pendingEnemyMeleeAtack = false;
 
-                ExecuteInput(ms.gsManagement.buttonMouseRightActiveSkill, "down", false);
+                ExecuteInput(SpecialUIManager.Instance.main.rightMouseSkill, "down", false);
             }
         }
         if (Input.GetKey(KeyCode.Mouse1))
         {
-            if (inputLockedBy == "mouse1" || inputLockedBy == "" || ms.gsManagement.buttonMouseRightActiveSkill.skillArchetype == archetype.BuffDebuff)
+            if (inputLockedBy == "mouse1" || inputLockedBy == "" || SpecialUIManager.Instance.main.rightMouseSkill.skillArchetype == archetype.BuffDebuff)
             {
-                ExecuteInput(ms.gsManagement.buttonMouseRightActiveSkill, "held", false);
+                ExecuteInput(SpecialUIManager.Instance.main.rightMouseSkill, "held", false);
             }
         }
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
-            if (inputLockedBy == "mouse1" || inputLockedBy == "" || ms.gsManagement.buttonMouseRightActiveSkill.skillArchetype == archetype.BuffDebuff)
+            if (inputLockedBy == "mouse1" || inputLockedBy == "" || SpecialUIManager.Instance.main.rightMouseSkill.skillArchetype == archetype.BuffDebuff)
             {
-                ExecuteInput(ms.gsManagement.buttonMouseRightActiveSkill, "up", false);
+                ExecuteInput(SpecialUIManager.Instance.main.rightMouseSkill, "up", false);
 
-                if (ms.gsManagement.buttonMouseRightActiveSkill.skillArchetype != archetype.BuffDebuff) { inputLockedBy = ""; }
+                if (SpecialUIManager.Instance.main.rightMouseSkill.skillArchetype != archetype.BuffDebuff) { inputLockedBy = ""; }
             }
         }
     }
@@ -134,15 +134,15 @@ public class aRPG_Input : MonoBehaviour
         // (MouseLeft)
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (inputLockedBy == "mouse0" || inputLockedBy == "" || ms.gsManagement.buttonMouseLeftActiveSkill.skillArchetype == archetype.BuffDebuff)
+            if (inputLockedBy == "mouse0" || inputLockedBy == "" || SpecialUIManager.Instance.main.leftMouseSkill.skillArchetype == archetype.BuffDebuff)
             {
-                if (ms.gsManagement.buttonMouseLeftActiveSkill.skillArchetype != archetype.BuffDebuff) { inputLockedBy = "mouse0"; }
+                if (SpecialUIManager.Instance.main.leftMouseSkill.skillArchetype != archetype.BuffDebuff) { inputLockedBy = "mouse0"; }
                 ms.psMovement.trackingEnemy = false;
                 ms.psMovement.pendingEnemyMeleeAtack = false;
 
                 pressedObject = CheckHitOnLeftMouseDown();
                 if (pressedObject == "enemy")
-                { ExecuteInput(ms.gsManagement.buttonMouseLeftActiveSkill, "down", true); }
+                { ExecuteInput(SpecialUIManager.Instance.main.leftMouseSkill, "down", true); }
                 if (pressedObject == "waypoint")
                 { ms.psSkills.WaypointClick(hitFire.transform.gameObject); }
                
@@ -151,7 +151,7 @@ public class aRPG_Input : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            if (inputLockedBy == "mouse0" || inputLockedBy == "" || ms.gsManagement.buttonMouseLeftActiveSkill.skillArchetype == archetype.BuffDebuff)
+            if (inputLockedBy == "mouse0" || inputLockedBy == "" || SpecialUIManager.Instance.main.leftMouseSkill.skillArchetype == archetype.BuffDebuff)
             {
                 if (pressedObject == "targetingPlane")
                 { ms.psMovement.SetDestinationCustom(MoveDestination()); }
@@ -164,17 +164,17 @@ public class aRPG_Input : MonoBehaviour
                     ms.psSkills.PlayerOpensDoor();
                 }
                 if (pressedObject == "enemy")
-                { ExecuteInput(ms.gsManagement.buttonMouseLeftActiveSkill, "held", true); }
+                { ExecuteInput(SpecialUIManager.Instance.main.leftMouseSkill, "held", true); }
 
             }
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
-            if (inputLockedBy == "mouse0" || inputLockedBy == "" || ms.gsManagement.buttonMouseLeftActiveSkill.skillArchetype == archetype.BuffDebuff)
+            if (inputLockedBy == "mouse0" || inputLockedBy == "" || SpecialUIManager.Instance.main.leftMouseSkill.skillArchetype == archetype.BuffDebuff)
             {
                 if (pressedObject == "enemy")
-                { ExecuteInput(ms.gsManagement.buttonMouseLeftActiveSkill, "up", true); }
+                { ExecuteInput(SpecialUIManager.Instance.main.leftMouseSkill, "up", true); }
 
                 inputLockedBy = "";
             }
@@ -182,7 +182,7 @@ public class aRPG_Input : MonoBehaviour
     }
 
     // Skills from keyboard
-    public void ExecuteInput(aRPG_DB_MakeSkillSO skill, string inputType, bool isMouseLeft)
+    public void ExecuteInput(SkillData skill, string inputType, bool isMouseLeft)
     {
         // (Ray)
         if (skill.skillArchetype == archetype.DoT && inputType == "down")
@@ -211,7 +211,7 @@ public class aRPG_Input : MonoBehaviour
         // (Medkit)急救包
         if (skill.skillArchetype == archetype.BuffDebuff && inputType == "down")
         { ms.psSkills.Consumable_Down(skill); }
-        
+
         // (MoveSkill)
         if (skill.skillArchetype == archetype.Move && inputType == "down")
         { ms.psSkills.MoveSkillDown(); }
@@ -222,7 +222,7 @@ public class aRPG_Input : MonoBehaviour
 
         //MeleeSweep
         if (skill.skillArchetype == archetype.MeleeSweep && inputType == "down")
-        { ms.psSkills.MeleeSweep_Down(skill);}
+        { ms.psSkills.MeleeSweep_Down(skill); }
         if (skill.skillArchetype == archetype.MeleeSweep && inputType == "held")
         { ms.psSkills.MeleeSweep_Held(skill); }
         if (skill.skillArchetype == archetype.MeleeSweep && inputType == "up")
@@ -274,7 +274,7 @@ public class aRPG_Input : MonoBehaviour
         }
     }
     // Skills from mobile pointer
-    public void ExecuteMobileInput(aRPG_DB_MakeSkillSO skill, string inputType)
+    public void ExecuteMobileInput(SkillData skill, string inputType)
     {
         Debug.Log(ms.psInventory.equippedWeaponCategory);
         // (Ray)
@@ -400,16 +400,16 @@ public class aRPG_Input : MonoBehaviour
     {
         if(actionButtonsInput == true)
         { return; }
-
-        for (i = 0; i < ms.gsManagement.Buttons_numberOf; i++)
-        {
-            if (pressedButtonToPass == ms.gsManagement.Buttons[i])
-            {
-                pressedMobileButtonIndex = i;
-            }
-        }
-        inputLockedBy = ms.gsManagement.Buttons_ActiveSkill[pressedMobileButtonIndex].skillArchetype.ToString();
-        ExecuteMobileInput(ms.gsManagement.Buttons_ActiveSkill[pressedMobileButtonIndex], "down");
+        //移动端输入要再处理，现在不做===================================================
+        //for (i = 0; i < ms.gsManagement.Buttons_numberOf; i++)
+        //{
+        //    if (pressedButtonToPass == ms.gsManagement.Buttons[i])
+        //    {
+        //        pressedMobileButtonIndex = i;
+        //    }
+        //}
+        inputLockedBy = SpecialUIManager.Instance.main.InputSkills[pressedMobileButtonIndex].skillArchetype.ToString();
+        ExecuteMobileInput(SpecialUIManager.Instance.main.InputSkills[pressedMobileButtonIndex], "down");
         pointerIsDown = true;
     }
 
@@ -419,7 +419,7 @@ public class aRPG_Input : MonoBehaviour
         { return; }
 
         if (pointerIsDown == false) { return; }
-        ExecuteMobileInput(ms.gsManagement.Buttons_ActiveSkill[pressedMobileButtonIndex], "held");
+        ExecuteMobileInput(SpecialUIManager.Instance.main.InputSkills[pressedMobileButtonIndex], "held");
     }
 
     public void PointerUp()
@@ -427,7 +427,7 @@ public class aRPG_Input : MonoBehaviour
         if (actionButtonsInput == true)
         { return; }
         inputLockedBy = "";
-        ExecuteMobileInput(ms.gsManagement.Buttons_ActiveSkill[pressedMobileButtonIndex], "up");
+        ExecuteMobileInput(SpecialUIManager.Instance.main.InputSkills[pressedMobileButtonIndex], "up");
         pointerIsDown = false;
 
     }

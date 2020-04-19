@@ -4,14 +4,16 @@ using UnityEngine;
 using ItemDrop;
 
 /// <summary>
+/// 特殊界面入口，主界面等，不适用UImanager同意管理的，都在这里
 /// 提供血条，伤害飘字的入口
+/// 其实也可以在uimanager中另加队列，管理这些，但是肯定代码越写越多。暂时先这样
 /// </summary>
-public class BloodBarManager : MonoSingleton<BloodBarManager>
+public class SpecialUIManager : MonoSingleton<SpecialUIManager>
 {
 
     UIBloodBar bloodBar = null;
     UIDamageNum damageNum = null;
-    
+    public UIMain main = null;
 
     GameObject m;
     aRPG_Master ms;
@@ -26,6 +28,10 @@ public class BloodBarManager : MonoSingleton<BloodBarManager>
         if(bloodBar != null)
         {
             bloodBar.Update();
+        }
+        if (main != null)
+        {
+            main.Update();
         }
     }
 
@@ -48,6 +54,22 @@ public class BloodBarManager : MonoSingleton<BloodBarManager>
             bloodBar.AfterOnShown();
         }
         bloodBar.ShowBloodBar(enemyStats);
+    }
+    public void ShowMainUI()
+    {
+        if (main == null)
+        {
+            main = UIManager.Instance.CreateWindow(EUIType.UIMain) as UIMain;
+            main.Show();
+            main.AfterOnShown();
+        }
+    }
+    public void HideMainUI()
+    {
+        if (main != null)
+        {
+            main.Hide();
+        }
     }
 }
 

@@ -32,8 +32,8 @@ public class aRPG_Skills : MonoBehaviour {
     GameObject instantiatedRay;
 
     Transform castPoint;
-    aRPG_DB_MakeSkillSO projectileSkill;
-    internal aRPG_DB_MakeSkillSO lastMeleeSkillUsed;
+    SkillData projectileSkill;
+    internal SkillData lastMeleeSkillUsed;
 
     aRPG_EnemyStats enemyStatsScript;
     float time;
@@ -67,14 +67,14 @@ public class aRPG_Skills : MonoBehaviour {
     // # please note that DoT_Collider skill damage to the enemy is dealt in aRPG_EnemyDoT script attached to an enemy.
     //请注意，对敌人的点阵对撞机技能伤害是用附在敌人身上的aRPG_enemy DoT脚本造成的。
 
-    public void CastDoT_ColliderDown(aRPG_DB_MakeSkillSO skill)
+    public void CastDoT_ColliderDown(SkillData skill)
     {
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0) { return; }
         if (skill.hasLimitedNoOfUses == true) { skill.ammo_amount -= 1; }
 
         InstantiateDoT_Collider(skill);
     }
-    public void CastDoT_ColliderHeld(aRPG_DB_MakeSkillSO skill)
+    public void CastDoT_ColliderHeld(SkillData skill)
     {
         //是否需要持续施法的
         if (skill.spawnAtCastPoint == false) { return; }
@@ -104,14 +104,14 @@ public class aRPG_Skills : MonoBehaviour {
             ms.player.transform.LookAt(new Vector3(hitFire.point.x, ms.player.transform.position.y, hitFire.point.z));
         }
     }
-    public void CastDoT_ColliderUp(aRPG_DB_MakeSkillSO skill)
+    public void CastDoT_ColliderUp(SkillData skill)
     {
         ms.pAnimator.SetBool("rayBool", false);
         if (skill.spawnAtCastPoint) { Destroy(DoTClone); }//持续施法结束，直接在这里删除。非持续的，由各自处理
         ManaDegen_Stop(skill);
     }
     
-    public void CastFireballDown(aRPG_DB_MakeSkillSO skill)
+    public void CastFireballDown(SkillData skill)
     {
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0) { return; }
 
@@ -128,7 +128,7 @@ public class aRPG_Skills : MonoBehaviour {
             ms.pAnimator.SetBool("FireballBool", true);
         }
     }
-    public void CastFireballHeld(aRPG_DB_MakeSkillSO skill) 
+    public void CastFireballHeld(SkillData skill) 
     {
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0)
         {
@@ -153,7 +153,7 @@ public class aRPG_Skills : MonoBehaviour {
         ms.pAnimator.SetBool("FireballBool", false);
     }
 
-    public void CastAoEDown(aRPG_DB_MakeSkillSO skill)
+    public void CastAoEDown(SkillData skill)
     {
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0) { return; }
         if (skill.hasLimitedNoOfUses == true) { skill.ammo_amount -= 1; }
@@ -170,18 +170,18 @@ public class aRPG_Skills : MonoBehaviour {
 
 
     /*Mana Degen*///持续减篮
-    public void ManaDegen_Start(aRPG_DB_MakeSkillSO skill)
+    public void ManaDegen_Start(SkillData skill)
     {
         skill.manaDegenIsOn = true;
         StartCoroutine(ManaDegeneration_Coroutine(skill));
     }
     //持续减篮停止
-    public void ManaDegen_Stop(aRPG_DB_MakeSkillSO skill)
+    public void ManaDegen_Stop(SkillData skill)
     {
         skill.manaDegenIsOn = false;
     }
     
-    IEnumerator ManaDegeneration_Coroutine(aRPG_DB_MakeSkillSO skill)
+    IEnumerator ManaDegeneration_Coroutine(SkillData skill)
     {
         float time = Time.time;
         while (time + skill.manaDegenInterval > Time.time && skill.manaDegenIsOn)
@@ -201,7 +201,7 @@ public class aRPG_Skills : MonoBehaviour {
 
         // set projectile instantiation position
         castPoint = spellCastPoint.transform;
-        castPoint.localPosition = projectileSkill.castPointLocalPosProjectile;
+        castPoint.localPosition = projectileSkill.CastPointLocalPos;
 
         // First Projectile
         InstantiateProjectile();
@@ -240,7 +240,7 @@ public class aRPG_Skills : MonoBehaviour {
 
     void InstantiateProjectile()
     {
-        instantiatedProjectile = Instantiate(projectileSkill.prefabFireballVFX, castPoint.position, castPoint.rotation) as GameObject;
+        instantiatedProjectile = Instantiate(projectileSkill.GetPrefab(), castPoint.position, castPoint.rotation) as GameObject;
         aRPG_Projectile projectile = instantiatedProjectile.GetComponent<aRPG_Projectile>();
         if (projectile == null)
         {
@@ -256,18 +256,19 @@ public class aRPG_Skills : MonoBehaviour {
     /// <param name="casterTag"></param>
     /// <param name="linkedSkill"></param>
     /// <param name="contactPosition"></param>
-    public void ExecuteLink(string casterTag, aRPG_DB_MakeSkillSO linkedSkill, Vector3 contactPosition)
+    public void ExecuteLink(string casterTag, int linkedId, Vector3 contactPosition)
     {
-        if (linkedSkill.skillArchetype == archetype.AoE)
+        SkillData linkedSkill = DataManager.Instance.GetSkill(linkedId);
+        if (linkedSkill.skillArchetype == (int)archetype.AoE)
         {
             AoE(casterTag , linkedSkill, contactPosition);
         }
-        if(linkedSkill.skillArchetype == archetype.DoT)
+        if(linkedSkill.skillArchetype == (int)archetype.DoT)
         {
             InstantiateDoT_Collider_fromLink(casterTag, linkedSkill, contactPosition); 
         }
         // debug note on linking
-        if(linkedSkill.skillArchetype != archetype.DoT && linkedSkill.skillArchetype != archetype.AoE)
+        if(linkedSkill.skillArchetype != (int)archetype.DoT && linkedSkill.skillArchetype != (int)archetype.AoE)
         {
             Debug.Log("NOTE: skill " + linkedSkill.UNIQUE_skillName + " cannot be linked");
         }
@@ -277,7 +278,7 @@ public class aRPG_Skills : MonoBehaviour {
     
     /* DoT Collider */
     //DoT技能直接生成的，不是动画驱动的
-    public void InstantiateDoT_Collider(aRPG_DB_MakeSkillSO skill)
+    public void InstantiateDoT_Collider(SkillData skill)
     {
         if (ms.psStats.curAttr.Mana < skill.manaCostPerSecOrUse) { return; }
         ms.psMovement.StopMoveNavAgent();
@@ -288,13 +289,13 @@ public class aRPG_Skills : MonoBehaviour {
             if (DoTClone != null && skill.spawnAtCastPoint) { Destroy(DoTClone); }
             if (skill.spawnAtCastPoint)
             {
-                DoTClone = Instantiate(skill.instantiatePrefab, spellCastPoint.transform.position, spellCastPoint.transform.rotation) as GameObject;
+                DoTClone = Instantiate(skill.GetPrefab(), spellCastPoint.transform.position, spellCastPoint.transform.rotation) as GameObject;
                 DoTClone.transform.parent = ms.player.transform;
                 ManaDegen_Start(skill);
             }
             else
             {
-                DoTClone = Instantiate(skill.instantiatePrefab, new Vector3(hitFire.point.x, ms.player.transform.position.y + 2f, hitFire.point.z), Quaternion.identity) as GameObject;
+                DoTClone = Instantiate(skill.GetPrefab(), new Vector3(hitFire.point.x, ms.player.transform.position.y + 2f, hitFire.point.z), Quaternion.identity) as GameObject;
                 DoTClone.transform.LookAt(new Vector3(ms.player.transform.position.x, ms.player.transform.position.y + 2f, ms.player.transform.position.z));
                 ms.psStats.curAttr.Mana -= (long)skill.manaCostPerSecOrUse;
             }
@@ -304,9 +305,9 @@ public class aRPG_Skills : MonoBehaviour {
         ms.pAnimator.SetBool("rayBool", true);
     }
     //被链接的DoT生成
-    public void InstantiateDoT_Collider_fromLink(string casterTag, aRPG_DB_MakeSkillSO skill, Vector3 contactPosition)
+    public void InstantiateDoT_Collider_fromLink(string casterTag, SkillData skill, Vector3 contactPosition)
     {
-        GameObject DoT_FromLink = Instantiate(skill.instantiatePrefab, contactPosition, Quaternion.identity) as GameObject;
+        GameObject DoT_FromLink = Instantiate(skill.GetPrefab(), contactPosition, Quaternion.identity) as GameObject;
         DoT_FromLink.GetComponent<aRPG_DoT>().SendObjects(ms, skill, casterTag);
 
     }
@@ -315,19 +316,19 @@ public class aRPG_Skills : MonoBehaviour {
 
     /* Area Damage */
     //处理AoE技能伤害， 但是没有处理技能消失
-    public void AoE(string casterTag, aRPG_DB_MakeSkillSO skill, Vector3 center)
+    public void AoE(string casterTag, SkillData skill, Vector3 center)
     {
         if (skill.AoEradius > 0f)
         {
             GameObject aoeGo = null;
             //看特效有没有角度
-            if (skill.AoEprefabVFX.transform.rotation.eulerAngles.magnitude > 10)
+            if ( (skill.GetPrefab() as GameObject).transform.rotation.eulerAngles.magnitude > 10)
             {
-                aoeGo = Instantiate(skill.AoEprefabVFX, center, skill.AoEprefabVFX.transform.rotation);
+                aoeGo = Instantiate(skill.GetPrefab(), center, (skill.GetPrefab() as GameObject).transform.rotation) as GameObject;
             }
             else
             {
-                aoeGo = Instantiate(skill.AoEprefabVFX, center, Quaternion.identity);
+                aoeGo = Instantiate(skill.GetPrefab(), center, Quaternion.identity) as GameObject;
             }
             aRPG_AoE aoe = aoeGo.GetComponent<aRPG_AoE>();
             if(aoe == null)
@@ -341,7 +342,7 @@ public class aRPG_Skills : MonoBehaviour {
         }
     }
     //把AoE逻辑转移到aRPG_AoE脚本中
-    //IEnumerator AoE_Damage(string casterTag, aRPG_DB_MakeSkillSO skill, Vector3 center)
+    //IEnumerator AoE_Damage(string casterTag, SkillData skill, Vector3 center)
     //{
     //    yield return new WaitForSeconds(skill.AoEdamageDelay);
 
@@ -727,13 +728,13 @@ public class aRPG_Skills : MonoBehaviour {
     /// 近战技能释放接口，meleeAttackTypeCode = 2;使用技能计算范围和伤害
     /// </summary>
     /// <param name="skill"></param>
-    public void MeleeSweep_Down(aRPG_DB_MakeSkillSO skill)
+    public void MeleeSweep_Down(SkillData skill)
     {
         lastMeleeSkillUsed = skill;
         ms.psEvents.meleeAttackTypeCode = 2;
     }
 
-    public void MeleeSweep_Held(aRPG_DB_MakeSkillSO skill)
+    public void MeleeSweep_Held(SkillData skill)
     {
         if (!ms.pAnimator.GetCurrentAnimatorStateInfo(0).IsName("Melee"))
         {
@@ -795,7 +796,7 @@ public class aRPG_Skills : MonoBehaviour {
     /*MoveSkill*/
 
     /*Consumable*/
-    public void Consumable_Down(aRPG_DB_MakeSkillSO skill)
+    public void Consumable_Down(SkillData skill)
     {
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0) { return; }
         if (skill.hasLimitedNoOfUses == true) { skill.ammo_amount -= 1; }
@@ -803,7 +804,7 @@ public class aRPG_Skills : MonoBehaviour {
         Consumable(skill);
     }
 
-    public void Consumable(aRPG_DB_MakeSkillSO skill)
+    public void Consumable(SkillData skill)
     {
         if (skill.delayIsOn) { return; }
         if (skill.sttChangeUseDelay > 0f)
@@ -817,7 +818,7 @@ public class aRPG_Skills : MonoBehaviour {
     /// 消耗品变化，影响属性的药品。回血回蓝。加体力什么的，到时间又变回原属性
     /// </summary>
     /// <param name="skill"></param>
-    void Consumable_Variants(aRPG_DB_MakeSkillSO skill)
+    void Consumable_Variants(SkillData skill)
     {
         if (skill.sttChange == sttChange.Health)
         {
@@ -849,21 +850,21 @@ public class aRPG_Skills : MonoBehaviour {
         }
     }
 
-    public void MedkitHeal(aRPG_DB_MakeSkillSO skill)
+    public void MedkitHeal(SkillData skill)
     {
         ms.psStats.curAttr.Health += (long)skill.sttChangeAmount;
         if (ms.psStats.curAttr.Health > ms.psStats.baseAttr.Health) { ms.psStats.curAttr.Health = ms.psStats.baseAttr.Health; }
     }
 
-    public void ManaPotion(aRPG_DB_MakeSkillSO skill)
+    public void ManaPotion(SkillData skill)
     {
         ms.psStats.curAttr.Mana += (long)skill.sttChangeAmount;
         if (ms.psStats.curAttr.Mana > ms.psStats.baseAttr.Mana) { ms.psStats.curAttr.Mana = ms.psStats.baseAttr.Mana; }
     }
 
-    IEnumerator RemoveConsumableBuff(aRPG_DB_MakeSkillSO skill)
+    IEnumerator RemoveConsumableBuff(SkillData skill)
     {
-        yield return new WaitForSeconds(skill.sttChangeDuration);
+        yield return new WaitForSeconds((float)skill.sttChangeDuration);
         
         //if (skill.sttChange == sttChange.Strenght) { ms.psStats.strenght -= skill.sttChangeAmount; }
         //if (skill.sttChange == sttChange.Int) { ms.psStats.intelligence -= skill.sttChangeAmount; }
@@ -871,24 +872,24 @@ public class aRPG_Skills : MonoBehaviour {
         // recalculate derived stats
     }
 
-    IEnumerator ConsumableCoroutine(aRPG_DB_MakeSkillSO skill)
+    IEnumerator ConsumableCoroutine(SkillData skill)
     {
         skill.delayIsOn = true;
         skill.currentSpriteFill = 0f;
         
         StartCoroutine("SpriteFillCoroutine", skill);
-        yield return new WaitForSeconds(skill.sttChangeUseDelay);
+        yield return new WaitForSeconds((float)skill.sttChangeUseDelay);
 
         skill.currentSpriteFill = 1f;
         skill.delayIsOn = false;
     }
 
-    IEnumerator SpriteFillCoroutine(aRPG_DB_MakeSkillSO skill)
+    IEnumerator SpriteFillCoroutine(SkillData skill)
     {
         float time = Time.time;
         while (time + skill.spriteFillSpeed > Time.time && skill.currentSpriteFill < 1f)
         {
-            skill.currentSpriteFill = skill.currentSpriteFill + (1 / skill.sttChangeUseDelay * skill.spriteFillSpeed);
+            skill.currentSpriteFill = skill.currentSpriteFill + (1 / (float)skill.sttChangeUseDelay * skill.spriteFillSpeed);
             yield return new WaitForSeconds(skill.spriteFillSpeed);
             time = Time.time + skill.spriteFillSpeed;
         }
@@ -936,14 +937,14 @@ public class aRPG_Skills : MonoBehaviour {
 
     /*========= MOBILE ===========*/
 
-    public void Mobile_DoT_Collider_Down(aRPG_DB_MakeSkillSO skill)
+    public void Mobile_DoT_Collider_Down(SkillData skill)
     {
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0) { return; }
         if (skill.hasLimitedNoOfUses == true) { skill.ammo_amount -= 1; }
 
         Mobile_InstantiateDoT_Collider(skill);
     }
-    public void Mobile_DoT_Collider_Held(aRPG_DB_MakeSkillSO skill)
+    public void Mobile_DoT_Collider_Held(SkillData skill)
     {
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0)
         {
@@ -965,7 +966,7 @@ public class aRPG_Skills : MonoBehaviour {
         }
 
     }
-    public void Mobile_DoT_Collider_Up(aRPG_DB_MakeSkillSO skill)
+    public void Mobile_DoT_Collider_Up(SkillData skill)
     {
         ms.pAnimator.SetBool("rayBool", false);
         Destroy(DoTClone);
@@ -973,7 +974,7 @@ public class aRPG_Skills : MonoBehaviour {
     }
 
     /* DoT Collider */
-    public void Mobile_InstantiateDoT_Collider(aRPG_DB_MakeSkillSO skill)
+    public void Mobile_InstantiateDoT_Collider(SkillData skill)
     {
         if (ms.psStats.curAttr.Mana < skill.manaCostPerSecOrUse) { return; }
 
@@ -983,7 +984,7 @@ public class aRPG_Skills : MonoBehaviour {
 
         if (skill.spawnAtCastPoint)
         {
-            DoTClone = Instantiate(skill.instantiatePrefab, spellCastPoint.transform.position, spellCastPoint.transform.rotation) as GameObject;
+            DoTClone = Instantiate(skill.GetPrefab(), spellCastPoint.transform.position, spellCastPoint.transform.rotation) as GameObject;
             DoTClone.transform.parent = ms.player.transform;
             ManaDegen_Start(skill);
         }
@@ -998,7 +999,7 @@ public class aRPG_Skills : MonoBehaviour {
     /* DoT Collider */
 
     /* (Fireball) */
-    public void Mobile_CastFireball_Down(aRPG_DB_MakeSkillSO skill)
+    public void Mobile_CastFireball_Down(SkillData skill)
     {
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0) { return; }
 
@@ -1007,7 +1008,7 @@ public class aRPG_Skills : MonoBehaviour {
         projectileSkill = skill;
         ms.pAnimator.SetBool("FireballBool", true);
     }
-    public void Mobile_CastFireball_Held(aRPG_DB_MakeSkillSO skill)
+    public void Mobile_CastFireball_Held(SkillData skill)
     {
         if (skill.hasLimitedNoOfUses == true && skill.ammo_amount <= 0)
         {
