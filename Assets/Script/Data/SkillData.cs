@@ -100,7 +100,7 @@ public class SkillData
         }
         return prefab;
     }
-    Vector3 castPointLocalPos = Vector3.up;
+    Vector3 castPointLocalPos = Vector3.positiveInfinity;
     public Vector3 CastPointLocalPos
     {
         get
