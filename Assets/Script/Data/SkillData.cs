@@ -100,12 +100,12 @@ public class SkillData
         }
         return prefab;
     }
-    Vector3 castPointLocalPos = Vector3.positiveInfinity;
+    Vector3 castPointLocalPos = Vector3.zero;
     public Vector3 CastPointLocalPos
     {
         get
         {
-            if(castPointLocalPos == Vector3.positiveInfinity)
+            if(castPointLocalPos == Vector3.zero)
             {
                 string[] arr = castPointLocalPosProjectile.Split(',');
                 castPointLocalPos = new Vector3(float.Parse(arr[0]), float.Parse(arr[1]), float.Parse(arr[2]));

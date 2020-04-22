@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using FairyGUI;
 
 public class aRPG_Input : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class aRPG_Input : MonoBehaviour
 
         // # this blocks input when pointer is over GUI element.
         if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) { return; }
-
+        if (Stage.isTouchOnUI) { return; }
         if (mouseInput)
         {
             InputMouseRight();
