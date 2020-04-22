@@ -11,6 +11,7 @@ namespace Main
 		public GImage m_n0;
 		public GTextField m_title;
 		public GLoader m_icon;
+		public GTextField m_txt_num;
 
 		public const string URL = "ui://3lyppwh6hsc67";
 
@@ -31,6 +32,7 @@ namespace Main
 			m_n0 = (GImage)this.GetChildAt(0);
 			m_title = (GTextField)this.GetChildAt(1);
 			m_icon = (GLoader)this.GetChildAt(2);
+			m_txt_num = (GTextField)this.GetChildAt(3);
 		}
 	}
 }

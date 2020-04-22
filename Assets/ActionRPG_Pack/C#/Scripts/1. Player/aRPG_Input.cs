@@ -462,10 +462,10 @@ public class aRPG_Input : MonoBehaviour
 
             if (inputLockedBy == "" || inputLockedBy == "Consumable")
             {
-                if (ms.mcsManagement.movementLocked == false)
-                {
-                    ms.pAnimator.SetFloat("Move", 0.9f);
-                }
+                //if (ms.mcsManagement.movementLocked == false)
+                //{
+                //    ms.pAnimator.SetFloat("Move", 0.9f);
+                //}
             }
             else
             {

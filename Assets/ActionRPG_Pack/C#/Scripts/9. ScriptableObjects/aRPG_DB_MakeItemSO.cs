@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class aRPG_DB_MakeItemSO : ScriptableObject {
-    int ID;
+    public int id;
     public Sprite weaponIcon;
     // Name of the GameObject weapon model located at the right hand of the player - it start with "@Weapon_"
     public string weaponModelName;

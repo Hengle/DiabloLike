@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Main;
 using FairyGUI;
+using System.Linq;
 
 public class UIMain : UIBase {
     /// <summary>
@@ -14,7 +15,7 @@ public class UIMain : UIBase {
     /// </summary>
     public override string PanelName { get { return "Main"; } }
 
-    UI_Main fgui;
+    public UI_Main fgui;
     //private List<ItemVO> itemList = new List<ItemVO>();
     public int key1;
     public int key2;
@@ -27,6 +28,12 @@ public class UIMain : UIBase {
     public List<SkillData> InputSkills = new List<SkillData>();
     public SkillData rightMouseSkill;
     public SkillData leftMouseSkill;
+
+    List<SkillData> skills;
+    UI_Btn_Main curSelectBtn;
+
+    List<aRPG_DB_MakeItemSO> weapons;
+    Dictionary<int, aRPG_DB_MakeItemSO> items_Dictionary = new Dictionary<int, aRPG_DB_MakeItemSO>();
 
     public override void Dispose()
     {
@@ -48,6 +55,24 @@ public class UIMain : UIBase {
 
         //EventCenter.AddListener(EGameEvent.eEquipmentChange, ShowBagList);
         //fgui.m_head.onDrop.Add(OnDragDrop);//拖动没行通
+        fgui.m_btn1.onClick.Add(OnSkillBtnClick);
+        fgui.m_btn2.onClick.Add(OnSkillBtnClick);
+        fgui.m_btn3.onClick.Add(OnSkillBtnClick);
+        fgui.m_btn4.onClick.Add(OnSkillBtnClick);
+        fgui.m_btnLeft.onClick.Add(OnSkillBtnClick);
+        fgui.m_btnRight.onClick.Add(OnSkillBtnClick);
+        fgui.m_btnWeapon.onClick.Add(OnWeaponBtnClick);
+        fgui.m_btnRespawn.onClick.Add(OnRespawnClick);
+        fgui.m_btnLv1.onClick.Add(OnBtnLvClick);
+        fgui.m_btnLv2.onClick.Add(OnBtnLvClick);
+        fgui.m_btnLv3.onClick.Add(OnBtnLvClick);
+
+        foreach (Object o in Resources.LoadAll("aRPG_WeaponDB", typeof(ScriptableObject)))
+        {
+            aRPG_DB_MakeItemSO oo = o as aRPG_DB_MakeItemSO;
+            items_Dictionary.Add(oo.id, oo);
+        }
+
         ShowSkill();
         ShowWeapon();
     }
@@ -82,6 +107,20 @@ public class UIMain : UIBase {
         fgui.m_bar_blood.value = aRPG_Master.Instance.psStats.curAttr.Health / (double)aRPG_Master.Instance.psStats.baseAttr.Health * 100;
         fgui.m_bar_blue.value = aRPG_Master.Instance.psStats.curAttr.Mana / (double)aRPG_Master.Instance.psStats.baseAttr.Mana * 100;
         fgui.m_bar_exp.value = aRPG_Master.Instance.psStats.Exp / (double)aRPG_Master.Instance.psStats.prevExpToLevelUp * 100;
+
+        if (aRPG_Master.Instance.psInventory.startingEquippedWeapon != null && fgui.m_btnWeapon.m_txt_num.visible)
+        {
+            fgui.m_btnWeapon.m_txt_num.text = aRPG_Master.Instance.psInventory.startingEquippedWeapon.ammo.ToString();
+        }
+
+        if (enemyHealthScript != null)
+        {
+            fgui.m_barEnemy.value = enemyHealthScript.curAttr.Health / (double)enemyHealthScript.baseAttr.Health * 100;
+            if (enemyHealthScript.isDead)
+            {
+                fgui.m_group_top.visible = false;
+            }
+        }
     }
     void ShowSkill()
     {
@@ -120,65 +159,162 @@ public class UIMain : UIBase {
         InputSkills.Add(skill2);
         InputSkills.Add(skill3);
         InputSkills.Add(skill4);
+
         //weaponId
-        //====
+        if (items_Dictionary[weaponId].weaponIcon != null)
+        {
+            fgui.m_btnWeapon.m_icon.texture = new NTexture(items_Dictionary[weaponId].weaponIcon);
+        }
+        else
+        {
+            fgui.m_btnWeapon.m_icon.texture = null;
+        }
+        fgui.m_btnWeapon.m_txt_num.visible = items_Dictionary[weaponId].hasLimitedNoOfUses;
     }
     void ShowWeapon()
     {
+        weapons = items_Dictionary.Values.ToList();
+        fgui.m_listWeapon.SetVirtual();
+        fgui.m_listWeapon.itemRenderer = RenderListItemWeapon;
+        fgui.m_listWeapon.numItems = weapons.Count;
+        fgui.m_listWeapon.RefreshVirtualList();
+    }
+    void RenderListItemWeapon(int index, GObject obj)
+    {
+        UI_Btn_List item = (UI_Btn_List)obj;
+        aRPG_DB_MakeItemSO wea = weapons[index];
+
+
+        if (wea.weaponIcon != null)
+        {
+            item.m_icon.texture = new NTexture(wea.weaponIcon);
+        }
+        else
+        {
+            item.m_icon.texture = null;
+        }
+        item.onClick.Add(() => {
+            weaponId = wea.id;
+            fgui.m_btnWeapon.m_icon.texture = item.m_icon.texture;
+            fgui.m_btnWeapon.m_txt_num.visible = wea.hasLimitedNoOfUses;
+            aRPG_Master.Instance.psInventory.ChangeWeapon(wea);
+            fgui.m_listWeapon.visible = false;
+        });
 
     }
-    //void ShowBagList()
-    //{
-    //    RefreshEquipedItem();
-    //    itemList = ItemDataManager.Instance.GetAllBagItem();
-    //    fgui.m_list_item.SetVirtual();
-    //    fgui.m_list_item.itemRenderer = RenderListItem;
-    //    fgui.m_list_item.numItems = itemList.Count;
-    //    fgui.m_list_item.RefreshVirtualList();
-    //}
-    //void RenderListItem(int index, GObject obj)
-    //{
-    //    UI_Comp_Item item = (UI_Comp_Item)obj;
-    //    ItemVO itemvo = itemList[index];
+
+    void OnSkillBtnClick(EventContext context)
+    {
+        //fgui.m_head.m_txt_name.text = (string)context.data;
+        UI_Btn_Main btn = context.sender as UI_Btn_Main;
+        //fgui.m_listSkill.x = btn.x;
+        fgui.m_listSkill.visible = true;
+        
+        curSelectBtn = btn;
+
+        skills = DataManager.Instance.skillDataDic.Values.ToList();
+        fgui.m_listSkill.SetVirtual();
+        fgui.m_listSkill.itemRenderer = RenderListItem;
+        fgui.m_listSkill.numItems = skills.Count;
+        fgui.m_listSkill.RefreshVirtualList();
+    }
+    void RenderListItem(int index, GObject obj)
+    {
+        UI_Btn_List item = (UI_Btn_List)obj;
+        SkillData skill = skills[index];
 
 
-    //    item.Init(itemvo);
+        item.icon = UIPackage.GetItemURL("SpriteRes", skill.sprite);
+        item.onClick.Add(()=> {
+            SelectSkill(skill.Id);
+        });
+
+    }
+    void SelectSkill(int id)
+    {
+        if (curSelectBtn == fgui.m_btn1)
+        {
+            key1 = id;
+        }
+        else if (curSelectBtn == fgui.m_btn2)
+        {
+            key2 = id;
+        }
+        else if (curSelectBtn == fgui.m_btn3)
+        {
+            key3 = id;
+        }
+        else if (curSelectBtn == fgui.m_btn4)
+        {
+            key4 = id;
+        }
+        else if (curSelectBtn == fgui.m_btnLeft)
+        {
+            mouseLeft = id;
+        }
+        else if (curSelectBtn == fgui.m_btnRight)
+        {
+            mouseRight = id;
+        }
+        fgui.m_listSkill.visible = false;
+        ShowSkill();
+    }
+
+   void OnWeaponBtnClick(EventContext context)
+    {
+        fgui.m_listWeapon.visible = true;
+    }
+    void OnRespawnClick(EventContext context)
+    {
+        aRPG_Master.Instance.Respawn();
+    }
+    void OnBtnLvClick(EventContext context)
+    {
+        if(context.sender == fgui.m_btnLv1)
+        {
+            Application.LoadLevel("1.Level_Small");
+        }
+        else if (context.sender == fgui.m_btnLv2)
+        {
+            Application.LoadLevel("3.Level_Large");
+        }
+        else if (context.sender == fgui.m_btnLv3)
+        {
+            Application.LoadLevel("2.Level_Doors");
+        }
+    }
 
 
-
-
-    //    //GButton b = item.asButton;
-    //    //item.draggable = true;
-    //    //item.onDragStart.Add((EventContext context) =>
-    //    //{
-    //    //    //Cancel the original dragging, and start a new one with a agent.
-    //    //    context.PreventDefault();
-
-    //    //    DragDropManager.inst.StartDrag(item, item.m_txt_name.text, item.m_txt_name, (int)context.data);
-    //    //});
-
-    //    //GButton c = obj.GetChild("c").asButton;
-    //    //c.icon = null;
-    //    //c.onDrop.Add((EventContext context) =>
-    //    //{
-    //    //    c.icon = (string)context.data;
-    //    //});
-    //}
-    //private void RefreshEquipedItem()
-    //{
-    //    fgui.m_head.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Head));
-    //    fgui.m_chest.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Chest));
-    //    fgui.m_yao.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Belt));
-    //    fgui.m_leg.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Leg));
-    //    fgui.m_shoe.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Foot));
-    //    fgui.m_neck.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Necklace));
-    //    fgui.m_ring_1.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Ring_1));
-    //    fgui.m_ring_2.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Ring_2));
-    //    fgui.m_weapon.Init(ItemDataManager.Instance.GetEquipedItemByPos(EEquipmentPosition.Weapon));
-
-    //}
-    //void OnDragDrop(EventContext context)
-    //{
-    //    fgui.m_head.m_txt_name.text = (string)context.data;
-    //}
+    GameObject enemy;
+    aRPG_EnemyStats enemyHealthScript;
+    string enemyName;
+    /// <summary>
+    /// 顶部血条
+    /// </summary>
+    /// <param name="receivedEnemy"></param>
+    public void GetTargetEnemy(GameObject receivedEnemy)
+    {
+        enemy = receivedEnemy;
+        enemyHealthScript = enemy.GetComponent<aRPG_EnemyStats>();
+        enemyName = enemyHealthScript.thisName;
+        fgui.m_txtEnemyName.text = enemyName;
+        fgui.m_txtEnemyName.color = Color.white;
+        fgui.m_group_top.visible = true;
+        if (enemyHealthScript.monsterModsDefinition == aRPG_EnemyStats.modsDefinition.Rare)
+        {
+            fgui.m_txtEnemyName.color = Color.yellow;
+        }
+        if (enemyHealthScript.monsterModsDefinition == aRPG_EnemyStats.modsDefinition.Champion)
+        {
+            fgui.m_txtEnemyName.color = Color.cyan;
+        }
+    }
+    public void ShowDieUI(bool die)
+    {
+        fgui.m_group_die.visible = die;
+    }
+    public void ShowWayPointMenu(bool show)
+    {
+        fgui.m_group_lv.visible = show;
+    }
 }

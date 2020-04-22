@@ -31,13 +31,13 @@ public enum buttonCharacter { WeaponSelection, Keyboard_Mobile, MouseRight, Mous
 /// 这样设计是为了，便于控制和其他操作，就像保存。暂时没看出来
 /// </summary>
 public class aRPG_Master : MonoSingleton<aRPG_Master> {
-    internal GameObject mc;
+    //internal GameObject mc;
     internal GameObject s;
 
-    internal aRPG_GuiDeathMenu mcsDeath;
-    internal aRPG_GuiEnemyInfo mcsEnemyInfo;
-    internal aRPG_GuiHealth mcsHealth;
-    internal aRPG_GuiTbManagement mcsManagement;
+    //internal aRPG_GuiDeathMenu mcsDeath;
+    //internal aRPG_GuiEnemyInfo mcsEnemyInfo;
+    //internal aRPG_GuiHealth mcsHealth;
+    //internal aRPG_GuiTbManagement mcsManagement;
 
     internal GameObject cam;
     internal aRPG_CameraMovement camMove;
@@ -46,9 +46,9 @@ public class aRPG_Master : MonoSingleton<aRPG_Master> {
     internal GameObject player;
 
     internal GameObject respawnPoint;
-    internal GameObject deathMenu;
+    //internal GameObject deathMenu;
 
-    internal GameObject waypointMenu;
+    //internal GameObject waypointMenu;
 
     //player核心脚本
     internal aRPG_Input psInput;
@@ -66,8 +66,8 @@ public class aRPG_Master : MonoSingleton<aRPG_Master> {
     internal UnityEngine.AI.NavMeshAgent pNavAgent;
 
     //internal aRPG_GuiTbManagement gsManagement;
-    internal aRPG_GuiHealth gsHealth;
-    internal aRPG_GuiEnemyInfo gsEnemyInfo;
+    //internal aRPG_GuiHealth gsHealth;
+    //internal aRPG_GuiEnemyInfo gsEnemyInfo;
 
     internal GameObject joystick;
     internal aRPG_Joystick gsJoystick;
@@ -105,11 +105,11 @@ public class aRPG_Master : MonoSingleton<aRPG_Master> {
     {
         s = gameObject;
 
-        mc = GameObject.Find("MainCanvas");
+        //mc = GameObject.Find("MainCanvas");
 
-        mcsEnemyInfo = mc.GetComponent<aRPG_GuiEnemyInfo>();
-        mcsHealth = mc.GetComponent<aRPG_GuiHealth>();
-        mcsManagement = mc.GetComponent<aRPG_GuiTbManagement>();
+        //mcsEnemyInfo = mc.GetComponent<aRPG_GuiEnemyInfo>();
+        //mcsHealth = mc.GetComponent<aRPG_GuiHealth>();
+        //mcsManagement = mc.GetComponent<aRPG_GuiTbManagement>();
         
         player = GameObject.FindGameObjectWithTag("Player");
         respawnPoint = GameObject.Find("PlayerSpawnPoint");
@@ -118,13 +118,13 @@ public class aRPG_Master : MonoSingleton<aRPG_Master> {
         cam = GameObject.Find("Camera");
         camMove = cam.GetComponent<aRPG_CameraMovement>();
 
-        if (deathMenu == null)
-        {
-            deathMenu = GameObject.Find("MainCanvas/DeathMenu_@");
-            mcsDeath = deathMenu.GetComponent<aRPG_GuiDeathMenu>();
-        }
+        //if (deathMenu == null)
+        //{
+        //    deathMenu = GameObject.Find("MainCanvas/DeathMenu_@");
+        //    mcsDeath = deathMenu.GetComponent<aRPG_GuiDeathMenu>();
+        //}
 
-        waypointMenu = GameObject.Find("MainCanvas/WaypointMenu_@");
+        //waypointMenu = GameObject.Find("MainCanvas/WaypointMenu_@");
 
         psInput = s.GetComponent<aRPG_Input>();
         psHealth = player.GetComponent<aRPG_Health>();
@@ -146,8 +146,8 @@ public class aRPG_Master : MonoSingleton<aRPG_Master> {
         maskShootEnemies = layerTargetingPlaneToShoot | layerEnemyMouseCollider;
 
         //gsManagement = mc.GetComponent<aRPG_GuiTbManagement>();
-        gsHealth = mc.GetComponent<aRPG_GuiHealth>();
-        gsEnemyInfo = mc.GetComponent<aRPG_GuiEnemyInfo>();
+        //gsHealth = mc.GetComponent<aRPG_GuiHealth>();
+        //gsEnemyInfo = mc.GetComponent<aRPG_GuiEnemyInfo>();
 
         if (joystick == null) { joystick = GameObject.Find("MainCanvas/MobileJoystick_@"); }
         if (gsJoystick == null && joystick != null) { gsJoystick = joystick.GetComponent<aRPG_Joystick>(); }
@@ -167,11 +167,11 @@ public class aRPG_Master : MonoSingleton<aRPG_Master> {
 
         respawnPoint = GameObject.Find("PlayerSpawnPoint");
         Instantiate(playerPrefab, respawnPoint.transform.position, respawnPoint.transform.rotation);
-        
-        waypointMenu.SetActive(true);
+
+        SpecialUIManager.Instance.main.ShowWayPointMenu(true);
         OnAwake();
-        deathMenu.SetActive(false);
-        waypointMenu.SetActive(false);
+        SpecialUIManager.Instance.main.ShowDieUI(false);
+        SpecialUIManager.Instance.main.ShowWayPointMenu(false);
 
         psInput.enabled = true;
         camMove.enabled = true;

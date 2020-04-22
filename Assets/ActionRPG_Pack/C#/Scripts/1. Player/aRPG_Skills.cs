@@ -913,6 +913,7 @@ public class aRPG_Skills : MonoBehaviour {
     }
 
     // # this is to open/close Waypoint menu.
+    //控制打开关闭路点菜单
     public void WaypointClick(GameObject waypoint)
     {
         wp = waypoint;
@@ -922,13 +923,13 @@ public class aRPG_Skills : MonoBehaviour {
         }
         else
         {
-            if (ms.waypointMenu.activeInHierarchy)
+            if (SpecialUIManager.Instance.main.fgui.m_group_lv.visible)
             {
-                ms.waypointMenu.SetActive(false);
+                SpecialUIManager.Instance.main.ShowWayPointMenu(false);
             }
             else
             {
-                ms.waypointMenu.SetActive(true);
+                SpecialUIManager.Instance.main.ShowWayPointMenu(true);
             }
         }
     }

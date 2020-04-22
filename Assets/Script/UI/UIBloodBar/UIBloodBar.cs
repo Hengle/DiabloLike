@@ -73,13 +73,13 @@ public class UIBloodBar : UIBase {
                 item.bar.xy = xy;
                 item.bar.value = item.enemy.curAttr.Health / (double)item.enemy.baseAttr.Health;
             }
-            else
-            {
-                if (item.bar != null)
-                {
-                    item.bar.Dispose();
-                }
-            }
+            //else
+            //{
+            //    if (item.bar != null)
+            //    {
+            //        item.bar.Dispose();
+            //    }
+            //}
         }
     }
     private UI_Bar_Blood GetBar()

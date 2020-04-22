@@ -89,7 +89,7 @@ public class aRPG_Health : MonoBehaviour {
         ms.psEvents.enabled = false;
         ms.camMove.enabled = false;
 
-        ms.deathMenu.SetActive(true);
+        SpecialUIManager.Instance.main.ShowDieUI(true);
     }
 
 

@@ -476,6 +476,7 @@ public class aRPG_GuiTbManagement : MonoBehaviour {
     }
 
     // # this F turns on/off ammo counters based on weapons/skills in use. It is called when a weapon/skills change takes place.
+    //显示按钮，右下，是否需要子弹的
     public void ResolveAmmoCountersStatus()
     {
         // Action Buttons

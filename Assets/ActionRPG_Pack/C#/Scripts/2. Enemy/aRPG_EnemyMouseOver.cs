@@ -49,7 +49,7 @@ public class aRPG_EnemyMouseOver : MonoBehaviour {
     void CustomMouseOver()
     {
         if (!model.GetComponent<Renderer>().isVisible) { return; }
-        if (ms.mcsEnemyInfo == null || ms.mcsEnemyInfo.enemyHPpanel == null) { return; }
+        //if (ms.mcsEnemyInfo == null || ms.mcsEnemyInfo.enemyHPpanel == null) { return; }//屏幕上部中间怪物血条
 
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, 60.0f, ms.layerEnemyMouseCollider))
@@ -58,9 +58,9 @@ public class aRPG_EnemyMouseOver : MonoBehaviour {
             {
                 if (dataSent == false)
                 {
-                    ms.mcsEnemyInfo.enemyHPpanel.SetActive(true);
+                    //ms.mcsEnemyInfo.enemyHPpanel.SetActive(true);
                     SetMaterialOutline(true);
-                    ms.mcsEnemyInfo.GetTargetEnemy(gameObject.transform.parent.gameObject);
+                    SpecialUIManager.Instance.main.GetTargetEnemy(gameObject.transform.parent.gameObject);
                     if (increaseColliderRadiusOnMouseOver) { collider.radius = colliderRadius * 1.4f; }
                     dataSent = true;
                 }
@@ -74,7 +74,7 @@ public class aRPG_EnemyMouseOver : MonoBehaviour {
         }
         else
         {
-            ms.mcsEnemyInfo.enemyHPpanel.SetActive(false);
+            //ms.mcsEnemyInfo.enemyHPpanel.SetActive(false);
             SetMaterialOutline(false);
             dataSent = false;
             collider.radius = colliderRadius;
