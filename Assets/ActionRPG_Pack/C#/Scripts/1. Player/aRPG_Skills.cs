@@ -291,6 +291,12 @@ public class aRPG_Skills : MonoBehaviour {
             {
                 DoTClone = Instantiate(skill.GetPrefab(), spellCastPoint.transform.position, spellCastPoint.transform.rotation) as GameObject;
                 DoTClone.transform.parent = ms.player.transform;
+                //beamStart = Instantiate(beamStartPrefab[currentBeam], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+                //beamEnd = Instantiate(beamEndPrefab[currentBeam], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+                //beam = Instantiate(beamLineRendererPrefab[currentBeam], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+                //line = beam.GetComponent<LineRenderer>();
+                DotSelection selection = DoTClone.GetComponent<DotSelection>();
+                selection.SetEffect(1, spellCastPoint.transform.position, spellCastPoint.transform.forward, 1.4f, 19.87f);
                 ManaDegen_Start(skill);
             }
             else

@@ -8,6 +8,7 @@ namespace ParticlePlayground {
 	[RequireComponent (typeof(ParticleSystem))]
     /// <summary>
     /// The PlaygroundParticlesC class is a Particle Playground system driven by the Playground Manager (PlaygroundC). A Particle Playground system contains settings and data for altering a Shuriken component（指粒子系统，Shuriken手里剑，飞镖）.
+    /// 老的粒子系统，好像不怎么好使。看看能不能不用了。
     /// </summary>
     [ExecuteInEditMode()]
 	public class PlaygroundParticlesC : MonoBehaviour {

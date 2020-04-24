@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class SkillData
 {
@@ -97,6 +98,11 @@ public class SkillData
         if (prefab == null)
         {
             prefab = Resources.Load("C# Prefabs/InstantiatedByScript/" + name);
+        }
+        if (prefab == null)
+        {
+            //AssetDatabase.LoadAssetAtPath("Assets/MagicArsenal/Demo/Effect Prefabs/Missiles/Mega/ArcaneMegaObj.prefab", typeof(GameObject));
+            prefab = AssetDatabase.LoadAssetAtPath("Assets/MagicArsenal/Demo/Effect Prefabs/Missiles/" + name + ".prefab", typeof(GameObject));
         }
         return prefab;
     }
