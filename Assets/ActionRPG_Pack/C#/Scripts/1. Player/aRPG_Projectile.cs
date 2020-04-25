@@ -134,7 +134,7 @@ public class aRPG_Projectile : MonoBehaviour {
     /// <param name="projectileGameObject"></param>
     public void ProjectileMovement(string casterTag, SkillData skill, GameObject projectileGameObject)
     {
-        time = Time.time;
+        time = Time.realtimeSinceStartup;
         if (projectileGameObject.GetComponent<Rigidbody>() != null && skill.rigidbodyMovement)
         {
             projectileGameObject.GetComponent<Rigidbody>().velocity = projectileGameObject.transform.forward * (float)skill.speedProjectile;
@@ -148,7 +148,7 @@ public class aRPG_Projectile : MonoBehaviour {
 
     IEnumerator ProjectileMovementCoroutine(string casterTag, SkillData skill, GameObject projectileGameObject, bool isRigidbody)
     {
-        while (time + skill.lifetimeProjectile > Time.time && projectileGameObject != null)
+        while (time + skill.lifetimeProjectile > Time.realtimeSinceStartup && projectileGameObject != null)
         {
             if (isRigidbody == false)
             {
@@ -158,7 +158,7 @@ public class aRPG_Projectile : MonoBehaviour {
 
         }
         //投射物的最后链接，是什么意思？  投射物飞到目标点，出效果，爆炸或者其他，不是最后的链接，是结束之后，接着是什么技能！！没有射中目标的情况
-        if (skill.linkOnEndOfLife == true && projectileGameObject != null && skill.linkedSkillProjectile1 != null)
+        if (skill.linkOnEndOfLife == true && projectileGameObject != null && skill.linkedSkillProjectile1 > 0)
         {
             ms.psSkills.ExecuteLink(casterTag, skill.linkedSkillProjectile1, projectileGameObject.transform.position);
         }
