@@ -104,6 +104,11 @@ public class SkillData
             //AssetDatabase.LoadAssetAtPath("Assets/MagicArsenal/Demo/Effect Prefabs/Missiles/Mega/ArcaneMegaObj.prefab", typeof(GameObject));
             prefab = AssetDatabase.LoadAssetAtPath("Assets/MagicArsenal/Demo/Effect Prefabs/Missiles/" + name + ".prefab", typeof(GameObject));
         }
+        if (prefab == null)
+        {
+            //AssetDatabase.LoadAssetAtPath("Assets/MagicArsenal/Demo/Effect Prefabs/Missiles/Mega/ArcaneMegaObj.prefab", typeof(GameObject));
+            prefab = AssetDatabase.LoadAssetAtPath("Assets/MagicArsenal/Effects/Prefabs/" + name + ".prefab", typeof(GameObject));
+        }
         return prefab;
     }
     Vector3 castPointLocalPos = Vector3.zero;

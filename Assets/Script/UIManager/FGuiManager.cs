@@ -129,7 +129,7 @@ public class FGuiManager : MonoSingleton<FGuiManager>
     {
 
         Common.CommonBinder.BindAll();
-        
+        //SpriteRes.SpriteResBinder.BindAll();这个只有图片，是不用BindAll的；
         Bag.BagBinder.BindAll();
         ItemDrop.ItemDropBinder.BindAll();
         Main.MainBinder.BindAll();
