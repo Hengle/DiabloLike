@@ -296,7 +296,8 @@ public class aRPG_Skills : MonoBehaviour {
                 //beam = Instantiate(beamLineRendererPrefab[currentBeam], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
                 //line = beam.GetComponent<LineRenderer>();
                 DotSelection selection = DoTClone.GetComponent<DotSelection>();
-                selection.SetEffect(1, spellCastPoint.transform.position, spellCastPoint.transform.forward, 1.4f, 19.87f);
+                if(selection != null)
+                    selection.SetEffect(1, spellCastPoint.transform.position, spellCastPoint.transform.forward, 1.4f, 19.87f);
                 ManaDegen_Start(skill);
             }
             else
