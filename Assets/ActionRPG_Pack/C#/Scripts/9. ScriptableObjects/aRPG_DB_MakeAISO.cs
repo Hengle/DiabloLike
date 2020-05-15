@@ -4,7 +4,7 @@ using System.Collections;
 public class aRPG_DB_MakeAISO : ScriptableObject {
 
     public AiTypes aiArchetype;
-    public SkillData spellToCast;
+    public int spellToCastID = 4;
     [Header("MeleeAI")]
     public float meleeAttackRange;
     public float meleeAttackDamage;
@@ -13,8 +13,8 @@ public class aRPG_DB_MakeAISO : ScriptableObject {
     //public float rangedGetAwayDistance;
 
 	// Use this for initialization
-	void Start () {
-        spellToCast = DataManager.Instance.GetSkill(4);
+	public SkillData spellToCast{
+        get { return DataManager.Instance.GetSkill(spellToCastID); }
 
     }
 	

@@ -259,6 +259,11 @@ public class aRPG_Skills : MonoBehaviour {
     public void ExecuteLink(string casterTag, int linkedId, Vector3 contactPosition)
     {
         SkillData linkedSkill = DataManager.Instance.GetSkill(linkedId);
+        //if(linkedSkill == null)
+        //{
+        //    Debug.LogError("linkedSkill == null");
+        //    return;
+        //}
         if (linkedSkill.skillArchetype == (int)archetype.AoE)
         {
             AoE(casterTag , linkedSkill, contactPosition);

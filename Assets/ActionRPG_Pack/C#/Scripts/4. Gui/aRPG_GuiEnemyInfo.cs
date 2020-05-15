@@ -19,37 +19,37 @@ public class aRPG_GuiEnemyInfo : MonoBehaviour {
     aRPG_EnemyStats enemyHealthScript;
     string enemyName;
 
-	void Awake () {
-        enemyHPpanel = GameObject.Find("MainCanvas/EnemyHPpanel_@");
-        hpBar = GameObject.Find("MainCanvas/EnemyHPpanel_@/HPbar_@");
-        textMods = GameObject.Find("MainCanvas/EnemyHPpanel_@/Text_Mods_@");
+	//void Awake () {
+ //       enemyHPpanel = GameObject.Find("MainCanvas/EnemyHPpanel_@");
+ //       hpBar = GameObject.Find("MainCanvas/EnemyHPpanel_@/HPbar_@");
+ //       textMods = GameObject.Find("MainCanvas/EnemyHPpanel_@/Text_Mods_@");
 
-        hpBar_slider = hpBar.GetComponent<Image>();
-        textMods_text = textMods.GetComponent<Text>();
-	}
+ //       hpBar_slider = hpBar.GetComponent<Image>();
+ //       textMods_text = textMods.GetComponent<Text>();
+ //   }
 
-    void Start()
-    {
-        enemyHPpanel = GameObject.Find("MainCanvas/EnemyHPpanel_@");
-        hpBar = GameObject.Find("MainCanvas/EnemyHPpanel_@/HPbar_@");
-        textMods = GameObject.Find("MainCanvas/EnemyHPpanel_@/Text_Mods_@");
+ //   void Start()
+ //   {
+ //       enemyHPpanel = GameObject.Find("MainCanvas/EnemyHPpanel_@");
+ //       hpBar = GameObject.Find("MainCanvas/EnemyHPpanel_@/HPbar_@");
+ //       textMods = GameObject.Find("MainCanvas/EnemyHPpanel_@/Text_Mods_@");
 
-        hpBar_slider = hpBar.GetComponent<Image>();
-        textMods_text = textMods.GetComponent<Text>();
-        enemyHPpanel.SetActive(false);
-    }
+ //       hpBar_slider = hpBar.GetComponent<Image>();
+ //       textMods_text = textMods.GetComponent<Text>();
+ //       enemyHPpanel.SetActive(false);
+ //   }
 
-	void Update () {
-        if (enemyHealthScript != null)
-        {
-            hpBar_slider.fillAmount = enemyHealthScript.curAttr.Health / enemyHealthScript.baseAttr.Health;
-            if (enemyHealthScript.isDead)
-            {
-                enemyHPpanel.SetActive(false);
-            }
-        }
+	//void Update () {
+ //       if (enemyHealthScript != null)
+ //       {
+ //           hpBar_slider.fillAmount = enemyHealthScript.curAttr.Health / enemyHealthScript.baseAttr.Health;
+ //           if (enemyHealthScript.isDead)
+ //           {
+ //               enemyHPpanel.SetActive(false);
+ //           }
+ //       }
         
-	}
+	//}
 
     // # this function is called when a cursor is over an enemy by aRPG_EnemyMouseOver. It gets the information on the enemy and sets variables based on that.
     public void GetTargetEnemy(GameObject receivedEnemy)
