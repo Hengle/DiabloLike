@@ -82,7 +82,7 @@ public class aRPG_Projectile : MonoBehaviour {
                 enemyStatsScript = projectileContact.GetComponent<aRPG_EnemyStats>();
                 enemyStatsScript.ReceiveDamage(skill.damageTypeProjectile, skill.damageProjectile);//算伤害
             }
-            if (skill.linkedSkillProjectile1 != null) {
+            if (skill.linkedSkillProjectile1 > 0) {
                 ms.psSkills.ExecuteLink(casterTag, skill.linkedSkillProjectile1, projectileGameObject.transform.position);
             }
             //感觉这个ExecuteLink在这个函数中执行了两次，测测=================================================================================================================
@@ -95,7 +95,7 @@ public class aRPG_Projectile : MonoBehaviour {
                 // Projectile Damage
                 ms.psStats.curAttr.Health -= (long)skill.damageProjectile;
             }
-            if (skill.linkedSkillProjectile1 != null) {
+            if (skill.linkedSkillProjectile1 > 0) {
                 ms.psSkills.ExecuteLink(casterTag, skill.linkedSkillProjectile1, projectileGameObject.transform.position);
             }
 
@@ -103,7 +103,7 @@ public class aRPG_Projectile : MonoBehaviour {
         // Destroy
         if (projectileContact.tag != "enemy" && projectileContact.tag != "Player")
         {
-            if (skill.linkOnEndOfLife == true && skill.linkedSkillProjectile1 != null)
+            if (skill.linkOnEndOfLife == true && skill.linkedSkillProjectile1 > 0)
             {
                 ms.psSkills.ExecuteLink(casterTag, skill.linkedSkillProjectile1, projectileGameObject.transform.position);
             }
@@ -115,7 +115,7 @@ public class aRPG_Projectile : MonoBehaviour {
             //不能穿透，直接删除
             if (piercing == false)
             {
-                if (skill.linkOnEndOfLife == true && skill.linkedSkillProjectile1 != null)
+                if (skill.linkOnEndOfLife == true && skill.linkedSkillProjectile1 > 0)
                 {
                     ms.psSkills.ExecuteLink(casterTag, skill.linkedSkillProjectile1, projectileGameObject.transform.position);
                 }
