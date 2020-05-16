@@ -23,6 +23,8 @@ public class aRPG_Projectile : MonoBehaviour {
         skill = passedSkill;
         casterTag = passedCasterTag;
 
+        gameObject.layer = 26;//Bullets
+        //兼容特效包MagicArsenal
         MagicP = gameObject.GetComponent<MagicProjectileScript>();
         if(MagicP != null)
         {
