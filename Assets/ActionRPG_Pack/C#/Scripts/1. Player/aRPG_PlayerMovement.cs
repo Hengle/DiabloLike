@@ -12,6 +12,9 @@ public class aRPG_PlayerMovement : MonoBehaviour
 
     [HideInInspector] public Transform trackingEnemyObj;
     [HideInInspector] public bool trackingEnemy = false;
+    /// <summary>
+    /// 等待距离够了普通近战攻击
+    /// </summary>
     [HideInInspector] public bool pendingEnemyMeleeAtack = false;
     [HideInInspector] public bool pendingOpenDoor = false;
     [HideInInspector] public bool isNearDoor = false;
