@@ -333,96 +333,96 @@ public class SuperCharacterController : MonoBehaviour
     /// </summary>
     void RecursivePushback(int depth, int maxDepth)
     {
-        PushIgnoredColliders();
+        //PushIgnoredColliders();
 
-        bool contact = false;
+        //bool contact = false;
 
-        foreach (var sphere in spheres)
-        {
-            foreach (Collider col in Physics.OverlapSphere((SpherePosition(sphere)), radius, Walkable, triggerInteraction))
-            {
-                Vector3 position = SpherePosition(sphere);
-                Vector3 contactPoint;
-                bool contactPointSuccess = SuperCollider.ClosestPointOnSurface(col, position, radius, out contactPoint);
+        //foreach (var sphere in spheres)
+        //{
+        //    foreach (Collider col in Physics.OverlapSphere((SpherePosition(sphere)), radius, Walkable, triggerInteraction))
+        //    {
+        //        Vector3 position = SpherePosition(sphere);
+        //        Vector3 contactPoint;
+        //        bool contactPointSuccess = SuperCollider.ClosestPointOnSurface(col, position, radius, out contactPoint);
                 
-                if (!contactPointSuccess)
-                {
-                    return;
-                }
+        //        if (!contactPointSuccess)
+        //        {
+        //            return;
+        //        }
                                             
-                if (debugPushbackMesssages)
-                    DebugDraw.DrawMarker(contactPoint, 2.0f, Color.cyan, 0.0f, false);
+        //        if (debugPushbackMesssages)
+        //            DebugDraw.DrawMarker(contactPoint, 2.0f, Color.cyan, 0.0f, false);
                     
-                Vector3 v = contactPoint - position;
-                if (v != Vector3.zero)
-                {
-                    // Cache the collider's layer so that we can cast against it
-                    int layer = col.gameObject.layer;
+        //        Vector3 v = contactPoint - position;
+        //        if (v != Vector3.zero)
+        //        {
+        //            // Cache the collider's layer so that we can cast against it
+        //            int layer = col.gameObject.layer;
 
-                    col.gameObject.layer = TemporaryLayerIndex;
+        //            col.gameObject.layer = TemporaryLayerIndex;
 
-                    // Check which side of the normal we are on
-                    bool facingNormal = Physics.SphereCast(new Ray(position, v.normalized), TinyTolerance, v.magnitude + TinyTolerance, 1 << TemporaryLayerIndex);
+        //            // Check which side of the normal we are on
+        //            bool facingNormal = Physics.SphereCast(new Ray(position, v.normalized), TinyTolerance, v.magnitude + TinyTolerance, 1 << TemporaryLayerIndex);
 
-                    col.gameObject.layer = layer;
+        //            col.gameObject.layer = layer;
 
-                    // Orient and scale our vector based on which side of the normal we are situated
-                    if (facingNormal)
-                    {
-                        if (Vector3.Distance(position, contactPoint) < radius)
-                        {
-                            v = v.normalized * (radius - v.magnitude) * -1;
-                        }
-                        else
-                        {
-                            // A previously resolved collision has had a side effect that moved us outside this collider
-                            continue;
-                        }
-                    }
-                    else
-                    {
-                        v = v.normalized * (radius + v.magnitude);
-                    }
+        //            // Orient and scale our vector based on which side of the normal we are situated
+        //            if (facingNormal)
+        //            {
+        //                if (Vector3.Distance(position, contactPoint) < radius)
+        //                {
+        //                    v = v.normalized * (radius - v.magnitude) * -1;
+        //                }
+        //                else
+        //                {
+        //                    // A previously resolved collision has had a side effect that moved us outside this collider
+        //                    continue;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                v = v.normalized * (radius + v.magnitude);
+        //            }
 
-                    contact = true;
+        //            contact = true;
 
-                    transform.position += v;
+        //            transform.position += v;
 
-                    col.gameObject.layer = TemporaryLayerIndex;
+        //            col.gameObject.layer = TemporaryLayerIndex;
 
-                    // Retrieve the surface normal of the collided point
-                    RaycastHit normalHit;
+        //            // Retrieve the surface normal of the collided point
+        //            RaycastHit normalHit;
 
-                    Physics.SphereCast(new Ray(position + v, contactPoint - (position + v)), TinyTolerance, out normalHit, 1 << TemporaryLayerIndex);
+        //            Physics.SphereCast(new Ray(position + v, contactPoint - (position + v)), TinyTolerance, out normalHit, 1 << TemporaryLayerIndex);
 
-                    col.gameObject.layer = layer;
+        //            col.gameObject.layer = layer;
 
-                    SuperCollisionType superColType = col.gameObject.GetComponent<SuperCollisionType>();
+        //            SuperCollisionType superColType = col.gameObject.GetComponent<SuperCollisionType>();
 
-                    if (superColType == null)
-                        superColType = defaultCollisionType;
+        //            if (superColType == null)
+        //                superColType = defaultCollisionType;
 
-                    // Our collision affected the collider; add it to the collision data
-                    var collision = new SuperCollision()
-                    {
-                        collisionSphere = sphere,
-                        superCollisionType = superColType,
-                        gameObject = col.gameObject,
-                        point = contactPoint,
-                        normal = normalHit.normal
-                    };
+        //            // Our collision affected the collider; add it to the collision data
+        //            var collision = new SuperCollision()
+        //            {
+        //                collisionSphere = sphere,
+        //                superCollisionType = superColType,
+        //                gameObject = col.gameObject,
+        //                point = contactPoint,
+        //                normal = normalHit.normal
+        //            };
 
-                    collisionData.Add(collision);
-                }
-            }            
-        }
+        //            collisionData.Add(collision);
+        //        }
+        //    }            
+        //}
 
-        PopIgnoredColliders();
+        //PopIgnoredColliders();
 
-        if (depth < maxDepth && contact)
-        {
-            RecursivePushback(depth + 1, maxDepth);
-        }
+        //if (depth < maxDepth && contact)
+        //{
+        //    RecursivePushback(depth + 1, maxDepth);
+        //}
     }
 
     protected struct IgnoredCollider
@@ -439,25 +439,25 @@ public class SuperCharacterController : MonoBehaviour
 
     private void PushIgnoredColliders()
     {
-        ignoredColliderStack.Clear();
+        //ignoredColliderStack.Clear();
 
-        for (int i = 0; i < ignoredColliders.Count; i++)
-        {
-            Collider col = ignoredColliders[i];
-            ignoredColliderStack.Add(new IgnoredCollider(col, col.gameObject.layer));
-            col.gameObject.layer = TemporaryLayerIndex;
-        }
+        //for (int i = 0; i < ignoredColliders.Count; i++)
+        //{
+        //    Collider col = ignoredColliders[i];
+        //    ignoredColliderStack.Add(new IgnoredCollider(col, col.gameObject.layer));
+        //    col.gameObject.layer = TemporaryLayerIndex;
+        //}
     }
 
     private void PopIgnoredColliders()
     {
-        for (int i = 0; i < ignoredColliderStack.Count; i++)
-        {
-            IgnoredCollider ic = ignoredColliderStack[i];
-            ic.collider.gameObject.layer = ic.layer;
-        }
+        //for (int i = 0; i < ignoredColliderStack.Count; i++)
+        //{
+        //    IgnoredCollider ic = ignoredColliderStack[i];
+        //    ic.collider.gameObject.layer = ic.layer;
+        //}
 
-        ignoredColliderStack.Clear();
+        //ignoredColliderStack.Clear();
     }
 
     void OnDrawGizmos()
