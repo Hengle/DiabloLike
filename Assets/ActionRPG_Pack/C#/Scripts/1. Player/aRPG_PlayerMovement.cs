@@ -38,7 +38,7 @@ public class aRPG_PlayerMovement : MonoBehaviour
 
     void Start()
     {
-
+        //这里关闭了NavAgent的位置和角度更新。转角度用的是lookat,移动用的是Animator组件的ApplyRootMotion，==========这就比较坑爹了。那为什么要用这个组件呢？？？？
         ms.pNavAgent.updatePosition = false;
         ms.pNavAgent.updateRotation = false;
         deadZone *= Mathf.Deg2Rad;//函数将角度转换为弧度。
